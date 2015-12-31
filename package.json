@@ -9,6 +9,7 @@
   "author": "S.P. Mohanty <spmohanty91@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.13.3",
     "socket.io": "^1.3.7"
   }
 }
