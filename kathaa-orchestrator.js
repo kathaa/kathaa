@@ -6,11 +6,15 @@ var kathaaOrchestrator = function (module_library, kue, client){
   this.client = client;
 }
 
-kathaaOrchestrator.prototype.executeGraph = function(graph){
+kathaaOrchestrator.prototype.executeGraph = function(graph, input_sentence){
   this.preprocessGraph(graph, function(_kathaaOrchestrator){
     // _kathaaOrchestrator.client.emit("debug_message", "Inside Preprocess");
+
+    //TO-DO: Handle empty graph in preprocessGraph validations, 
+    // and add an error callback
+    graph.beginNode.input_sentence = input_sentence;
+
     _kathaaOrchestrator.queueNodeJob(graph, graph.beginNode);
-    
   });
 }
 
@@ -19,73 +23,54 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node){
   // this.client.emit("debug_message", "Job Enqueued : "+node.id);
   job.orchestrator = this;
 
-  job.on('complete', function(){
+
+  job.on('complete', function(processed_node){
+    job.data.node = processed_node;
+
     console.log("Job Complete : "+job.id);
-    // job.orchestrator.client.emit("debug_message", "Job Complete : "+job.id);
+    job.orchestrator.client.emit("debug_message", "Job Complete : "+job.id);
+    job.orchestrator.client.emit("node_processing_complete", {node:job.data.node});;
     job.orchestrator.client.emit("execute_workflow_progress", {progress:100, node_id: node.id});
 
-    //Enqueue jobs corresponding to child nodes
+    // Enqueue jobs corresponding to child nodes
+    // TO-DO : Make sure the child nodes has all their dependent inputs available
     if(job.data.node.children){
       for(var _index in job.data.node.children){
+        // Mark output of processed node as input of to-be-processed node
+        // TO-DO : Handle inport and outport definition 
+        //         instead of assumed inSSF and outSSF definitions
+        job.data.node.children[_index].in_ssf = job.data.node.out_ssf
+        console.log(job.data.node.children[_index].in_ssf);
+        //Queue corresponding jobs for the child node
         job.orchestrator.queueNodeJob(graph, job.data.node.children[_index])
-      } 
+      }
     }
 
   });
 
-  job.on('failed', function(){
+  job.on('failed', function(err){
     //TO-DO: Handle 
     console.log("Job Failed : "+job.id);
+    console.log(err);
+    job.orchestrator.client.emit("node_processing_failed", {node: job.data.node, error: err});    
     // job.orchestrator.client.emit("debug_message", "Job Failed : "+job.id);
-  })
-
-  job.on('progress', function(progress, node){
-    console.log(node.id+" "+progress);
-    // job.orchestrator.client.emit("debug_message", "Progress of "+node.id+" ==="+progress);
-    job.orchestrator.client.emit("execute_workflow_progress", {progress:progress, node_id: node.id});
   })
 
   job.save();
 
-  this.kue.process("JOB::"+node.id, 5, function(current_job, done){
-    console.log("Processing : "+current_job.id);
+  this.kue.process("JOB::"+node.id, 5, function(current_job, done){    
+    console.log("Processing : "+job.data.node.id);
     // job.orchestrator.client.emit("debug_message", "Processing :"+current_job.id+"  node id : "+current_job.data.node.id);
 
+    //Using custom progress tracker, as the Kue progress tracker is acting funny
     var progressTrackerWrapper = function(progress, data){
       job.orchestrator.client.emit("execute_workflow_progress", {progress:progress, node_id: data.id});
     }
 
-    dummy_process(current_job, progressTrackerWrapper);
-    done && done();
+    //Look up the corresponding process in module library
+    var _process = job.orchestrator.module_library.processes[node.component.replace("/","_")]
+    _process(current_job, progressTrackerWrapper, done);
   })
-
-  //Enque job associated with Node
-  //On job complete enqueue the jobs associated with its children 
-}
-
-function dummy_process(job, progress){
-
-  sleep.usleep(100000);
-  progress(10, job.data.node)
-  sleep.usleep(100000);
-  progress(20, job.data.node)
-  sleep.usleep(100000);
-  progress(30, job.data.node)
-  sleep.usleep(100000);
-  progress(40, job.data.node)
-  sleep.usleep(100000);
-  progress(50, job.data.node)
-  sleep.usleep(100000);
-  progress(60, job.data.node)
-  sleep.usleep(100000);
-  progress(70, job.data.node)
-  sleep.usleep(100000);
-  progress(80, job.data.node)
-  sleep.usleep(100000);
-  progress(90, job.data.node)
-  sleep.usleep(100000);
-  progress(100, job.data.node)
-
 }
 
 //Preprocesses the graph to optimise some of the future queries on the graph
