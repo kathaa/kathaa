@@ -1,0 +1,526 @@
+loadGraph({
+    "processes": {
+        "core/sentence_output_1zk7": {
+            "component": "core/sentence_output", 
+            "metadata": {
+                "y": 360, 
+                "x": 540, 
+                "height": 72, 
+                "width": 72, 
+                "label": "Sentence Output"
+            }
+        }, 
+        "hindi_panjabi/wordgenerator_ezxo": {
+            "component": "hindi_panjabi/wordgenerator", 
+            "metadata": {
+                "y": 439, 
+                "x": 484, 
+                "height": 72, 
+                "width": 72, 
+                "label": "wordgenerator"
+            }
+        }, 
+        "hindi_panjabi/computevibhakti_24bs": {
+            "component": "hindi_panjabi/computevibhakti", 
+            "metadata": {
+                "y": 486, 
+                "x": 577, 
+                "height": 72, 
+                "width": 72, 
+                "label": "computevibhakti"
+            }
+        }, 
+        "hindi_panjabi/interchunk_9cph": {
+            "component": "hindi_panjabi/interchunk", 
+            "metadata": {
+                "y": 576, 
+                "x": 591, 
+                "height": 72, 
+                "width": 72, 
+                "label": "interchunk"
+            }
+        }, 
+        "hindi_panjabi/root2infinity_j53m": {
+            "component": "hindi_panjabi/root2infinity", 
+            "metadata": {
+                "y": 423, 
+                "x": 590, 
+                "height": 72, 
+                "width": 72, 
+                "label": "root2infinity"
+            }
+        }, 
+        "core/sentence_input_1zk7": {
+            "component": "core/sentence_input", 
+            "metadata": {
+                "y": 468, 
+                "x": 216, 
+                "height": 72, 
+                "width": 72, 
+                "label": "Sentence Input"
+            }
+        }, 
+        "hindi_panjabi/intrachunk_5j88": {
+            "component": "hindi_panjabi/intrachunk", 
+            "metadata": {
+                "y": 290, 
+                "x": 460, 
+                "height": 72, 
+                "width": 72, 
+                "label": "intrachunk"
+            }
+        }, 
+        "hindi_panjabi/tokenizer_yj5u": {
+            "component": "hindi_panjabi/tokenizer", 
+            "metadata": {
+                "y": 318, 
+                "x": 426, 
+                "height": 72, 
+                "width": 72, 
+                "label": "tokenizer"
+            }
+        }, 
+        "hindi_panjabi/chunker_jyoh": {
+            "component": "hindi_panjabi/chunker", 
+            "metadata": {
+                "y": 464, 
+                "x": 505, 
+                "height": 72, 
+                "width": 72, 
+                "label": "chunker"
+            }
+        }, 
+        "hindi_panjabi/morph_jsqt": {
+            "component": "hindi_panjabi/morph", 
+            "metadata": {
+                "y": 237, 
+                "x": 548, 
+                "height": 72, 
+                "width": 72, 
+                "label": "morph"
+            }
+        }, 
+        "hindi_panjabi/transfergrammar_c600": {
+            "component": "hindi_panjabi/transfergrammar", 
+            "metadata": {
+                "y": 587, 
+                "x": 466, 
+                "height": 72, 
+                "width": 72, 
+                "label": "transfergrammar"
+            }
+        }, 
+        "hindi_panjabi/guessmorph_qapk": {
+            "component": "hindi_panjabi/guessmorph", 
+            "metadata": {
+                "y": 271, 
+                "x": 503, 
+                "height": 72, 
+                "width": 72, 
+                "label": "guessmorph"
+            }
+        }, 
+        "hindi_panjabi/postagger_hm6h": {
+            "component": "hindi_panjabi/postagger", 
+            "metadata": {
+                "y": 473, 
+                "x": 278, 
+                "height": 72, 
+                "width": 72, 
+                "label": "postagger"
+            }
+        }, 
+        "hindi_panjabi/pickonemorph_yb5f": {
+            "component": "hindi_panjabi/pickonemorph", 
+            "metadata": {
+                "y": 555, 
+                "x": 345, 
+                "height": 72, 
+                "width": 72, 
+                "label": "pickonemorph"
+            }
+        }, 
+        "hindi_panjabi/agreementfeature_wdk5": {
+            "component": "hindi_panjabi/agreementfeature", 
+            "metadata": {
+                "y": 309, 
+                "x": 538, 
+                "height": 72, 
+                "width": 72, 
+                "label": "agreementfeature"
+            }
+        }, 
+        "hindi_panjabi/parse_kh5q": {
+            "component": "hindi_panjabi/parse", 
+            "metadata": {
+                "y": 224, 
+                "x": 352, 
+                "height": 72, 
+                "width": 72, 
+                "label": "parse"
+            }
+        }, 
+        "hindi_panjabi/computehead_bg60": {
+            "component": "hindi_panjabi/computehead", 
+            "metadata": {
+                "y": 530, 
+                "x": 343, 
+                "height": 72, 
+                "width": 72, 
+                "label": "computehead"
+            }
+        }, 
+        "hindi_panjabi/transliterate_kif4": {
+            "component": "hindi_panjabi/transliterate", 
+            "metadata": {
+                "y": 293, 
+                "x": 573, 
+                "height": 72, 
+                "width": 72, 
+                "label": "transliterate"
+            }
+        }, 
+        "hindi_panjabi/agreementdistribution_si5q": {
+            "component": "hindi_panjabi/agreementdistribution", 
+            "metadata": {
+                "y": 540, 
+                "x": 337, 
+                "height": 72, 
+                "width": 72, 
+                "label": "agreementdistribution"
+            }
+        }, 
+        "hindi_panjabi/lexicaltransfer_m0gl": {
+            "component": "hindi_panjabi/lexicaltransfer", 
+            "metadata": {
+                "y": 361, 
+                "x": 561, 
+                "height": 72, 
+                "width": 72, 
+                "label": "lexicaltransfer"
+            }
+        }, 
+        "hindi_panjabi/pruning_6iv9": {
+            "component": "hindi_panjabi/pruning", 
+            "metadata": {
+                "y": 531, 
+                "x": 540, 
+                "height": 72, 
+                "width": 72, 
+                "label": "pruning"
+            }
+        }, 
+        "hindi_panjabi/vibhaktispliter_or14": {
+            "component": "hindi_panjabi/vibhaktispliter", 
+            "metadata": {
+                "y": 578, 
+                "x": 270, 
+                "height": 72, 
+                "width": 72, 
+                "label": "vibhaktispliter"
+            }
+        }, 
+        "hindi_panjabi/wx2utf_irg8": {
+            "component": "hindi_panjabi/wx2utf", 
+            "metadata": {
+                "y": 355, 
+                "x": 361, 
+                "height": 72, 
+                "width": 72, 
+                "label": "wx2utf"
+            }
+        }, 
+        "hindi_panjabi/defaultfeatures_sewl": {
+            "component": "hindi_panjabi/defaultfeatures", 
+            "metadata": {
+                "y": 475, 
+                "x": 499, 
+                "height": 72, 
+                "width": 72, 
+                "label": "defaultfeatures"
+            }
+        }, 
+        "hindi_panjabi/utf2wx_acs9": {
+            "component": "hindi_panjabi/utf2wx", 
+            "metadata": {
+                "y": 303, 
+                "x": 398, 
+                "height": 72, 
+                "width": 72, 
+                "label": "utf2wx"
+            }
+        }
+    }, 
+    "inports": [], 
+    "connections": [
+        {
+            "src": {
+                "process": "core/sentence_input_1zk7", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/tokenizer_yj5u", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/tokenizer_yj5u", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/utf2wx_acs9", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/utf2wx_acs9", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/morph_jsqt", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/morph_jsqt", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/postagger_hm6h", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/postagger_hm6h", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/chunker_jyoh", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/chunker_jyoh", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/pruning_6iv9", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/pruning_6iv9", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/guessmorph_qapk", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/guessmorph_qapk", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/pickonemorph_yb5f", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/pickonemorph_yb5f", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/computehead_bg60", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/computehead_bg60", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/computevibhakti_24bs", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/computevibhakti_24bs", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/parse_kh5q", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/parse_kh5q", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/root2infinity_j53m", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/root2infinity_j53m", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/transfergrammar_c600", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/transfergrammar_c600", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/wx2utf_irg8", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/wx2utf_irg8", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/lexicaltransfer_m0gl", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/lexicaltransfer_m0gl", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/transliterate_kif4", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/transliterate_kif4", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/agreementfeature_wdk5", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/agreementfeature_wdk5", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/vibhaktispliter_or14", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/vibhaktispliter_or14", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/interchunk_9cph", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/interchunk_9cph", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/intrachunk_5j88", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/intrachunk_5j88", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/agreementdistribution_si5q", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/agreementdistribution_si5q", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/defaultfeatures_sewl", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/defaultfeatures_sewl", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "hindi_panjabi/wordgenerator_ezxo", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }, 
+        {
+            "src": {
+                "process": "hindi_panjabi/wordgenerator_ezxo", 
+                "port": "out_ssf"
+            }, 
+            "tgt": {
+                "process": "core/sentence_output_1zk7", 
+                "port": "in_ssf"
+            }, 
+            "metadata": {}
+        }
+    ], 
+    "outports": [], 
+    "groups": [], 
+    "properties": {
+        "name": "hindi_panjabi"
+    }
+})

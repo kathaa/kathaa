@@ -1,0 +1,485 @@
+{
+    "hindi_panjabi/agreementdistribution": {
+        "name": "hindi_panjabi/agreementdistribution", 
+        "description": "agreementdistribution description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "agreementdistribution"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/vibhaktispliter": {
+        "name": "hindi_panjabi/vibhaktispliter", 
+        "description": "vibhaktispliter description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "vibhaktispliter"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/interchunk": {
+        "name": "hindi_panjabi/interchunk", 
+        "description": "interchunk description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "interchunk"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/computevibhakti": {
+        "name": "hindi_panjabi/computevibhakti", 
+        "description": "computevibhakti description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "computevibhakti"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/transfergrammar": {
+        "name": "hindi_panjabi/transfergrammar", 
+        "description": "transfergrammar description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "transfergrammar"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/utf2wx": {
+        "name": "hindi_panjabi/utf2wx", 
+        "description": "utf2wx description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "utf2wx"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/root2infinity": {
+        "name": "hindi_panjabi/root2infinity", 
+        "description": "root2infinity description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "root2infinity"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/tokenizer": {
+        "name": "hindi_panjabi/tokenizer", 
+        "description": "tokenizer description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "tokenizer"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/wordgenerator": {
+        "name": "hindi_panjabi/wordgenerator", 
+        "description": "wordgenerator description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "wordgenerator"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/pruning": {
+        "name": "hindi_panjabi/pruning", 
+        "description": "pruning description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "pruning"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/transliterate": {
+        "name": "hindi_panjabi/transliterate", 
+        "description": "transliterate description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "transliterate"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/intrachunk": {
+        "name": "hindi_panjabi/intrachunk", 
+        "description": "intrachunk description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "intrachunk"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/chunker": {
+        "name": "hindi_panjabi/chunker", 
+        "description": "chunker description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "chunker"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/wx2utf": {
+        "name": "hindi_panjabi/wx2utf", 
+        "description": "wx2utf description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "wx2utf"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/defaultfeatures": {
+        "name": "hindi_panjabi/defaultfeatures", 
+        "description": "defaultfeatures description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "defaultfeatures"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/postagger": {
+        "name": "hindi_panjabi/postagger", 
+        "description": "postagger description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "postagger"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/lexicaltransfer": {
+        "name": "hindi_panjabi/lexicaltransfer", 
+        "description": "lexicaltransfer description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "lexicaltransfer"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/morph": {
+        "name": "hindi_panjabi/morph", 
+        "description": "morph description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "morph"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/guessmorph": {
+        "name": "hindi_panjabi/guessmorph", 
+        "description": "guessmorph description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "guessmorph"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/computehead": {
+        "name": "hindi_panjabi/computehead", 
+        "description": "computehead description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "computehead"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/parse": {
+        "name": "hindi_panjabi/parse", 
+        "description": "parse description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "parse"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/pickonemorph": {
+        "name": "hindi_panjabi/pickonemorph", 
+        "description": "pickonemorph description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "pickonemorph"
+        }, 
+        "icon": "legal"
+    }, 
+    "hindi_panjabi/agreementfeature": {
+        "name": "hindi_panjabi/agreementfeature", 
+        "description": "agreementfeature description", 
+        "inports": [
+            {
+                "type": "all", 
+                "name": "in_ssf"
+            }
+        ], 
+        "version": "v0.1", 
+        "outports": [
+            {
+                "type": "all", 
+                "name": "out_ssf"
+            }
+        ], 
+        "metadata": {
+            "label": "agreementfeature"
+        }, 
+        "icon": "legal"
+    }
+}
