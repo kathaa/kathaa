@@ -32,5 +32,60 @@
       "metadata":{
          "label":"Output"
       }
+   },
+   "core/echo":{
+      "name":"core/echo",
+      "description":"Toy Module which Echoes input values into output",
+      "version":"v0.1",
+      "icon":"desktop",
+      "inports":[
+         {
+            "name":"in_ssf",
+            "type":"all"
+         }
+      ],
+      "outports":[
+         {
+            "name":"out_ssf",
+            "type":"all"
+         }      
+      ],
+      "metadata":{
+         "label":"Echo"
+      }
+   },
+   "core/random_merger":{
+      "name":"core/random_merger",
+      "description":"Toy Module which takes 4 different input values and randomly streams one into output",
+      "version":"v0.1",
+      "icon":"desktop",
+      "inports":[
+         {
+            "name":"in_ssf_1",
+            "type":"all"
+         },
+         {
+            "name":"in_ssf_2",
+            "type":"all"
+         },
+         {
+            "name":"in_ssf_3",
+            "type":"all"
+         },
+         {
+            "name":"in_ssf_4",
+            "type":"all",
+            "optional":true
+         }
+      ],
+      "outports":[
+         {
+            "name":"out_ssf",
+            "type":"all"
+         }      
+      ],
+      "metadata":{
+         "label":"Random Merger"
+      }
    }
 }
