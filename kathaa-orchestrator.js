@@ -91,8 +91,8 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     debug(job.orchestrator.client, "Processing :"+current_job.id+"  node id : "+current_job.data.node.id);
 
     //Using custom progress tracker, as the Kue progress tracker is acting funny
-    var progressTrackerWrapper = function(progress, data){
-      job.orchestrator.client.emit("execute_workflow_progress", {progress:progress, node_id: data.id});
+    var progressTrackerWrapper = function(progress){
+      job.orchestrator.client.emit("execute_workflow_progress", {progress:progress, node_id: current_job.data.node.id});
     }
 
     // The current_job object is guaranteed to have `kathaa_inputs` object properly defined
