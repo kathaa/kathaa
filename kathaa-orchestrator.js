@@ -25,10 +25,10 @@ kathaaOrchestrator.prototype.executeGraph = function(graph, beginNode){
 }
 
 function getInPorts(module_library, component_name){
-  return module_library[component].inports;
+  return module_library.component_library[component].inports;
 }
 function getOutPorts(module_library, component_name){
-  return module_library[component].outports;
+  return module_library.component_library[component].outports;
 }
 
 kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
@@ -110,6 +110,8 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     if(current_job.data.node.process_definition){
       //then use this process definition instead
       //TO-DO Handle errors here
+      //TO-DO Come up with a better way to run in scope
+      //      Maybe by using job.orchestrator.module_library.library_object?
       _process = new Function("return " + current_job.data.node.process_definition)();
       _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done)
 
@@ -250,8 +252,8 @@ kathaaOrchestrator.prototype.preprocessGraph = function(graph, callback){
     // Now check if all the (non-optional) inports of the said component
     // are represented in kathaa-input
     var inport;
-    for(var _index in module_library[node.component].inports){
-      inport = module_library[node.component].inports[_index];
+    for(var _index in module_library.component_library[node.component].inports){
+      inport = module_library.component_library[node.component].inports[_index];
 
       if(inport.optional){
         //this check can be ignored for optional ports

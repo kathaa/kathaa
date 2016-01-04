@@ -1,6 +1,6 @@
-var request = require('request');
-var Entities = require('html-entities').AllHtmlEntities;
-entities = new Entities();
+GLOBAL.hindi_panjabi_request = require('request');
+GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 
 var hindi_panjabi = function(){
 }
@@ -10,7 +10,7 @@ hindi_panjabi.prototype.hindi_panjabi_tokenizer = function(kathaa_inputs, progre
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/1/1',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -18,7 +18,7 @@ hindi_panjabi.prototype.hindi_panjabi_tokenizer = function(kathaa_inputs, progre
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -37,6 +37,13 @@ hindi_panjabi.prototype.hindi_panjabi_tokenizer = function(kathaa_inputs, progre
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_utf2wx = function(kathaa_inputs, progress, done){
@@ -44,7 +51,7 @@ hindi_panjabi.prototype.hindi_panjabi_utf2wx = function(kathaa_inputs, progress,
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/2/2',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -52,7 +59,7 @@ hindi_panjabi.prototype.hindi_panjabi_utf2wx = function(kathaa_inputs, progress,
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -71,6 +78,13 @@ hindi_panjabi.prototype.hindi_panjabi_utf2wx = function(kathaa_inputs, progress,
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_morph = function(kathaa_inputs, progress, done){
@@ -78,7 +92,7 @@ hindi_panjabi.prototype.hindi_panjabi_morph = function(kathaa_inputs, progress, 
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/3/3',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -86,7 +100,7 @@ hindi_panjabi.prototype.hindi_panjabi_morph = function(kathaa_inputs, progress, 
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -105,6 +119,13 @@ hindi_panjabi.prototype.hindi_panjabi_morph = function(kathaa_inputs, progress, 
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_postagger = function(kathaa_inputs, progress, done){
@@ -112,7 +133,7 @@ hindi_panjabi.prototype.hindi_panjabi_postagger = function(kathaa_inputs, progre
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/4/4',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -120,7 +141,7 @@ hindi_panjabi.prototype.hindi_panjabi_postagger = function(kathaa_inputs, progre
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -139,6 +160,13 @@ hindi_panjabi.prototype.hindi_panjabi_postagger = function(kathaa_inputs, progre
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_chunker = function(kathaa_inputs, progress, done){
@@ -146,7 +174,7 @@ hindi_panjabi.prototype.hindi_panjabi_chunker = function(kathaa_inputs, progress
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/5/5',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -154,7 +182,7 @@ hindi_panjabi.prototype.hindi_panjabi_chunker = function(kathaa_inputs, progress
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -173,6 +201,13 @@ hindi_panjabi.prototype.hindi_panjabi_chunker = function(kathaa_inputs, progress
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_pruning = function(kathaa_inputs, progress, done){
@@ -180,7 +215,7 @@ hindi_panjabi.prototype.hindi_panjabi_pruning = function(kathaa_inputs, progress
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/6/6',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -188,7 +223,7 @@ hindi_panjabi.prototype.hindi_panjabi_pruning = function(kathaa_inputs, progress
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -207,6 +242,13 @@ hindi_panjabi.prototype.hindi_panjabi_pruning = function(kathaa_inputs, progress
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_guessmorph = function(kathaa_inputs, progress, done){
@@ -214,7 +256,7 @@ hindi_panjabi.prototype.hindi_panjabi_guessmorph = function(kathaa_inputs, progr
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/7/7',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -222,7 +264,7 @@ hindi_panjabi.prototype.hindi_panjabi_guessmorph = function(kathaa_inputs, progr
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -241,6 +283,13 @@ hindi_panjabi.prototype.hindi_panjabi_guessmorph = function(kathaa_inputs, progr
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_pickonemorph = function(kathaa_inputs, progress, done){
@@ -248,7 +297,7 @@ hindi_panjabi.prototype.hindi_panjabi_pickonemorph = function(kathaa_inputs, pro
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/8/8',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -256,7 +305,7 @@ hindi_panjabi.prototype.hindi_panjabi_pickonemorph = function(kathaa_inputs, pro
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -275,6 +324,13 @@ hindi_panjabi.prototype.hindi_panjabi_pickonemorph = function(kathaa_inputs, pro
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_computehead = function(kathaa_inputs, progress, done){
@@ -282,7 +338,7 @@ hindi_panjabi.prototype.hindi_panjabi_computehead = function(kathaa_inputs, prog
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/9/9',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -290,7 +346,7 @@ hindi_panjabi.prototype.hindi_panjabi_computehead = function(kathaa_inputs, prog
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -309,6 +365,13 @@ hindi_panjabi.prototype.hindi_panjabi_computehead = function(kathaa_inputs, prog
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_computevibhakti = function(kathaa_inputs, progress, done){
@@ -316,7 +379,7 @@ hindi_panjabi.prototype.hindi_panjabi_computevibhakti = function(kathaa_inputs, 
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/10/10',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -324,7 +387,7 @@ hindi_panjabi.prototype.hindi_panjabi_computevibhakti = function(kathaa_inputs, 
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -343,6 +406,13 @@ hindi_panjabi.prototype.hindi_panjabi_computevibhakti = function(kathaa_inputs, 
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_parse = function(kathaa_inputs, progress, done){
@@ -350,7 +420,7 @@ hindi_panjabi.prototype.hindi_panjabi_parse = function(kathaa_inputs, progress, 
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/11/11',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -358,7 +428,7 @@ hindi_panjabi.prototype.hindi_panjabi_parse = function(kathaa_inputs, progress, 
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -377,6 +447,13 @@ hindi_panjabi.prototype.hindi_panjabi_parse = function(kathaa_inputs, progress, 
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_root2infinity = function(kathaa_inputs, progress, done){
@@ -384,7 +461,7 @@ hindi_panjabi.prototype.hindi_panjabi_root2infinity = function(kathaa_inputs, pr
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/12/12',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -392,7 +469,7 @@ hindi_panjabi.prototype.hindi_panjabi_root2infinity = function(kathaa_inputs, pr
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -411,6 +488,13 @@ hindi_panjabi.prototype.hindi_panjabi_root2infinity = function(kathaa_inputs, pr
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_transfergrammar = function(kathaa_inputs, progress, done){
@@ -418,7 +502,7 @@ hindi_panjabi.prototype.hindi_panjabi_transfergrammar = function(kathaa_inputs, 
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/13/13',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -426,7 +510,7 @@ hindi_panjabi.prototype.hindi_panjabi_transfergrammar = function(kathaa_inputs, 
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -445,6 +529,13 @@ hindi_panjabi.prototype.hindi_panjabi_transfergrammar = function(kathaa_inputs, 
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_wx2utf = function(kathaa_inputs, progress, done){
@@ -452,7 +543,7 @@ hindi_panjabi.prototype.hindi_panjabi_wx2utf = function(kathaa_inputs, progress,
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/14/14',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -460,7 +551,7 @@ hindi_panjabi.prototype.hindi_panjabi_wx2utf = function(kathaa_inputs, progress,
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -479,6 +570,13 @@ hindi_panjabi.prototype.hindi_panjabi_wx2utf = function(kathaa_inputs, progress,
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_lexicaltransfer = function(kathaa_inputs, progress, done){
@@ -486,7 +584,7 @@ hindi_panjabi.prototype.hindi_panjabi_lexicaltransfer = function(kathaa_inputs, 
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/15/15',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -494,7 +592,7 @@ hindi_panjabi.prototype.hindi_panjabi_lexicaltransfer = function(kathaa_inputs, 
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -513,6 +611,13 @@ hindi_panjabi.prototype.hindi_panjabi_lexicaltransfer = function(kathaa_inputs, 
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_transliterate = function(kathaa_inputs, progress, done){
@@ -520,7 +625,7 @@ hindi_panjabi.prototype.hindi_panjabi_transliterate = function(kathaa_inputs, pr
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/16/16',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -528,7 +633,7 @@ hindi_panjabi.prototype.hindi_panjabi_transliterate = function(kathaa_inputs, pr
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -547,6 +652,13 @@ hindi_panjabi.prototype.hindi_panjabi_transliterate = function(kathaa_inputs, pr
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_agreementfeature = function(kathaa_inputs, progress, done){
@@ -554,7 +666,7 @@ hindi_panjabi.prototype.hindi_panjabi_agreementfeature = function(kathaa_inputs,
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/17/17',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -562,7 +674,7 @@ hindi_panjabi.prototype.hindi_panjabi_agreementfeature = function(kathaa_inputs,
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -581,6 +693,13 @@ hindi_panjabi.prototype.hindi_panjabi_agreementfeature = function(kathaa_inputs,
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_vibhaktispliter = function(kathaa_inputs, progress, done){
@@ -588,7 +707,7 @@ hindi_panjabi.prototype.hindi_panjabi_vibhaktispliter = function(kathaa_inputs, 
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/18/18',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -596,7 +715,7 @@ hindi_panjabi.prototype.hindi_panjabi_vibhaktispliter = function(kathaa_inputs, 
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -615,6 +734,13 @@ hindi_panjabi.prototype.hindi_panjabi_vibhaktispliter = function(kathaa_inputs, 
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_interchunk = function(kathaa_inputs, progress, done){
@@ -622,7 +748,7 @@ hindi_panjabi.prototype.hindi_panjabi_interchunk = function(kathaa_inputs, progr
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/19/19',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -630,7 +756,7 @@ hindi_panjabi.prototype.hindi_panjabi_interchunk = function(kathaa_inputs, progr
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -649,6 +775,13 @@ hindi_panjabi.prototype.hindi_panjabi_interchunk = function(kathaa_inputs, progr
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_intrachunk = function(kathaa_inputs, progress, done){
@@ -656,7 +789,7 @@ hindi_panjabi.prototype.hindi_panjabi_intrachunk = function(kathaa_inputs, progr
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/20/20',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -664,7 +797,7 @@ hindi_panjabi.prototype.hindi_panjabi_intrachunk = function(kathaa_inputs, progr
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -683,6 +816,13 @@ hindi_panjabi.prototype.hindi_panjabi_intrachunk = function(kathaa_inputs, progr
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_agreementdistribution = function(kathaa_inputs, progress, done){
@@ -690,7 +830,7 @@ hindi_panjabi.prototype.hindi_panjabi_agreementdistribution = function(kathaa_in
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/21/21',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -698,7 +838,7 @@ hindi_panjabi.prototype.hindi_panjabi_agreementdistribution = function(kathaa_in
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -717,6 +857,13 @@ hindi_panjabi.prototype.hindi_panjabi_agreementdistribution = function(kathaa_in
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_defaultfeatures = function(kathaa_inputs, progress, done){
@@ -724,7 +871,7 @@ hindi_panjabi.prototype.hindi_panjabi_defaultfeatures = function(kathaa_inputs, 
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/22/22',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -732,7 +879,7 @@ hindi_panjabi.prototype.hindi_panjabi_defaultfeatures = function(kathaa_inputs, 
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -751,6 +898,13 @@ hindi_panjabi.prototype.hindi_panjabi_defaultfeatures = function(kathaa_inputs, 
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 hindi_panjabi.prototype.hindi_panjabi_wordgenerator = function(kathaa_inputs, progress, done){
@@ -758,7 +912,7 @@ hindi_panjabi.prototype.hindi_panjabi_wordgenerator = function(kathaa_inputs, pr
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/23/23',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -766,7 +920,7 @@ hindi_panjabi.prototype.hindi_panjabi_wordgenerator = function(kathaa_inputs, pr
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -785,6 +939,13 @@ hindi_panjabi.prototype.hindi_panjabi_wordgenerator = function(kathaa_inputs, pr
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 
 module.exports = hindi_panjabi;

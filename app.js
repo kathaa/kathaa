@@ -14,12 +14,13 @@ var kathaaOrchestrator = require('./kathaa-orchestrator');
 var file = __dirname+"/module_library/package.json";
 var module_package = jsonfile.readFileSync(file);
 var module_library = {}
+module_library.component_library = {}
+module_library.library_object = {}
 module_library.processes = {}
-
-process_definitions = {}
+module_library.process_definitions = {}
 
 module_package.files.forEach(function(element, index, array){
-  jsonConcat(module_library, jsonfile.readFileSync(__dirname+"/module_library/"+element));
+  jsonConcat(module_library.component_library, jsonfile.readFileSync(__dirname+"/module_library/"+element));
 
   var library_definition_file = element.split(".");
   library_definition_file.pop();
@@ -29,13 +30,11 @@ module_package.files.forEach(function(element, index, array){
   var library_definition = require(__dirname+"/module_library/"+library_definition_file);  
   for(_process in library_definition.prototype){
     module_library.processes[_process] = library_definition.prototype[_process];
-    process_definitions[_process] = library_definition.prototype[_process].toString();
+    module_library.process_definitions[_process] = library_definition.prototype[_process].toString();
+    module_library.library_object[_process] = library_definition;
   }
 })
 
-//This holds just the component definitions and not the process definitions
-var module_library_skeleton = JSON.parse(JSON.stringify(module_library))
-delete module_library_skeleton.processes;
 
 // Note : Every registered component of the type "core/component_name" has to have a 
 // corresponding process of the name "core_component_name" ( '/' replace with '_' )
@@ -52,7 +51,7 @@ io.of('/kathaa')
   .on('connection', function(client){
     console.log("Connected !!");
     //Instantiate Client
-    client.emit('init', {module_library: module_library_skeleton, process_definitions: process_definitions}); 
+    client.emit('init', {module_library: module_library.component_library, process_definitions: module_library.process_definitions}); 
 
     client.on('execute_workflow', function (message) {
       // client.emit('request_ack', { response: "acknowledged", id: request_id });

@@ -1,4 +1,11 @@
-var sleep = require('sleep');
+// imported libraries have to be imported in the 
+// global scope, so that user defined/user modified functions 
+// also have access to them
+// 
+// example
+// GLOBAL.core_request = require('request');
+//
+// where "core" is the namespace to avoid conflicts between different modules
 var core = function(){
 }
 // Note : Every registered component of the type "core/component_name" has to have a 
@@ -14,7 +21,6 @@ var core = function(){
 
 core.prototype.core_sentence_input = function(kathaa_inputs, progress, done){
   var kathaa_outputs = {};
-
   //Your Voodoo goes here
   kathaa_outputs['out_ssf'] = kathaa_inputs['sentence_input'];
 

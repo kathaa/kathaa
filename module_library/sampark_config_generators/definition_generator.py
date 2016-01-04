@@ -55,12 +55,15 @@ template = """
 """
 
 """
+// Imported libraries
+// GLOBAL.hindi_panjabi_request = require('request');
+// 
 hindi_panjabi.prototype.hindi_panjabi_tokenizer = function(job, progress, done){
   console.log("Inside tokenizer");
   //save computed output values
   job.data.node.out_ssf = job.data.node.in_ssf+"::tokenizer"
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/1/1',
     body:    "input="+job.data.node.in_ssf;
@@ -79,7 +82,7 @@ sampark_template = """
   //save computed output values
   var kathaa_outputs = {}
 
-  request.post({
+  hindi_panjabi_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     '%s/hin/pan/%s/%s',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
@@ -87,7 +90,7 @@ sampark_template = """
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = entities.decode(body);
+        body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -106,12 +109,19 @@ sampark_template = """
       done(err);
     }
   });
+//
+// 
+// Available external libraries 
+// 
+// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
 }
 """
 
-s =  "var request = require('request');\n"
-s += "var Entities = require('html-entities').AllHtmlEntities;\n"
-s += "entities = new Entities();\n"
+s =  "GLOBAL.hindi_panjabi_request = require('request');\n"
+s += "GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;\n"
+s += "GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();\n"
 
 s += """
 var """+pipeline_name+""" = function(){
