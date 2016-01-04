@@ -99,11 +99,25 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     // The job of the process and return the `kathaa_outputs` object
 
     //TO-DO : Handle unknown component here
+
+    //Check if custom process_definitions have been provided
     
     //Look up the corresponding process in module library
     var _process = job.orchestrator.module_library.processes[node.component.replace("/","_")]
     // _process(current_job, progressTrackerWrapper, done);
-    _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done);
+
+    //Check if the node itself supplies a process defintion
+    if(current_job.data.node.process_definition){
+      //then use this process definition instead
+      //TO-DO Handle errors here
+      _process = new Function("return " + current_job.data.node.process_definition)();
+      _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done)
+
+    }else{
+       // Use the default process definition
+      _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done);
+
+    }
   })
 
   job.on('failed', function(err){

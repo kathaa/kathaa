@@ -15,6 +15,9 @@ var file = __dirname+"/module_library/package.json";
 var module_package = jsonfile.readFileSync(file);
 var module_library = {}
 module_library.processes = {}
+
+process_definitions = {}
+
 module_package.files.forEach(function(element, index, array){
   jsonConcat(module_library, jsonfile.readFileSync(__dirname+"/module_library/"+element));
 
@@ -26,6 +29,7 @@ module_package.files.forEach(function(element, index, array){
   var library_definition = require(__dirname+"/module_library/"+library_definition_file);  
   for(_process in library_definition.prototype){
     module_library.processes[_process] = library_definition.prototype[_process];
+    process_definitions[_process] = library_definition.prototype[_process].toString();
   }
 })
 
@@ -48,7 +52,7 @@ io.of('/kathaa')
   .on('connection', function(client){
     console.log("Connected !!");
     //Instantiate Client
-    client.emit('init', {module_library: module_library_skeleton});    
+    client.emit('init', {module_library: module_library_skeleton, process_definitions: process_definitions}); 
 
     client.on('execute_workflow', function (message) {
       // client.emit('request_ack', { response: "acknowledged", id: request_id });
