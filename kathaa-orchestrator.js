@@ -98,6 +98,20 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
                           });
     }
 
+    // Custom _done wrapper to be passed into the individual processes
+    // if error, is defined, then _param will represent a custom error message
+    // if the job successfully completes, error has to be passed as null, and _param
+    // represents `kathaa_input`
+    var _done = function(error, _param){
+      if(error){
+        job.failed().error(error);
+        return done(error, node_error);
+      }else{
+        //In case of successful completion of job
+        return done(error, _param)
+      }
+    }
+
     // The current_job object is guaranteed to have `kathaa_inputs` object properly defined
     // The job of the process and return the `kathaa_outputs` object
 
@@ -117,7 +131,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       //      Maybe by using job.orchestrator.module_library.library_object?
       try{
         _process = new Function("return " + current_job.data.node.process_definition)();
-        _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done)
+        _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, _done)
       }catch(err){
         job.failed().error(err);
         done(err);
@@ -125,7 +139,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
     }else{
        // Use the default process definition
-      _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done);
+      _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, _done);
 
     }
   })

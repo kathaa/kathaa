@@ -27,13 +27,11 @@ hindi_urdu.prototype.hindi_urdu_tokenizer = function(kathaa_inputs, progress, do
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -68,13 +66,11 @@ hindi_urdu.prototype.hindi_urdu_utf2wx = function(kathaa_inputs, progress, done)
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -109,13 +105,11 @@ hindi_urdu.prototype.hindi_urdu_morph = function(kathaa_inputs, progress, done){
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -150,13 +144,11 @@ hindi_urdu.prototype.hindi_urdu_postagger = function(kathaa_inputs, progress, do
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -191,13 +183,11 @@ hindi_urdu.prototype.hindi_urdu_pruning = function(kathaa_inputs, progress, done
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -232,13 +222,11 @@ hindi_urdu.prototype.hindi_urdu_pickonemorph = function(kathaa_inputs, progress,
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -273,13 +261,11 @@ hindi_urdu.prototype.hindi_urdu_chunker = function(kathaa_inputs, progress, done
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -314,13 +300,11 @@ hindi_urdu.prototype.hindi_urdu_multiwordexpr = function(kathaa_inputs, progress
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -355,13 +339,11 @@ hindi_urdu.prototype.hindi_urdu_ner = function(kathaa_inputs, progress, done){
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -396,13 +378,11 @@ hindi_urdu.prototype.hindi_urdu_merger = function(kathaa_inputs, progress, done)
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -437,13 +417,11 @@ hindi_urdu.prototype.hindi_urdu_headcomputation = function(kathaa_inputs, progre
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -478,13 +456,11 @@ hindi_urdu.prototype.hindi_urdu_wx2utf = function(kathaa_inputs, progress, done)
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -519,13 +495,11 @@ hindi_urdu.prototype.hindi_urdu_lexicaltransfer = function(kathaa_inputs, progre
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -560,13 +534,11 @@ hindi_urdu.prototype.hindi_urdu_transliterate = function(kathaa_inputs, progress
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -601,13 +573,11 @@ hindi_urdu.prototype.hindi_urdu_utf2wx_urd = function(kathaa_inputs, progress, d
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -642,13 +612,11 @@ hindi_urdu.prototype.hindi_urdu_agreementfeature = function(kathaa_inputs, progr
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -683,13 +651,11 @@ hindi_urdu.prototype.hindi_urdu_interchunk = function(kathaa_inputs, progress, d
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -724,13 +690,11 @@ hindi_urdu.prototype.hindi_urdu_intrachunk = function(kathaa_inputs, progress, d
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -765,13 +729,11 @@ hindi_urdu.prototype.hindi_urdu_defaultfeatures = function(kathaa_inputs, progre
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -806,13 +768,11 @@ hindi_urdu.prototype.hindi_urdu_wordgenerator = function(kathaa_inputs, progress
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });
@@ -847,13 +807,11 @@ hindi_urdu.prototype.hindi_urdu_wx2utf_urd = function(kathaa_inputs, progress, d
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
+        var err = new Error('Malformed reply from Sampark API Server');        
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
+      var err = new Error('Sampark API Server non responsive');      
       done(err);
     }
   });

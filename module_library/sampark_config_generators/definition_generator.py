@@ -100,12 +100,10 @@ sampark_template = """
         }
       }catch(e){
         var err = new Error('Malformed reply from Sampark API Server');
-        job.failed().error(err);
         done(err);
       }
     }else{
       var err = new Error('Sampark API Server non responsive');
-      job.failed().error(err);
       done(err);
     }
   });
