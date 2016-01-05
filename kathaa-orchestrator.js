@@ -92,7 +92,10 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
     //Using custom progress tracker, as the Kue progress tracker is acting funny
     var progressTrackerWrapper = function(progress){
-      job.orchestrator.client.emit("execute_workflow_progress", {progress:progress, node_id: current_job.data.node.id});
+      job.orchestrator.client.emit("execute_workflow_progress", 
+                          { progress : progress, 
+                            node_id : current_job.data.node.id
+                          });
     }
 
     // The current_job object is guaranteed to have `kathaa_inputs` object properly defined
@@ -112,8 +115,13 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       //TO-DO Handle errors here
       //TO-DO Come up with a better way to run in scope
       //      Maybe by using job.orchestrator.module_library.library_object?
-      _process = new Function("return " + current_job.data.node.process_definition)();
-      _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done)
+      try{
+        _process = new Function("return " + current_job.data.node.process_definition)();
+        _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, done)
+      }catch(err){
+        job.failed().error(err);
+        done(err);
+      }
 
     }else{
        // Use the default process definition
