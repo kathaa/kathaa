@@ -18,7 +18,7 @@
         "metadata": {
             "label": "utf2wx"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/headcomputation": {
         "name": "hindi_urdu/headcomputation", 
@@ -39,7 +39,7 @@
         "metadata": {
             "label": "headcomputation"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/intrachunk": {
         "name": "hindi_urdu/intrachunk", 
@@ -60,7 +60,7 @@
         "metadata": {
             "label": "intrachunk"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/lexicaltransfer": {
         "name": "hindi_urdu/lexicaltransfer", 
@@ -81,7 +81,7 @@
         "metadata": {
             "label": "lexicaltransfer"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/ner": {
         "name": "hindi_urdu/ner", 
@@ -102,7 +102,7 @@
         "metadata": {
             "label": "ner"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/wordgenerator": {
         "name": "hindi_urdu/wordgenerator", 
@@ -123,7 +123,7 @@
         "metadata": {
             "label": "wordgenerator"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/pickonemorph": {
         "name": "hindi_urdu/pickonemorph", 
@@ -144,7 +144,7 @@
         "metadata": {
             "label": "pickonemorph"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/chunker": {
         "name": "hindi_urdu/chunker", 
@@ -165,7 +165,7 @@
         "metadata": {
             "label": "chunker"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/agreementfeature": {
         "name": "hindi_urdu/agreementfeature", 
@@ -186,7 +186,7 @@
         "metadata": {
             "label": "agreementfeature"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/tokenizer": {
         "name": "hindi_urdu/tokenizer", 
@@ -207,7 +207,7 @@
         "metadata": {
             "label": "tokenizer"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/defaultfeatures": {
         "name": "hindi_urdu/defaultfeatures", 
@@ -228,7 +228,7 @@
         "metadata": {
             "label": "defaultfeatures"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/wx2utf": {
         "name": "hindi_urdu/wx2utf", 
@@ -249,7 +249,7 @@
         "metadata": {
             "label": "wx2utf"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/morph": {
         "name": "hindi_urdu/morph", 
@@ -270,7 +270,7 @@
         "metadata": {
             "label": "morph"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/merger": {
         "name": "hindi_urdu/merger", 
@@ -291,7 +291,7 @@
         "metadata": {
             "label": "merger"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/postagger": {
         "name": "hindi_urdu/postagger", 
@@ -312,7 +312,7 @@
         "metadata": {
             "label": "postagger"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/wx2utf_urd": {
         "name": "hindi_urdu/wx2utf_urd", 
@@ -333,7 +333,7 @@
         "metadata": {
             "label": "wx2utf_urd"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/multiwordexpr": {
         "name": "hindi_urdu/multiwordexpr", 
@@ -354,7 +354,7 @@
         "metadata": {
             "label": "multiwordexpr"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/pruning": {
         "name": "hindi_urdu/pruning", 
@@ -375,7 +375,7 @@
         "metadata": {
             "label": "pruning"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/interchunk": {
         "name": "hindi_urdu/interchunk", 
@@ -396,7 +396,7 @@
         "metadata": {
             "label": "interchunk"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/transliterate": {
         "name": "hindi_urdu/transliterate", 
@@ -417,7 +417,7 @@
         "metadata": {
             "label": "transliterate"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }, 
     "hindi_urdu/utf2wx_urd": {
         "name": "hindi_urdu/utf2wx_urd", 
@@ -438,6 +438,6 @@
         "metadata": {
             "label": "utf2wx_urd"
         }, 
-        "icon": "legal"
+        "icon": "balance-scale"
     }
 }

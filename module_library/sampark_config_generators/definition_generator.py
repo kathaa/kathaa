@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-pipeline_name = "hindi_panjabi";
+pipeline_name = "hindi_urdu";
 
 template = """
    "%s/%s":{
-      "name":"hindi_panjabi/%s",
+      "name":"hindi_urdu/%s",
       "description":"%s description",
       "version":"v0.1",
       "icon":"legal",
@@ -25,7 +25,7 @@ template = """
       }
    },"""
 
-modules = ["tokenizer","utf2wx","morph","postagger","chunker","pruning","guessmorph","pickonemorph","computehead","computevibhakti","parse","root2infinity","transfergrammar","wx2utf","lexicaltransfer","transliterate","agreementfeature","vibhaktispliter","interchunk","intrachunk","agreementdistribution","defaultfeatures","wordgenerator"]
+modules = ["tokenizer","utf2wx","morph","postagger","pruning","pickonemorph","chunker","multiwordexpr","ner","merger","headcomputation","wx2utf","lexicaltransfer","transliterate","utf2wx_urd","agreementfeature","interchunk","intrachunk","defaultfeatures","wordgenerator","wx2utf_urd"]
 
 s = "{";
 for m in modules:
@@ -56,14 +56,14 @@ template = """
 
 """
 // Imported libraries
-// GLOBAL.hindi_panjabi_request = require('request');
+// GLOBAL.hindi_urdu_request = require('request');
 // 
-hindi_panjabi.prototype.hindi_panjabi_tokenizer = function(job, progress, done){
+hindi_urdu.prototype.hindi_urdu_tokenizer = function(job, progress, done){
   console.log("Inside tokenizer");
   //save computed output values
   job.data.node.out_ssf = job.data.node.in_ssf+"::tokenizer"
 
-  hindi_panjabi_request.post({
+  hindi_urdu_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;'},
     url:     'http://api.ilmt.iiit.ac.in/hin/pan/1/1',
     body:    "input="+job.data.node.in_ssf;
@@ -82,15 +82,15 @@ sampark_template = """
   //save computed output values
   var kathaa_outputs = {}
 
-  hindi_panjabi_request.post({
+  hindi_urdu_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
-    url:     '%s/hin/pan/%s/%s',
+    url:     '%s/hin/urd/%s/%s',
     body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
   }, function(error, response, body){
     if (!error && response.statusCode == 200) {
       try{
         console.log(body);
-        body = hindi_panjabi_entities.decode(body);
+        body = hindi_urdu_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed
         for(var _key in body){
@@ -113,15 +113,15 @@ sampark_template = """
 // 
 // Available external libraries 
 // 
-// GLOBAL.hindi_panjabi_request = require('request');
-// GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
-// GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();
+// GLOBAL.hindi_urdu_request = require('request');
+// GLOBAL.hindi_urdu_Entities = require('html-entities').AllHtmlEntities;
+// GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();
 }
 """
 
-s =  "GLOBAL.hindi_panjabi_request = require('request');\n"
-s += "GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;\n"
-s += "GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();\n"
+s =  "GLOBAL.hindi_urdu_request = require('request');\n"
+s += "GLOBAL.hindi_urdu_Entities = require('html-entities').AllHtmlEntities;\n"
+s += "GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();\n"
 
 s += """
 var """+pipeline_name+""" = function(){
