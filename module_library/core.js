@@ -1,19 +1,19 @@
-// imported libraries have to be imported in the 
-// global scope, so that user defined/user modified functions 
+// imported libraries have to be imported in the
+// global scope, so that user defined/user modified functions
 // also have access to them
-// 
+//
 // example
 // GLOBAL.core_request = require('request');
 //
 // where "core" is the namespace to avoid conflicts between different modules
 
-// Only the SSF API gets to violate the namespacing convention, 
+// Only the SSF API gets to violate the namespacing convention,
 // because well its cool -_- and because I wrote it -_- !!
-// 
+//
 GLOBAL.ssf = require('ssf-api');
 var core = function(){
 }
-// Note : Every registered component of the type "core/component_name" has to have a 
+// Note : Every registered component of the type "core/component_name" has to have a
 // corresponding process of the name "core_component_name" ( '/' replace with '_' )
 // module_library.processes["core_sentence_input"](null,null,null);
 
@@ -72,7 +72,7 @@ core.prototype.core_random_merger = function(kathaa_inputs, progress, done){
 
 core.prototype.core_custom_module = function(kathaa_inputs, progress, done){
   // Collection of Inputs
-  // ================================================================= 
+  // =================================================================
   //You have access to all the input ports by
   //var input_1 = kathaa_inputs['input_1']
   //var input_2 = kathaa_inputs['input_2']
@@ -88,8 +88,8 @@ core.prototype.core_custom_module = function(kathaa_inputs, progress, done){
   var input_9 = kathaa_inputs['input_9']
 
 
-  // Preprocessing 
-  // ================================================================= 
+  // Preprocessing
+  // =================================================================
   //You can parse the SSF sentence, using the shiny new SSF API by
   var parsed_sentence = ssf.parse(input_9);
 
@@ -98,14 +98,14 @@ core.prototype.core_custom_module = function(kathaa_inputs, progress, done){
   // (or you are free to get as creative as you want :D )
 
 
-  // Processing 
-  // ================================================================= 
+  // Processing
+  // =================================================================
 
   function recurse(node){
     if(node.instanceType == "Node"){
       // Your Node level Voodoo goes here...
 
-      // You can check the documentation of what parameters you have access to 
+      // You can check the documentation of what parameters you have access to
       // at : https://github.com/spMohanty/ssf-api
 
       return;
@@ -122,50 +122,49 @@ core.prototype.core_custom_module = function(kathaa_inputs, progress, done){
   recurse(parsed_sentence);
 
 
-  // Post Processing 
-  // ================================================================= 
+  // Post Processing
+  // =================================================================
   var output_SSF_sentence = parsed_sentence.printSSFValue();
 
 
   // Populate the Module Outputs
-  // ================================================================= 
-  
+  // =================================================================
+
   var kathaa_outputs = {};
-  //Lets say you want to pass on the output to the port named "output_1"  
+  //Lets say you want to pass on the output to the port named "output_1"
   kathaa_outputs['output_1'] = output_SSF_sentence;
 
-  //Depending on the connections you have in the graph, you can populate the 
+  //Depending on the connections you have in the graph, you can populate the
   // following ports
   //kathaa_outputs['output_1'] = output_SSF_sentence;
-  //kathaa_outputs['output_2'] = output_SSF_sentence; 
-  //kathaa_outputs['output_3'] = output_SSF_sentence; 
-  //kathaa_outputs['output_4'] = output_SSF_sentence; 
-  //kathaa_outputs['output_5'] = output_SSF_sentence; 
-  //kathaa_outputs['output_6'] = output_SSF_sentence; 
-  //kathaa_outputs['output_7'] = output_SSF_sentence; 
-  //kathaa_outputs['output_8'] = output_SSF_sentence; 
-  //kathaa_outputs['output_9'] = output_SSF_sentence; 
+  //kathaa_outputs['output_2'] = output_SSF_sentence;
+  //kathaa_outputs['output_3'] = output_SSF_sentence;
+  //kathaa_outputs['output_4'] = output_SSF_sentence;
+  //kathaa_outputs['output_5'] = output_SSF_sentence;
+  //kathaa_outputs['output_6'] = output_SSF_sentence;
+  //kathaa_outputs['output_7'] = output_SSF_sentence;
+  //kathaa_outputs['output_8'] = output_SSF_sentence;
+  //kathaa_outputs['output_9'] = output_SSF_sentence;
 
   // Other Stuff you can do....
-  // 
+  //
   // Mark Progress
   // -----------
-  // If you have a time consuming process here, you can mark the progress by 
-  // progress(30); 
+  // If you have a time consuming process here, you can mark the progress by
+  // progress(30);
   // This says this process is 30% complete
-  // Note the scale is from 0-100 
+  // Note the scale is from 0-100
   //
   // Mark Errors
   // -----------------------
-  // Or say you have a nasty error somewhere, then you simply do a 
-  // 
+  // Or say you have a nasty error somewhere, then you simply do a
+  //
   // var err = new Error('Your Error Message');
-  // job.failed().error(err);
   // done(err);
 
   // Passback the results to Kathaa Orchestrator
-  // ================================================================= 
-  
+  // =================================================================
+
   done && done(null, kathaa_outputs);
 }
 
