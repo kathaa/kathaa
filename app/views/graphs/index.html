@@ -1,0 +1,61 @@
+{% extends '../layouts/default.html' %}
+
+{% block main %}
+  <h1>{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+
+{% if (graphs.length) %}
+  {% for graph in graphs %}
+    {% include 'graph.html' %}
+  {% endfor %}
+
+  {% if (pages > 1) %}
+  <div class="col-md-12">
+    <center>
+    <ul class="pagination">
+      {% autoescape false %}
+        {{ createPagination(pages, page) }}
+      {% endautoescape %}
+    </ul>
+    </center>
+  </div>
+  {% endif %}
+
+  <script>
+      $(document).ready(function(){
+          $('.contact-box').each(function() {
+              animationHover(this, 'pulse');
+          });
+      });
+  </script>
+
+{% else %}
+<center>
+  <h1> No Graphs Yet !! Create one Now </h1>
+  <a class="btn btn-primary" href="/graphs/new">Create Graph</a>
+</center>
+{% endif %}
+
+
+
+{% endblock %}
+<!-- {% if (graphs.length) %}
+  {% for graph in graphs %}
+    {% include 'graph.html' %}
+  {% endfor %}
+
+  {% if (pages > 1) %}
+    <ul class="pagination">
+      {% autoescape false %}
+        {{ createPagination(pages, page) }}
+      {% endautoescape %}
+    </ul>
+  {% endif %}
+{% else %}
+  <h4 class="muted">
+    No graphs.&nbsp;
+    <a href="/graphs/new">create one</a>
+  </h4>
+{% endif %} -->

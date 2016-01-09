@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kathaa | Login</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="/js/jquery-2.1.1.js"></script>
+
+</head>
+
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <img src="/img/logo-full.png" style="width:100%"></img>
+
+            </div>
+
+            <form action="/users" method="post" role="form" class="form-horizontal">
+                <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+
+                <div class="form-group">
+                    <input id="name" class="form-control" type="text" name="name" placeholder="Full name" value="{{ user.name }}" required="">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="email" placeholder="Email" value="{{ user.email }}" id="email" class="form-control" required="">
+                </div>
+                <div class="form-group">
+                    <input id="username" class="form-control" type="text" name="username" placeholder="Username" value="{{ user.username }}" required="">
+                </div>
+                <div class="form-group">
+                  <input id="password" class="form-control" type="password" name="password" placeholder="Password" required="">
+                </div>
+                <div class="form-group">
+                        <div class="checkbox i-checks"><label> <input type="checkbox" required=""><i></i> Agree to terms and policy </label></div>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+
+                <p class="text-muted text-center"><small>Already have an account?</small></p>
+                <a class="btn btn-sm btn-success btn-block" href="/login">Login</a>
+            </form>
+
+            <p class="m-t"> <small>S.P. Mohanty &copy; 2014</small> </p>
+        </div>
+    </div>
+    {% include '../includes/messages.html' %}
+    <!-- Mainly scripts -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+
+</body>
+
+<style>
+html {
+    font-size: 93.8%;
+    background-color: #f1f2f3;
+    background-image:
+      -webkit-linear-gradient(0deg, transparent .05em, rgba(0,0,0,.05) .05em, rgba(0,0,0,.05) .125000em, transparent .125000em),
+      -webkit-linear-gradient(rgba(0,0,0,.05) .062500em, transparent .062500em);
+    background-image:
+      -moz-linear-gradient(0deg, transparent .05em, rgba(0,0,0,.05) .05em, rgba(0,0,0,.05) .125000em, transparent .125000em),
+      -moz-linear-gradient(rgba(0,0,0,.05) .062500em, transparent .062500em);
+    background-image:
+      -ms-linear-gradient(0deg, transparent .05em, rgba(0,0,0,.05) .05em, rgba(0,0,0,.05) .125000em, transparent .125000em),
+      -ms-linear-gradient(rgba(0,0,0,.05) .062500em, transparent .062500em);
+    background-image:
+      -o-linear-gradient(0deg, transparent .05em, rgba(0,0,0,.05) .05em, rgba(0,0,0,.05) .125000em, transparent .125000em),
+      -o-linear-gradient(rgba(0,0,0,.05) .062500em, transparent .062500em);
+    background-image:
+      linear-gradient(0deg, transparent .05em, rgba(0,0,0,.05) .05em, rgba(0,0,0,.05) .125000em, transparent .125000em),
+      inear-gradient(rgba(0,0,0,.05) .062500em, transparent .062500em);
+    background-size: .75em .75em;
+    background-position: 0 -0.5em;
+}
+
+
+@media screen and (min-width: 600px) {
+    html {
+        font-size: 100%;
+    }
+}
+
+
+@media screen and (min-width: 800px) {
+    html {
+        font-size: 125%;
+    }
+}
+</style>
+
+</html>

@@ -1,0 +1,635 @@
+{% extends '../layouts/default.html' %}
+
+
+<!-- onkeypress="return event.keyCode != 13;"  -->
+{% block graphViewPrePageWrapper %}
+
+{% if graph.isNew %}
+  {% set action = '/graphs' %}
+{% else %}
+  {% set action = '/graphs/' + graph._id %}
+{% endif %}
+
+<form method="post" id="kathaa-graph-form" action="{{ action }}" enctype="multipart/form-data" role="form" class="form-horizontal">
+  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <input name="body" id="kathaa-graph-body" class="form-control hidden" value="{{ graph.body }}" required=""></input>
+
+  {% if not graph.isNew %}
+    <input type="hidden" name="_method" value="PUT">
+  {% endif %}
+{% endblock %}
+
+{% block graphViewPostPageWrapper %}
+  </form>
+{% endblock %}
+
+
+
+{% block head %}
+{% endblock %}
+
+{% block main %}
+  <h1>{{ title }}</h1>
+  <hr>
+{% endblock %}
+
+{% block content %}
+
+
+
+  <!-------------------------------------------------------------------------------------------------------------------------------->
+
+
+<script type="text/javascript">
+    function set_view(mode){
+
+      var UIElements = {
+        "graph-editor" : [".kathaa-graph-sidebar-controls", "#kathaa-graph-editor-view", ".kathaa-graph-view-buttons" ],
+        "explorer" : ["#kathaa-explorer-view", ".kathaa-explorer-view-buttons" ],
+        "loading": ["#kathaa-loadin-view"]
+      }
+
+      function showElements(list){
+        for(var _index in list){
+          $(list[_index]).removeClass("hidden");
+        }
+      }
+      function hideElements(list){
+        for(var _index in list){
+          $(list[_index]).addClass("hidden");
+        }
+      }
+
+      for(var _key in UIElements){
+        if(_key == mode){
+          console.log("Showing :",UIElements[_key]);
+          showElements(UIElements[_key]);
+        }else{
+          console.log("Hiding :",UIElements[_key]);
+          hideElements(UIElements[_key]);
+        }
+      }
+
+        if(mode == 'graph-editor'){
+            $('body').css('position', 'fixed');
+            $('body').css('overflow', 'hidden');
+        }else{
+            $('body').css('position', 'static');
+            $('body').css('overflow', 'auto');
+        }
+    }
+</script>
+
+<div id="kathaa-loadin-view" class="row">
+  <div class="sk-folding-cube">
+    <div class="sk-cube1 sk-cube"></div>
+    <div class="sk-cube2 sk-cube"></div>
+    <div class="sk-cube4 sk-cube"></div>
+    <div class="sk-cube3 sk-cube"></div>
+  </div>
+  <div class="kathaa-loading-view-message">
+    <h1>Loading....</h1>
+  </div>
+</div>
+
+<div id="kathaa-graph-editor-view" class="row border-bottom white-bg dashboard-header hidden">
+    <div class="col-md-12" id="editor-wrapper">
+        <the-graph-editor id="editor"
+        width="100%" height="400"
+        grid="72"
+        snap="36"
+        theme="dark">
+        </the-graph-editor>
+
+        <the-graph-nav id="nav" width="216" height="162"></the-graph-nav>
+    </div>
+</div>
+
+<div id="kathaa-explorer-view" class="hidden">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2 id="kathaa-explorer-view-label">Module Properties</h2> ( <code id="kathaa-explorer-view-sublabel"></code> )
+        </div>
+    </div>
+    <div id="kathaa-edit-module" class="wrapper wrapper-content animated fadeInRight">
+            <div class="panel blank-panel">
+                <div class="panel-heading">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li class="active "><a data-toggle="tab" href="#kathaa-edit-module-info-tab" aria-expanded="true">Info</a></li>
+                            <li class=""><a data-toggle="tab" href="#kathaa-edit-module-properties-tab" aria-expanded="true">Module Properties</a></li>
+                            <li class=""><a data-toggle="tab" href="#kathaa-edit-module-process-definition-tab" aria-expanded="true">Code</a></li>
+                            <li class=""><a data-toggle="tab" href="#kathaa-edit-module-input-tab" aria-expanded="false">Input</a></li>
+                            <li class=""><a data-toggle="tab" href="#kathaa-edit-module-output-tab" aria-expanded="false">Output</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div id="kathaa-edit-module-info-tab" class="tab-pane active">
+                            <p id="kathaa-edit-module-description"></p>
+                        </div>
+                        <div id="kathaa-edit-module-properties-tab" class="tab-pane ">
+                            <div id="kathaa-edit-node-body">
+                            </div>
+                        </div>
+                        <div id="kathaa-edit-module-process-definition-tab" class="tab-pane ">
+                            <textarea id="kathaa-edit-module-process-definition-tab-code" style="min-height:300px"></textarea>
+                        </div>
+                        <div id="kathaa-edit-module-input-tab" class="tab-pane">
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                  <label>Input Ports</label>
+                                  <select id="kathaa-edit-module-input-tab-ports" class="form-control">
+                                  </select>
+                                </div>
+                            </div>
+                            <textarea id="kathaa-edit-module-input-tab-code" style="min-height:300px"></textarea>
+                        </div>
+                        <div id="kathaa-edit-module-output-tab" class="tab-pane">
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                  <label>Output Ports</label>
+                                  <select id="kathaa-edit-module-output-tab-ports" class="form-control">
+                                  </select>
+                                </div>
+                            </div>
+                            <textarea id="kathaa-edit-module-output-tab-code" style="min-height:300px"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+    <script type="text/javascript" src="/js/kathaa-explorer-view.js"></script>
+
+
+</div>
+<!-- Add Module Modal -->
+<div class="modal inmodal" id="kathaa-add-module" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#kathaa-add-module').hide();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"> <i class="fa fa-laptop"></i> Add Module</h4>
+            </div>
+            <div class="modal-body">
+
+            <script type="text/javascript" src="/js/kathaa-add-module-modal.js"></script>
+
+
+            <table id="kathaa-modules-table" class="display" width="100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Version</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create/Edit Groups -->
+<div class="modal inmodal" id="kathaa-group-modules" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#kathaa-group-modules').hide();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><i class="fa fa-laptop modal-icon"></i>Group Modules</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group"><label class="col-lg-2 control-label">Group Name</label>
+                        <div class="col-lg-10"><input id="kathaa-group-modules-name" type="text" placeholder="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group"><label class="col-lg-2 control-label">Group Description</label>
+                        <div class="col-lg-10"><textarea id="kathaa-group-modules-description" class="form-control" rows="5"></textarea></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" onclick="$('#kathaa-group-modules').hide();">Close</button>
+                <button id="kathaa-group-modules-save" type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#kathaa-group-modules").on('update', function () {
+            $("#kathaa-group-modules-name").val("");
+            $("#kathaa-group-modules-description").val("");
+        });
+        $("#kathaa-group-modules-save").click(function(){
+            var item = window.kathaa.last_node_group;
+            var metadata = {
+                description: $("#kathaa-group-modules-description").val()
+            };
+
+            metadata = TheGraph.merge(TheGraph.config.group, metadata);
+            editor.nofloGraph.addGroup($("#kathaa-group-modules-name").val(), item.nodes, metadata);
+            editor.rerender();
+            $('#kathaa-group-modules').hide();
+        });
+    })
+</script>
+
+<!-- Create/Edit Groups -->
+<div class="modal inmodal" id="kathaa-debug-view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#kathaa-debug-view').hide();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><i class="fa fa-laptop modal-icon"></i>Debug View</h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="kathaa-debug-view-editor" style="max-height:300px"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" onclick="$('#kathaa-debug-view').hide();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #kathaa-debug-view .CodeMirror {
+        border: 1px solid #eee;
+        height: 300px!important;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function(){
+                window.kathaa.debug_view = CodeMirror.fromTextArea(document.getElementById("kathaa-debug-view-editor"), {
+                 lineNumbers: true,
+                 matchBrackets: true,
+                 styleActiveLine: true,
+                 readOnly: true,
+                 theme:"ambiance",
+                });
+    })
+</script>
+
+<!-- Create/Edit Groups -->
+<div class="modal inmodal" id="kathaa-edit-edge" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#kathaa-edit-edge').hide();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><i class="fa fa-paint-brush modal-icon"></i>Edit Edge</h4>
+                <small class="font-bold">Please select the intended edge color</small>
+            </div>
+            <div class="modal-body">
+                <style>
+                    .route-option {
+                         cursor: pointer;
+                         border: 1px solid black;
+                    }
+                </style>
+                <center>
+                <!-- TODO : Move Styling definitions to stylys -->
+                <div id="kathaa-edit-edge-routes" class="noselect">
+                    <div route="0" style="width:20px; background-color: #fff;color:#fff" class="route0 inline route-option">..</div>
+                    <div route="1" style="width:20px; background-color: #e80202;color:#e80202" class="route1 inline route-option">..</div>
+                    <div route="2" style="width:20px; background-color: #e88802;color:#e88802" class="route2 inline route-option">..</div>
+                    <div route="3" style="width:20px; background-color: #e8e802;color:#e8e802" class="route3 inline route-option">..</div>
+                    <div route="4" style="width:20px; background-color: #02e83c;color:#02e83c" class="route4 inline route-option">..</div>
+                    <div route="5" style="width:20px; background-color: #02e89c;color:#02e89c" class="route5 inline route-option">..</div>
+                    <div route="6" style="width:20px; background-color: #02d5e8;color:#02d5e8" class="route6 inline route-option">..</div>
+                    <div route="7" style="width:20px; background-color: #0275e8;color:#0275e8" class="route7 inline route-option">..</div>
+                    <div route="8" style="width:20px; background-color: #af02e8;color:#af02e8" class="route8 inline route-option">..</div>
+                    <div route="9" style="width:20px; background-color: #e802c2;color:#e802c2" class="route9 inline route-option">..</div>
+                    <div route="10" style="width:20px; background-color: #e80262;color:#e80262" class="route10 inline route-option">..</div>
+                </div>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" onclick="$('#kathaa-edit-edge').hide();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#kathaa-edit-edge-routes div").click(function(){
+            console.log($(this).attr("route"));
+
+            window.kathaa.latest_edge_edit_focus.metadata.route = $(this).attr("route");
+            editor.rerender();
+            $('#kathaa-edit-edge').hide();
+        })
+        $("#kathaa-edit-edge").on('update', function () {
+        });
+    })
+</script>
+
+<socket-connection id="kathaa-socket" auto></socket-connection>
+<script type="text/javascript">
+var socket = document.querySelector("socket-connection")
+socket.url = "";
+
+socket.addEventListener('socket-connect', function(){
+            toast("success", "", "Connected");
+            set_view('graph-editor');
+            //
+            if(socket.socket.listeners("execute_workflow_progress").length==0)
+            socket.socket.on('execute_workflow_progress', function (message) {
+              // console.log("Progress Notification ::");
+              // console.log(message);
+              try{
+                  editor.updateModuleProgressPercentage(message.node_id, message.progress);
+              }catch(err){
+                console.log(err);
+              }
+            });
+
+            if(socket.socket.listeners("node_processing_complete").length==0)
+            socket.socket.on('node_processing_complete', function(message){
+                // console.log("Node Processing Complete :: ");
+                // console.log(message);
+
+                //Save state of the node in the latest workflow run
+                window.kathaa.latest_workflow_run[message.node.id] = message.node;
+
+                if(message.node.component=="core/sentence_output"){
+                    toastr["success"]("", "Successfully processed "+message.node.metadata.label)
+                }
+            });
+
+            if(socket.socket.listeners("node_processing_failed").length==0)
+            socket.socket.on('node_processing_failed', function(message){
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 10000
+                };
+                toastr["error"](message.error, "Unable to process "+message.node.metadata.label)
+            });
+
+            if(socket.socket.listeners("debug_message").length==0)
+            socket.socket.on('debug_message', function (message) {
+              console.log("DEBUG ::");
+              console.log(message);
+            });
+
+            if(socket.socket.listeners("init").length==0)
+            socket.socket.on('init', function(params){
+                console.log(params);
+                if(window.library == undefined){
+                  init(params);
+                }
+            })
+        });
+socket.addEventListener('socket-error', function(){
+            toastr["error"]("please wait while we try to reconnect", "Connecting failed");
+            set_view("loading");
+            console.log("Socket Error !!");
+        });
+socket.addEventListener('socket-timeout', function(){
+            console.log("Socket Timeout !!");
+        });
+
+function init(params){
+    //Init Module Library
+    //Register known modules as components
+    window.library = {};
+    window.library['core'] = params.module_library;
+    $.each(window.library, function(key, value){
+        $.each(value, function(key, value){
+            editor.registerComponent(value)
+        })
+    })
+
+    window.kathaa.process_definitions = params.process_definitions;
+    toast("success", "", "Module Library Instantiated");
+    init_add_module_modal();
+}
+
+
+$("#kathaa-edit-module-execute").click(function(){
+    set_view('graph-editor');
+    var current_node = window.kathaa.latest_node_edit_focus;
+
+    disable_controls();
+    // editor.enableModuleProgressBars(); //Enable rendering of progress bars
+    editor.resetModuleProgressBars();
+
+    loading_visibility(true);
+    execute_workflow(current_node);
+
+    // ??Should we reset the lastest workflow run state ?
+    window.kathaa.latest_workflow_run = {}
+})
+//TO-DO : Add error handling
+$("#kathaa-execute-workflow").click(function(){
+    //Find sentence_input
+    for(var _node_index in editor.nofloGraph.nodes){
+        if(editor.nofloGraph.nodes[_node_index].component == "core/sentence_input"){
+            window.kathaa.latest_node_edit_focus = editor.nofloGraph.nodes[_node_index];
+
+            $("#kathaa-edit-module").trigger('update');
+            window.set_view('explorer');
+            //Trigger opening of the input tab
+            $("a[href='#kathaa-edit-module-input-tab']").tab('show');
+
+            return;
+        }
+    }
+});
+
+function add_process_definitions(graph){
+    var graph_node;
+
+    for(var id in graph.processes){
+        graph_node = graph.processes[id];
+        if(editor.nofloGraph.getNode(id).process_definition){
+            graph_node.process_definition = editor.nofloGraph.getNode(id).process_definition
+        }
+    }
+
+    return graph;
+}
+function execute_workflow(beginNode){
+
+    //Prepare graph for kathaa-orchestrator
+    var graph=editor.toJSON();
+    graph = add_process_definitions(graph);
+
+    beginNode = editor.nofloGraph.getNode(beginNode.id);
+
+    beginNode.kathaa_inputs = {}
+    // Build a boilerplate kathaa-inputs object
+    // for the beginNode, based on the component definition
+    var inport;
+    var inports;
+    inports = window.library["core"][beginNode.component].inports;
+
+    // core/sentence_input is the only component type which will
+    // have no inports in the component_definition
+    // TO-DO : Fix this
+    if(beginNode.component == "core/sentence_input"){
+        inports = [{"name":"sentence_input"}]
+    }
+
+    for(_index in inports){
+        inport = inports[_index]
+        beginNode.kathaa_inputs[inport.name] = ""; //TO-DO : Add a default param in the config file
+    }
+
+    //Check if the latest_workflow_run has some record for the id
+    // If present, copy the input and output values of all the ports
+    // into kathaa_inputs, kathaa_outpus keys in the _node object
+    function mergeObjects(_o1, _o2){
+        if(_o2 == undefined && _o1 != undefined){
+            return _o1;
+        }
+        if(_o1 == undefined && _o2 != undefined){
+            return _o2;
+        }
+        if(_o1 == undefined && _o2 == undefined){
+            return {}
+        }
+        //Copy all _o2 keys into _o1
+        for(var _key in _o2){
+            _o1[_key] = _o2;
+        }
+        return _o2;
+    }
+    if(window.kathaa.latest_workflow_run[beginNode.id]){
+       beginNode.kathaa_inputs = mergeObjects(
+            beginNode.kathaa_inputs,
+            window.kathaa.latest_workflow_run["kathaa_inputs"]
+        )
+    }
+
+    // If the latest_node_edit_focus is the beginNode, then copy the input_editor_buffer into
+    // beginNode too.
+    // Note:  In the current workflow, the latest_node_edit_focus will always be the beginNode
+    //        This check is rather an insurance for if at all any changes to the workflow are done
+    //        in the future
+   if(window.kathaa.latest_node_edit_focus.id == beginNode.id){
+       beginNode.kathaa_inputs = mergeObjects(
+            beginNode.kathaa_inputs,
+            window.kathaa.input_editor_buffer[beginNode.id]
+        )
+
+       //Now, finally copy the editor value into the corresponding kathaa_inputs key
+       var current_input_port = $("#kathaa-edit-module-input-tab-ports").val();
+       beginNode.kathaa_inputs[current_input_port] = window.kathaa.explorer_input_editor.getValue();
+   }
+    socket.socket.emit('execute_workflow', {graph: graph, beginNode: beginNode});
+    toastr["info"]("","Executing Kathaa workflow....")
+}
+function disable_controls(){
+    //TO-DO : Disable all UI control elements which might interfere with execution
+    // $("#kathaa-execute-workflow").prop('disabled', true);
+}
+function enable_controls(){
+    //TO-DO : Enable all UI control elements after workflow execution is complete
+    $("#kathaa-execute-workflow").prop('disabled', false);
+}
+</script>
+</div>
+
+<script type="text/javascript">
+window.kathaa = {}
+window.kathaa.input_editor_buffer = {}
+window.kathaa.latest_workflow_run = {}
+window.kathaa.show_module_progress = false;
+
+Polymer.veiledElements = ["the-graph-editor"];
+window.addEventListener('polymer-ready', function() {
+"use strict";
+
+// Fix modal background scrolling issues
+// Refs : https://github.com/spMohanty/kathaa/issues/3
+// $('body').css('overflow','hidden');
+// $('body').css('position','fixed');
+
+window.loadGraph = function (json) {
+  // Remove loading message
+  loading_visibility(false);
+
+  // Load graph
+  var editor = document.getElementById('editor');
+  var graph = json.data ? JSON.parse(json.data.files['noflo.json'].content) : json;
+  var graphString = JSON.stringify(graph);
+  editor.graph = graph;
+
+  // Attach editor to nav
+  var nav = document.getElementById('nav');
+  nav.editor = editor;
+};
+
+{% if graph.body %}
+loadGraph(JSON.parse({{graph.body | json | raw }}));
+{% else %}
+  //LoadGraph
+  var body = document.querySelector('body');
+  var script = document.createElement('script');
+  script.type = 'application/javascript';
+  script.src = '/the-graph-editor/blank-canvas.json.js';
+  body.appendChild(script);
+{% endif %}
+// Resize to fill window and also have explicit w/h attributes
+var editor = document.getElementById("editor");
+var resize = function () {
+  editor.setAttribute("width", window.innerWidth);
+  editor.setAttribute("height", window.innerHeight);
+};
+window.addEventListener("resize", resize);
+
+
+resize();
+});
+
+function save_workflow(){
+var graph = editor.nofloGraph.toJSON();
+graph = add_process_definitions(graph);
+
+// $("#kathaa-debug-view").show();
+// window.kathaa.debug_view.setValue(
+//         JSON.stringify(graph, null, 4)
+//     )
+
+$("#kathaa-graph-body").attr("value", JSON.stringify(graph));
+$("#kathaa-graph-form").submit();
+
+}
+function toast(type, message, title, options){
+if(options){
+    toastr.options = options;
+}else{
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        showMethod: 'slideDown',
+        timeOut: 2000
+    };
+}
+
+if(type=="error"){
+    toastr.error(message, title);
+}else{
+    toastr.success(message, title)
+}
+}
+
+function loading_visibility(state){
+if(state){
+    $("#loading").removeClass("hidden");
+}else{
+    $("#loading").addClass("hidden");
+}
+}
+</script>
+
+  <!-------------------------------------------------------------------------------------------------------------------------------->
+{% endblock %}

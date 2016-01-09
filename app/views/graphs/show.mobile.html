@@ -1,0 +1,34 @@
+{% extends '../layouts/default.html' %}
+
+{% block main %}
+  <h1>{{ graph.title }}</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8">
+      <p>{{ graph.body }}</p>
+      <div class="meta">
+        {% if (graph.user) %}
+          Author: &nbsp;
+          <a href="{{ '/users/' + graph.user._id }}">
+            {{ graph.user.name || graph.user.username }}
+          </a>
+        {% endif %}
+        <span class="muted">{{ graph.createdAt.toISOString()|date('M d, Y  h:i a') }}</span>
+      </div>
+    </div>
+  </div>
+
+  <form action="{{ '/graphs/' + graph.id }}" method="post" onsubmit="return confirm('Are you sure?')">
+    <br>
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <a href="{{ '/graphs/' + graph._id + '/edit' }}" title="edit" class="btn btn-default">
+      Edit
+    </a>
+    &nbsp;
+    <input type="hidden" name="_method" value="DELETE">
+    <button class="btn btn-danger" type="submit">Delete</button>
+  </form>
+  <br>
+{% endblock %}

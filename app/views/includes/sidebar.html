@@ -1,0 +1,49 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                  <a href="/">
+                    <span>
+                      <img alt="image" class="img-circle" style="width:100%" src="/img/logo.png" />
+                    </span>
+                    <center>
+                    <br/>
+                      <h3 class="font-bold" style="color:white">Kathaa</h3>
+                    <span class="text-muted text-xs block">A Visual Programming Framework </b></span>
+                    </center>
+                  </a>
+                </div>
+                <div class="logo-element">
+                    क
+                </div>
+            </li>
+            <li>
+              <a title="Create New Graph" href="/graphs/new"><i class="fa fa-file-text"></i> <span class="nav-label">Create New Graph</span></a>
+            </li>
+
+            {% if (graphView) %}
+            <li class="kathaa-graph-sidebar-controls">
+              {% if (forkable) %}
+                <a onclick="save_workflow()" title="Fork Graph" href="#"><i class="fa fa-code-fork"></i> <span class="nav-label">Fork Graph</span></a>
+              {% else %}
+              <a onclick="save_workflow()" title="Save Graph" href="#"><i class="fa fa-floppy-o"></i> <span class="nav-label">Save Graph</span></a>
+              <a onclick="$('#kathaa-graph-delete-form').submit()" title="Delete Graph" href="#"><i class="fa fa-trash"></i> <span class="nav-label">Delete Graph</span></a>
+              {% endif %}
+                <a onclick="$('#kathaa-add-module').show()" title="Add Module" href="#"><i class="fa fa-plus"></i> <span class="nav-label">Add Module</span></a>
+                <a onclick="editor.graph = {}" title="Clear Graph" href="#"><i class="fa fa-eraser"></i> <span class="nav-label">Clear Graph</span></a>
+            </li>
+            {% endif %}
+
+            {% if (req.isAuthenticated()) %}
+            <li>
+              <a title="Log Out" href="/logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Log Out</span></a>
+            </li>
+            {% else %}
+            <li>
+              <a title="Log In" href="/login"><i class="fa fa-sign-in"></i> <span class="nav-label">Log In</span></a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,37 @@
+{% extends 'graph-viewer.html' %}
+
+
+<!-- onkeypress="return event.keyCode != 13;"  -->
+{% block graphViewPrePageWrapper %}
+
+{% if graph.isNew %}
+  {% set action = '/graphs' %}
+{% else %}
+  {% set action = '/graphs/' + graph._id %}
+{% endif %}
+
+<form method="post" id="kathaa-graph-form" action="{{ action }}" enctype="multipart/form-data" role="form" class="form-horizontal">
+  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <input name="body" id="kathaa-graph-body" class="form-control hidden" value="{{ graph.body }}" required=""></input>
+
+  {% if not graph.isNew %}
+    <input type="hidden" name="_method" value="PUT">
+  {% endif %}
+{% endblock %}
+
+{% block graphViewPostPageWrapper %}
+  </form>
+
+  <form id="kathaa-graph-delete-form" class="hidden" action="{{ '/graphs/' + graph.id }}" method="post" onsubmit="return confirm('Are you sure?')">
+    <br>
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <button class="btn btn-danger" type="submit">Delete</button>
+  </form>
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block main %}
+{% endblock %}

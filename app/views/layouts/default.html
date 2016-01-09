@@ -1,0 +1,38 @@
+{% include '../includes/head.html' %}
+<body>
+    <div id="wrapper">
+
+      {% include '../includes/sidebar.html' %}
+
+      {% block graphViewPrePageWrapper %}{% endblock %}
+
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row" style="margin-bottom:0px">
+              {% include '../includes/topbar.html' %}
+            </div>
+
+            <div class="messages">
+              {% include '../includes/messages.html' %}
+            </div>
+
+            {% if (graphView) %}
+              {% block content %}{% endblock %}
+            {% else %}
+            <div id="kathaa-explorer-view">
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-lg-9">
+                      <h1>{{title}}</h1>
+                    </div>
+                </div>
+                <div class="row wrapper wrapper-content">
+                  {% block content %}{% endblock %}
+                </div>
+                {% include '../includes/footer.html' %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% block graphViewPostPageWrapper %}{% endblock %}        
+    </div>
+  </body>
+{% include '../includes/foot.html' %}

@@ -1,0 +1,29 @@
+<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        <!-- <form role="search" class="navbar-form-custom" method="post" action="">
+            <div class="form-group">
+                <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="kathaa-graph-name">
+            </div>
+        </form> -->
+        {% if (graphView) %}
+        <!-- <input type="text" class="navbar-bar" name="name" value="{{ graph.name }}" placeholder="Enter the Name" class="form-control" id="name" required=""> -->
+        <input class="navbar-bar minimalize-styl-2 form-control" style="height:30px; width: 300px;" type="text" name="name" required="" value="{{ graph.name }}" placeholder="Name of the Graph" id="name">
+
+        <!-- Graph View Buttons -->
+        <button class="navbar-bar minimalize-styl-2 btn btn-success kathaa-graph-view-buttons hidden" type="button" onclick="editor.triggerAutolayout()" title="Auto Layout"><i class="fa fa-magic"></i></span></button>
+        <button class="navbar-bar minimalize-styl-2 btn btn-primary kathaa-graph-view-buttons hidden" type="button" onclick="" id="kathaa-execute-workflow" title="Execute"><i class="fa fa-play"></i> Execute Graph </span></button>
+
+        <!-- Kathaa-Explorer Buttons -->
+        <button class="navbar-bar minimalize-styl-2 btn btn-success kathaa-explorer-view-buttons hidden" type="button" onclick="set_view('graph-editor')" title="Back to Graph View"><i class="fa fa-arrow-left"></i> Back to Graph View</span></button>
+        <button id="kathaa-edit-module-execute" class="hidden navbar-bar minimalize-styl-2 btn btn-success kathaa-explorer-view-buttons hidden" type="button" title="Execute from this Node"><i class="fa fa-play"></i> Execute </span></button>
+        <button class="navbar-bar minimalize-styl-2 btn btn-primary kathaa-explorer-view-buttons hidden" type="button" onclick="" id="kathaa-edit-module-save" title="Save Changes"><i class="fa fa-check"></i> Save Locally</span></button>
+
+        {% endif %}
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+      {% if (graphView) %}
+      {% endif %}
+    </ul>
+</nav>

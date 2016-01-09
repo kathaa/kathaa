@@ -1,0 +1,42 @@
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+  toastr.options = {
+      closeButton: true,
+      progressBar: true,
+      showMethod: 'slideDown',
+      timeOut: 10000
+  };
+
+  {% if (info && info.length) %}
+
+  {% for inf in info %}
+    toastr["info"]("{{ inf }}", "Info");
+  {% endfor %}
+  {% endif %}
+
+  {% if (errors && errors.length) %}
+
+  {% for error in errors %}
+    toastr["error"]("{{ error }}", "Error");
+  {% endfor %}
+  {% endif %}
+
+  {% if (success && success.length) %}
+
+  {% for succ in success %}
+    toastr["success"]("{{ succ }}", "Success");
+  {% endfor %}
+  {% endif %}
+
+  {% if (warning && warning.length) %}
+
+  {% for warn in warning %}
+    toastr["warning"]("{{ warn }}", "Warning");
+  {% endfor %}
+  {% endif %}
+
+
+});
+</script>

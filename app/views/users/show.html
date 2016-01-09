@@ -1,0 +1,6 @@
+{% extends '../layouts/default.html' %}
+
+{% block main %}
+  {{ JSON.stringify(user) }}
+  <h1>{{ user.name || user.username }}</h1>
+{% endblock %}
