@@ -22,9 +22,7 @@
         <div>
             <div>
                 <img src="/img/logo-full.png" style="width:100%"></img>
-
             </div>
-
             <form action="/users/session" method="post" role="form" class="form-horizontal">
               <input type="hidden" name="_csrf" value="{{ csrf_token }}">
               <div class="form-group">
@@ -34,11 +32,12 @@
                   <input id="password" class="form-control" type="password" placeholder="Password" name="password" required="">
               </div>
               <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
+              {% if (allow_user_creation) %}
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-success btn-block" href="/signup">Create an account</a>
+              {% endif %}
             </form>
-            <p class="m-t"> <small>S.P. Mohanty &copy; 2014</small> </p>
+            <p class="m-t"> <small>S.P. Mohanty &copy; 2015</small> </p>
         </div>
     </div>
     {% include '../includes/messages.html' %}

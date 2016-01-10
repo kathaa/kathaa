@@ -10,6 +10,7 @@
 const users = require('../app/controllers/users');
 const graphs = require('../app/controllers/graphs');
 const auth = require('./middlewares/authorization');
+const config = require('./config');
 
 /**
  * Route middlewares
@@ -28,9 +29,12 @@ module.exports = function (app, passport) {
 
   // user routes
   app.get('/login', users.login);
-  app.get('/signup', users.signup);
+  // Allow User creations only if the user allows in the config file
+  if(config.allow_user_creation){
+    app.get('/signup', users.signup);
+    app.post('/users', users.create);
+  }
   app.get('/logout', users.logout);
-  app.post('/users', users.create);
   app.post('/users/session',
     passport.authenticate('local', {
       failureRedirect: '/login',

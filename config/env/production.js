@@ -30,5 +30,6 @@ module.exports = {
     clientID: process.env.GOOGLE_CLIENTID,
     clientSecret: process.env.GOOGLE_SECRET,
     callbackURL: 'http://nodejs-express-demo.herokuapp.com/auth/google/callback'
-  }
+  },
+  allow_user_creation: (process.env.ALLOW_USER_CREATION == "true")
 };

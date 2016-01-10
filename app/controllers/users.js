@@ -7,6 +7,7 @@
 const mongoose = require('mongoose');
 const wrap = require('co-express');
 const User = mongoose.model('User');
+const config = require('../../config/config');
 
 /**
  * Load
@@ -59,7 +60,8 @@ exports.authCallback = login;
 
 exports.login = function (req, res) {
   res.render('users/login', {
-    title: 'Login'
+    title: 'Login',
+    allow_user_creation: config.allow_user_creation
   });
 };
 
