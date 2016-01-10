@@ -12,15 +12,26 @@
               </a>
             </div>
             <div class="ibox-content profile-content">
+              <div class="row">
                 <h4>
                   <i class="fa fa-user"></i> Author :
                   <a class="inline" style="" href="{{ '/users/' + graph.user._id }}">
                     <strong>{{graph.user.name}}</strong>
                   </a>
                 </h4>
+              </div>
+              <div class="row">
                 <i class="fa fa-calendar"></i> Created :
                 <p class="inline">
                  {{ graph.createdAt | date('F jS, Y') }}</p>
+              </div>
+                 {% if (graph.parentGraph) %}
+                  <div class="row" style="margin-bottom:10px;">
+                  <i class="fa fa-code-fork"></i>  Forked From :
+                  <a href="/graphs/{{graph.parentGraph.toString()}}"><code>{{ graph.parentGraph.toString() }}</code></a>
+                  </div>
+                 {% endif %}
+                <div class="row">
                 <div class="user-button">
                     <div class="row">
                         <div class="col-md-6">
@@ -42,6 +53,7 @@
                           {% endif %}
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
     </div>
