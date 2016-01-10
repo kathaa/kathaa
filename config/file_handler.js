@@ -1,6 +1,6 @@
 const config = require('./config');
 const filendir = require('filendir');
-const fs = require('fs');
+const fs = require('fs-extra');
 
 
 /**
@@ -23,6 +23,11 @@ module.exports = {
                       console.log('Successfully Wrote '+type+' File : '+filename);
                       callback(err);
                   });
+  },
+  copy_file: function(type, source, target, callback){
+    fs.copy(config.root + '/public/' + type + '/' + source,
+            config.root + '/public/' + type + '/' + target,
+            callback );
   },
   delete_file : function(type, filename, callback){
     fs.unlink( config.root + '/public/' + type + '/' + filename, function(err){

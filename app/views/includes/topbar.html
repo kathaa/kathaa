@@ -9,10 +9,12 @@
         </form> -->
         {% if (graphView) %}
         <!-- <input type="text" class="navbar-bar" name="name" value="{{ graph.name }}" placeholder="Enter the Name" class="form-control" id="name" required=""> -->
-        {% if (forkable) %}
-        <a id="kathaa-fork-graph" class="navbar-bar minimalize-styl-2 btn btn-success" onclick="save_workflow()" title="Fork Graph" href="#"><i class="fa fa-code-fork"></i> <span class="nav-label">Fork Graph</span></a>
+        {% if (!newGraph) %}
+        <a id="kathaa-fork-graph" class="navbar-bar minimalize-styl-2 btn btn-success"  title="Fork Graph" href="/graphs/{{graph.id}}/fork"><i class="fa fa-code-fork"></i> <span class="nav-label">Fork Graph</span></a>
+        {% endif %}
+
+        {% if ( !isOwner && !newGraph) %}
         <code class="navbar-bar minimalize-styl-2">{{graph.name}}</code>
-        <input  type="hidden" name="name" value="{{ graph.name }}" id="name">
         {%  else %}
         <input class="navbar-bar minimalize-styl-2 form-control" style="height:30px; width: 300px;" type="text" name="name" required="" value="{{ graph.name }}" placeholder="Name of the Graph" id="name">
         {% endif %}

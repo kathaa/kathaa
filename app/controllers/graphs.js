@@ -52,6 +52,7 @@ exports.new = function (req, res){
   res.render('graphs/new', {
     title: 'New Graph',
     graph: new Graph({}),
+    newGraph : true,
     graphView: true
   });
 };
@@ -95,6 +96,28 @@ exports.create = wrap(function* (req, res) {
 });
 
 /**
+  * Fork a Graph
+  */
+
+exports.fork = wrap(function* (req, res){
+  const graph = new Graph(only(req.graph, 'name body'));
+  graph.name += "::Forked";
+  graph.user = req.user;
+  graph.parentGraph = req.graph;
+
+  //Copy old graphs snapshot as new graphs snapshot
+  file_handler.copy_file('snapshot',  req.graph.id+".png",
+                                      graph.id+".png",
+                                      function(){});
+
+  yield graph.uploadAndSave();
+
+  req.flash('success', 'Successfuly Forked the Graph');
+  res.redirect('/graphs/'+graph.id);
+});
+
+
+/**
  * Edit an graph
  */
 
@@ -103,7 +126,8 @@ exports.edit = function (req, res) {
   res.render('graphs/edit', {
     title: 'Edit ' + req.graph.name,
     graph: req.graph,
-    graphView: true
+    graphView: true,
+    isOwner: req.graph.user.id == req.user.id
   });
 };
 
@@ -133,6 +157,7 @@ exports.update = wrap(function* (req, res){
  */
 
 exports.show = function (req, res){
+
   if(req.graph.user.id == req.user.id){
     // If the user has the right to edit the graph,
     // redirect him to the edit page directly
@@ -141,11 +166,12 @@ exports.show = function (req, res){
     res.render('graphs/show', {
       name: req.graph.name,
       graph: req.graph,
-      forkable: true,
+      isOwner: req.graph.user.id == req.user.id,
       graphView: true
     });
   }
 };
+
 
 /**
  * Delete an graph

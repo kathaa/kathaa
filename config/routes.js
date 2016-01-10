@@ -98,6 +98,7 @@ module.exports = function (app, passport) {
   app.get('/graphs/new', auth.requiresLogin, graphs.new);
   app.post('/graphs', auth.requiresLogin, graphs.create);
   app.get('/graphs/:id', auth.requiresLogin, graphs.show);
+  app.get('/graphs/:id/fork', auth.requiresLogin, graphs.fork);
   app.get('/graphs/:id/edit', graphAuthUpdate, graphs.edit);
   app.put('/graphs/:id', graphAuthUpdate, graphs.update);
   app.delete('/graphs/:id', graphAuthUpdate, graphs.destroy);
