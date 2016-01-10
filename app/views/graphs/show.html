@@ -11,13 +11,14 @@
 <form method="post" id="kathaa-graph-form" action="{{ action }}" enctype="multipart/form-data" role="form" class="form-horizontal">
   <input type="hidden" name="_csrf" value="{{ csrf_token }}">
   <input type="hidden" name="isForked" value="true">
+  <input type="hidden" id="kathaa-graph-snapshot" name="snapshot" value"">  
   <input type="hidden" name="parentGraph" value={{ graph.id }}>
   <input name="body" id="kathaa-graph-body" class="form-control hidden" value="{{ graph.body }}" required=""></input>
 
 {% endblock %}
 
 {% block graphViewPostPageWrapper %}
-  </form>  
+  </form>
 {% endblock %}
 
 {% block head %}

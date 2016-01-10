@@ -37,9 +37,6 @@ exports.graph = {
     next();
   },
   hasAuthorizationToUpdate: function (req, res, next) {
-    console.log(req.graph);
-    console.log(req.user);
-
     if (req.graph.user.id != req.user.id) {
       req.flash('info', 'You are not authorized');
       return res.redirect('/graphs/' + req.graph.id);

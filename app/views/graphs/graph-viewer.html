@@ -599,6 +599,17 @@ graph = add_process_definitions(graph);
 //         JSON.stringify(graph, null, 4)
 //     )
 
+//Check Validations
+if($("#name").val().trim() == ""){
+  toastr["error"]("", "The name of the graph cannot be blank....");
+  return;
+}
+
+if(editor.nofloGraph.nodes.length == 0){
+  toastr["error"]("", "The graph should have atleast one Node....");
+  return;
+}
+
 $("#kathaa-graph-snapshot").attr("value", document.querySelector("the-graph-nav").canvas.toDataURL());
 $("#kathaa-graph-body").attr("value", JSON.stringify(graph));
 $("#kathaa-graph-form").submit();

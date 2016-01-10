@@ -13,7 +13,7 @@ module.exports = {
             Each type gets mapped to a different directory
   **/
   save_base64_png : function(type, filename, base64_png_data, callback){
-
+    console.log("Attempting to Write "+type+" for "+filename);
     var buff = new Buffer(base64_png_data
       .replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
 

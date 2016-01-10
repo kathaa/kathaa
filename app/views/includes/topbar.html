@@ -9,10 +9,15 @@
         </form> -->
         {% if (graphView) %}
         <!-- <input type="text" class="navbar-bar" name="name" value="{{ graph.name }}" placeholder="Enter the Name" class="form-control" id="name" required=""> -->
+        {% if (forkable) %}
+        <a id="kathaa-fork-graph" class="navbar-bar minimalize-styl-2 btn btn-success" onclick="save_workflow()" title="Fork Graph" href="#"><i class="fa fa-code-fork"></i> <span class="nav-label">Fork Graph</span></a>
+        <code class="navbar-bar minimalize-styl-2">{{graph.name}}</code>
+        <input  type="hidden" name="name" value="{{ graph.name }}" id="name">
+        {%  else %}
         <input class="navbar-bar minimalize-styl-2 form-control" style="height:30px; width: 300px;" type="text" name="name" required="" value="{{ graph.name }}" placeholder="Name of the Graph" id="name">
+        {% endif %}
 
         <!-- Graph View Buttons -->
-        <button class="navbar-bar minimalize-styl-2 btn btn-success kathaa-graph-view-buttons hidden" type="button" onclick="editor.triggerAutolayout()" title="Auto Layout"><i class="fa fa-magic"></i></span></button>
         <button class="navbar-bar minimalize-styl-2 btn btn-primary kathaa-graph-view-buttons hidden" type="button" onclick="" id="kathaa-execute-workflow" title="Execute"><i class="fa fa-play"></i> Execute Graph </span></button>
 
         <!-- Kathaa-Explorer Buttons -->

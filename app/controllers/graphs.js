@@ -61,6 +61,8 @@ exports.new = function (req, res){
  * Upload an image
  */
 
+
+
 exports.create = wrap(function* (req, res) {
   console.log("Inside Create !!");
   const graph = new Graph(only(req.body, 'name body'));
@@ -76,6 +78,7 @@ exports.create = wrap(function* (req, res) {
   }
 
   if(req.body.isForked){
+    graph.name += "::Forked"
     //Update
     var parentGraph = yield Graph.load(
             mongoose.Types.ObjectId(req.body.parentGraph)
