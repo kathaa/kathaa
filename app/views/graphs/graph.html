@@ -24,10 +24,22 @@
                 <div class="user-button">
                     <div class="row">
                         <div class="col-md-6">
+                          {% if (graph.user.id == req.user.id ) %}
+                            <a href="/graphs/{{graph.id}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> Edit</a>
+                          {% else %}
                             <a href="/graphs/{{graph.id}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-eye"></i> View</a>
+                          {% endif %}
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-success btn-sm btn-block"><i class="fa fa-code-fork"></i> Fork</button>
+                          {% if (graph.user.id == req.user.id ) %}
+                            <form action="/graphs/{{graph.id}}" method="POST">
+                              <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+                              <input type="hidden" name="_method" value="DELETE">
+                              <button type="submit" class="btn btn-danger btn-sm btn-block"><i class="fa fa-trash"></i> Delete</button>
+                            </form>
+                          {% else %}
+                          <a class="btn btn-success btn-sm btn-block"><i class="fa fa-code-fork"></i> Fork</a>
+                          {% endif %}
                         </div>
                     </div>
                 </div>
