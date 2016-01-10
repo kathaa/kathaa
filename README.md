@@ -6,6 +6,8 @@ Although it was built for Sampark, it is highly flexible, and can accommodate an
 practically any other system, as long as you can safely represent the unit-task at
 hand by a single function which takes some inputs, and spits out some outputs :D.   
 
+![Kathaa Screenshot](https://cloud.githubusercontent.com/assets/1581312/12222517/cc55d2f0-b7e4-11e5-9f15-77a531a4affa.png)
+
 Installation
 ============
 ```
