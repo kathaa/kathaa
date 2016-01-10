@@ -38,6 +38,11 @@
 </center>
 {% endif %}
 
+<script type="text/javascript">
+  $(".kathaa-graph-snapshot").on('error', function(){
+    $(this).attr('src','/snapshot/default.png');
+  })
+</script>
 
 
 {% endblock %}
