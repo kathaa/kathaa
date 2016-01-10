@@ -9,7 +9,7 @@ hand by a single function which takes some inputs, and spits out some outputs :D
 Installation
 ============
 ```
-git clone https://github.com/spMohanty/kathaa-server
+git clone https://github.com/spMohanty/kathaa
 cd kathaa-server
 npm install .
 grunt build
