@@ -1,26 +1,37 @@
-<div class="col-lg-3">
-    <div class="contact-box">
-        <a href="{{ '/graphs/' + graph._id }}" title="{{ graph.name }}">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="text-center" style="background-color:black;-webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px;">
-                <img alt="image" class="kathaa-graph-snapshot" style="width:100%" class="img-responsive" src="/snapshot/{{graph.id}}.png">
-            </div>
-          </div>
+<div class="col-md-3">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <a href="/graphs/{{graph.id}}">
+            <h5>{{ graph.name }}</h5>
+          </a>
         </div>
-        <div class="row">
-          <div class="col-md-10">
-            <h3><strong>{{ graph.name }}</strong></h3>
-
-            {% if (graph.user) %}
-              Author :
-              <a style="color:#428bca" href="{{ '/users/' + graph.user._id }}">
-              {{graph.user.name}}
+        <div>
+            <div class="ibox-content no-padding border-left-right">
+              <a href="/graphs/{{graph.id}}">
+                  <img alt="image" class="kathaa-graph-snapshot" style="width:100%;background-color:black" class="img-responsive" src="/snapshot/{{graph.id}}.png">
               </a>
-            {% endif %}
-          </div>
-        </div>
-        <div class="clearfix"></div>
-        </a>
+            </div>
+            <div class="ibox-content profile-content">
+                <h4>
+                  <i class="fa fa-user"></i> Author :
+                  <a class="inline" style="" href="{{ '/users/' + graph.user._id }}">
+                    <strong>{{graph.user.name}}</strong>
+                  </a>
+                </h4>
+                <i class="fa fa-calendar"></i> Created :
+                <p class="inline">
+                 {{ graph.createdAt | date('F jS, Y') }}</p>
+                <div class="user-button">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="/graphs/{{graph.id}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-eye"></i> View</a>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-success btn-sm btn-block"><i class="fa fa-code-fork"></i> Fork</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
+</div>
 </div>
