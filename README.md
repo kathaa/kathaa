@@ -16,7 +16,11 @@ cd kathaa-server
 npm install .
 grunt build
 
+# Point to your MongoDB instance.
+# If you mongo DB instance is running on localhost in default settings, 
+# then you can ignore this next step
 export MONGOHQ_URL="mongodb://user:pass@your-mongo-server.some-domain.com:port_name/db_name"
+
 #Make sure, redis is running on localhost
 
 export NODE_ENV=development
