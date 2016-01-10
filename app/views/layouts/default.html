@@ -19,11 +19,13 @@
               {% block content %}{% endblock %}
             {% else %}
             <div id="kathaa-explorer-view">
+              {% if (!title=='false') %}
                 <div class="row wrapper border-bottom white-bg page-heading">
                     <div class="col-lg-9">
                       <h1>{{title}}</h1>
                     </div>
                 </div>
+              {% endif %}
                 <div class="row wrapper wrapper-content">
                   {% block content %}{% endblock %}
                 </div>
@@ -32,7 +34,7 @@
             {% endif %}
         </div>
 
-        {% block graphViewPostPageWrapper %}{% endblock %}        
+        {% block graphViewPostPageWrapper %}{% endblock %}
     </div>
   </body>
 {% include '../includes/foot.html' %}

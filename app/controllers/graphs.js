@@ -37,7 +37,7 @@ exports.index = wrap(function* (req, res) {
   const count = yield Graph.count();
 
   res.render('graphs/index', {
-    title: 'Graphs',
+    title: 'false',
     graphs: graphs,
     page: page + 1,
     pages: Math.ceil(count / limit)
