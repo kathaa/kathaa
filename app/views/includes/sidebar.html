@@ -19,11 +19,13 @@
                 </div>
             </li>
             <li>
+              {% if (req.isAuthenticated()) %}
               <a title="Create New Graph" href="/graphs/new"><i class="fa fa-file-text"></i> <span class="nav-label">Create New Graph</span></a>
+              {% endif %}
             </li>
 
             {% if (graphView) %}
-            <li class="kathaa-graph-sidebar-controls">
+            <li class="kathaa-graph-sidebar-controls hidden">
               {% if (forkable) %}
                 <a onclick="save_workflow()" title="Fork Graph" href="#"><i class="fa fa-code-fork"></i> <span class="nav-label">Fork Graph</span></a>
               {% else %}
@@ -45,5 +47,6 @@
             </li>
             {% endif %}
         </ul>
+        <canvas id="canvas" width="200px" height="200px"></canvas>
     </div>
 </nav>

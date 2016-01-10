@@ -599,6 +599,7 @@ graph = add_process_definitions(graph);
 //         JSON.stringify(graph, null, 4)
 //     )
 
+$("#kathaa-graph-snapshot").attr("value", document.querySelector("the-graph-nav").canvas.toDataURL());
 $("#kathaa-graph-body").attr("value", JSON.stringify(graph));
 $("#kathaa-graph-form").submit();
 

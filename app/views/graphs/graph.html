@@ -1,13 +1,15 @@
-<div class="col-lg-4">
+<div class="col-lg-3">
     <div class="contact-box">
         <a href="{{ '/graphs/' + graph._id }}" title="{{ graph.name }}">
-        <div class="col-sm-4">
-            <div class="text-center">
-                <img alt="image" class="img-circle m-t-xs img-responsive" src="http://www.pd4pic.com/images/microchip-flat-theme-circuit-icon.png">
-                <div class="m-t-xs font-bold"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-center" style="background-color:black;-webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px;">
+                <img alt="image" style="width:120%" class="img-responsive" src="/snapshot/{{graph.id}}.png">
             </div>
+          </div>
         </div>
-        <div class="col-sm-8">
+        <div class="row">
+          <div class="col-md-10">
             <h3><strong>{{ graph.name }}</strong></h3>
 
             {% if (graph.user) %}
@@ -16,30 +18,9 @@
               {{graph.user.name}}
               </a>
             {% endif %}
-
+          </div>
         </div>
         <div class="clearfix"></div>
         </a>
     </div>
 </div>
-
-
-<!-- <div class="graph">
-  <h3>
-    <a href="{{ '/graphs/' + graph._id }}" title="{{ graph.name }}">
-      {{ graph.name }}
-    </a>
-  </h3>
-  <p>{{ graph.body }}</p>
-
-  <span class="muted">{{ graph.createdAt.toISOString()|date('M d, Y  h:i a') }}</span>
-
-  {% if (graph.user) %}
-    &nbsp; - &nbsp;
-    <span>Author: </span>
-    <a href="{{ '/users/' + graph.user._id }}">
-      {{ graph.user.name || graph.user.username }}
-    </a>
-  {% endif %}
-
-</div> -->

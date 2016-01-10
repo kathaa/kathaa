@@ -27,6 +27,7 @@
     "entities": "^1.1.1",
     "express": "~4.13.3",
     "express-session": "~1.12.1",
+    "filendir": "^1.0.0",
     "forever": "~0.15.1",
     "grunt": "^0.4.5",
     "grunt-bower-install-simple": "^1.2.0",

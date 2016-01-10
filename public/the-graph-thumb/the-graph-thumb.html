@@ -5,7 +5,7 @@
 
 -->
 
-<polymer-element name="the-graph-thumb" attributes="graph width height thumbscale thumbrectangle theme">
+<polymer-element name="the-graph-thumb" attributes="graph width height thumbscale thumbrectangle theme canvas">
   <template>
     <canvas id="canvas" width="{{width}}" height="{{height}}" style="position:absolute;top:0;left:0;"></canvas>
   </template>
@@ -23,6 +23,7 @@
       strokeStyle: "hsl(180, 11%, 70%)",
       lineWidth: 0.75,
       theme: "dark",
+      canvas: null,
       edgeColors: [
         "white",
         "hsl(  0, 100%, 46%)",
@@ -39,6 +40,7 @@
       ready: function () {
         this.thumbrectangle = [0,0,500,500];
         this.viewrectangle = [0,0,200,150];
+        this.canvas = this.$.canvas;
       },
       attached: function () {
         this.style.width = this.width + "px";

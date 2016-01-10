@@ -1,4 +1,4 @@
-<polymer-element name="the-graph" attributes="graph menus library width height autolayout theme selectedNodes errorNodes selectedEdges animatedEdges getMenuDef pan scale maxZoom minZoom displaySelectionGroup forceSelection offsetY offsetX" touch-action="none">
+<polymer-element name="the-graph" attributes="graph menus library width height autolayout theme selectedNodes errorNodes selectedEdges animatedEdges getMenuDef pan scale maxZoom minZoom displaySelectionGroup forceSelection offsetY offsetX svgcontainer styleSheets" touch-action="none">
 
 
   <template>
@@ -53,6 +53,8 @@
       forceSelection: false,
       offsetY: null,
       offsetX: null,
+      svgcontainer: null,
+      styleSheets: null,
       created: function () {
         this.library = {};
         // Default pan
@@ -62,9 +64,12 @@
           onSuccess: this.applyAutolayout.bind(this),
           workerScript: "../bower_components/klayjs/klay.js"
         });
+
       },
       ready: function () {
         this.themeChanged();
+        this.svgcontainer = this.$.svgcontainer;
+        this.styleSheets = this.shadowRoot.styleSheets;
       },
       themeChanged: function () {
         this.$.svgcontainer.className = "the-graph-"+this.theme;

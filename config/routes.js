@@ -90,7 +90,7 @@ module.exports = function (app, passport) {
 
   // Graph routes
   app.param('id', graphs.load);
-  app.get('/graphs', graphs.index);
+  app.get('/graphs', auth.requiresLogin, graphs.index);
   app.get('/graphs/new', auth.requiresLogin, graphs.new);
   app.post('/graphs', auth.requiresLogin, graphs.create);
   app.get('/graphs/:id', auth.requiresLogin, graphs.show);

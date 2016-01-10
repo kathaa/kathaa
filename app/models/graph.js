@@ -65,6 +65,7 @@ GraphSchema.methods = {
   uploadAndSave: function () {
     const err = this.validateSync();
     if (err && err.toString()) throw new Error(err.toString());
+
     return this.save();
 
     /*

@@ -41,3 +41,4 @@ Makefile
 public/bower_components
 
 public/build
+public/snapshot/*

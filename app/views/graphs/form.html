@@ -12,6 +12,7 @@
 
 <form method="post" id="kathaa-graph-form" action="{{ action }}" enctype="multipart/form-data" role="form" class="form-horizontal">
   <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <input type="hidden" id="kathaa-graph-snapshot" name="snapshot" value"">
   <input name="body" id="kathaa-graph-body" class="form-control hidden" value="{{ graph.body }}" required=""></input>
 
   {% if not graph.isNew %}

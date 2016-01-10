@@ -1,6 +1,6 @@
 <link rel="import" href="../the-graph/the-graph.html">
 
-<polymer-element name="the-graph-editor" attributes="grid snap width height autolayout theme selectedNodes errorNodes selectedEdges animatedEdges onContextMenu displaySelectionGroup forceSelection" touch-action="none">
+<polymer-element name="the-graph-editor" attributes="grid snap width height autolayout theme selectedNodes errorNodes selectedEdges animatedEdges onContextMenu displaySelectionGroup forceSelection svgcontainer styleSheets" touch-action="none">
   <template>
     <the-graph id="graph"
       name="{{ graph.properties.name }}"
@@ -42,6 +42,8 @@
       animatedEdges: [],
       displaySelectionGroup: true,
       forceSelection: false,
+      svgcontainer: null,
+      styleSheets: null,
       created: function () {
         this.pan = [0,0];
         var pasteAction = function (graph, itemKey, item) {
@@ -57,7 +59,7 @@
         var addNodeAction = function(graph, itemKey, item){
             //TODO :: Add some preprocessing here to mark the item
             window.kathaa.addNodePositionKnown = true;
-            
+
             // get the position of the context menu from its transform attribute
             var contextMenu = window.document.querySelector('#editor /deep/ .context-menu');
             var transform = contextMenu?contextMenu.getAttribute('transform'):'';
@@ -208,7 +210,10 @@
           }
         };
       },
-      ready: function () {},
+      ready: function () {
+        this.svgcontainer = this.$.graph.svgcontainer;
+        this.styleSheets = this.$.graph.styleSheets;
+      },
       attached: function () {
       },
       detached: function () {
@@ -396,7 +401,7 @@
         }
       },
       resetModuleProgressBars: function(){
-        window.kathaa.show_module_progress = true;        
+        window.kathaa.show_module_progress = true;
         for(var i=0;i<this.nofloGraph.nodes.length; i++){
           this.nofloGraph.getNode(this.nofloGraph.nodes[i].id).metadata.refresh_progress = true;
           this.nofloGraph.getNode(this.nofloGraph.nodes[i].id).metadata.progress = 0;

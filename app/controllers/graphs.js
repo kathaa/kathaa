@@ -9,6 +9,7 @@ const assign = require('object-assign');
 const wrap = require('co-express');
 const only = require('only');
 const Graph = mongoose.model('Graph');
+const file_handler = require('../../config/file_handler');
 
 /**
  * Load
@@ -65,6 +66,15 @@ exports.create = wrap(function* (req, res) {
   const graph = new Graph(only(req.body, 'name body'));
   graph.user = req.user;
 
+  // Saves the Snapshot PNG in /public/snapshots folder with
+  // the graph-id as its name.
+  if(req.body.snapshot){
+    file_handler.save_base64_png( 'snapshot', graph.id+".png",
+                                  req.body.snapshot,
+                                  function(){
+                                  })
+  }
+
   if(req.body.isForked){
     //Update
     var parentGraph = yield Graph.load(
@@ -74,7 +84,7 @@ exports.create = wrap(function* (req, res) {
     yield graph.uploadAndSave();
     req.flash('success', 'Successfully forked graph!');
   }else{
-    yield graph.uploadAndSave();    
+    yield graph.uploadAndSave();
     req.flash('success', 'Successfully created graph!');
   }
 
@@ -100,6 +110,15 @@ exports.edit = function (req, res) {
 
 exports.update = wrap(function* (req, res){
   const graph = req.graph;
+
+  // Saves the Snapshot PNG in /public/snapshots folder with
+  // the graph-id as its name.
+  if(req.body.snapshot){
+    file_handler.save_base64_png( 'snapshot', graph.id+".png",
+                                  req.body.snapshot,
+                                  function(){
+                                  })
+  }
 
   assign(graph, only(req.body, 'name body'));
   yield graph.uploadAndSave();
@@ -131,6 +150,10 @@ exports.show = function (req, res){
 
 exports.destroy = wrap(function* (req, res) {
   yield req.graph.remove();
+
+  //Delete Snapshot
+  file_handler.delete_file('snapshot', req.graph.id+".png", function(){});
+
   req.flash('success', 'Deleted successfully');
   res.redirect('/graphs');
 });
