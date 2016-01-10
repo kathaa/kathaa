@@ -603,7 +603,7 @@ graph = add_process_definitions(graph);
 if($("#name").val().trim() == ""){
   toastr["error"]("", "The name of the graph cannot be blank....");
   $("#name")
-    .addClass("animated shake")
+    .addClass("animated shake error")
     .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
       $(this).removeClass("animated shake");
     });
