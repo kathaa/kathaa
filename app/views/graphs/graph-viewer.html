@@ -415,6 +415,7 @@ function init(params){
 
 $("#kathaa-edit-module-execute").click(function(){
     set_view('graph-editor');
+    window.kathaa.save_module_handler();
     var current_node = window.kathaa.latest_node_edit_focus;
 
     disable_controls();
