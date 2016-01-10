@@ -615,6 +615,16 @@ $("#kathaa-graph-body").attr("value", JSON.stringify(graph));
 $("#kathaa-graph-form").submit();
 
 }
+
+function show_workflow(){
+  var graph = editor.nofloGraph.toJSON();
+  graph = add_process_definitions(graph);
+
+  $("#kathaa-debug-view").show();
+  window.kathaa.debug_view.setValue(
+          JSON.stringify(graph, null, 4)
+      )
+}
 function toast(type, message, title, options){
 if(options){
     toastr.options = options;

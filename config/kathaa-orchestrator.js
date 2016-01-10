@@ -11,7 +11,7 @@ kathaaOrchestrator.prototype.executeGraph = function(graph, beginNode){
     // _kathaaOrchestrator.client.emit("debug_message", "Inside Preprocess");
 
 
-    //TO-DO: Handle empty graph in preprocessGraph validations, 
+    //TO-DO: Handle empty graph in preprocessGraph validations,
     // and add an error callback
     var _beginNode = graph.nodeMap[beginNode.id]
 
@@ -33,8 +33,8 @@ function getOutPorts(module_library, component_name){
 
 kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
   var node = graph.get_node(node_id);
-  var job = this.kue.create(  "JOB::"+node.id, 
-                              { graph:graph, 
+  var job = this.kue.create(  "JOB::"+node.id,
+                              { graph:graph,
                                 node:node
                               });
 
@@ -62,19 +62,19 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
     // Start preparing for prospective new jobs
 
-    var current_node, child_node, 
-        parent_nodes, parent_node_id, 
+    var current_node, child_node,
+        parent_nodes, parent_node_id,
         edge, kathaa_input;
 
     // for all children...
     current_node = graph.get_node(job.data.node.id);
-    
+
     for(var _child_id in current_node.children){
       edge = graph.get_node(current_node.id).children[_child_id];
 
       // the edge object should ideally hold corresponding results ?
       // Check if all dependencies (inports) of the node are satisfied
-      // If they are satisfied, automatically compute the kathaa_input 
+      // If they are satisfied, automatically compute the kathaa_input
       // inside the graph-level node instance
       if(graph.check_dependency_satisfied(_child_id, job.orchestrator.module_library)){
         job.orchestrator.queueNodeJob(graph, _child_id)
@@ -86,14 +86,14 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
   });
 
-  this.kue.process("JOB::"+node.id, 5, function(current_job, done){    
+  this.kue.process("JOB::"+node.id, 5, function(current_job, done){
     // console.log("Processing : "+current_job.data.node.id);
     debug(job.orchestrator.client, "Processing :"+current_job.id+"  node id : "+current_job.data.node.id);
 
     //Using custom progress tracker, as the Kue progress tracker is acting funny
     var progressTrackerWrapper = function(progress){
-      job.orchestrator.client.emit("execute_workflow_progress", 
-                          { progress : progress, 
+      job.orchestrator.client.emit("execute_workflow_progress",
+                          { progress : progress,
                             node_id : current_job.data.node.id
                           });
     }
@@ -118,7 +118,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     //TO-DO : Handle unknown component here
 
     //Check if custom process_definitions have been provided
-    
+
     //Look up the corresponding process in module library
     var _process = job.orchestrator.module_library.processes[node.component.replace("/","_")]
     // _process(current_job, progressTrackerWrapper, done);
@@ -139,16 +139,20 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
     }else{
        // Use the default process definition
-      _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, _done);
-
+       try{
+         _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, _done);
+       }catch(err){
+         job.failed().error(err);
+         done(err);
+       }
     }
   })
 
   job.on('failed', function(err){
-    //TO-DO: Handle 
+    //TO-DO: Handle
     console.log("Job Failed : "+job.id);
     console.log(err);
-    job.orchestrator.client.emit("node_processing_failed", {node: job.data.node, error: err});    
+    job.orchestrator.client.emit("node_processing_failed", {node: job.data.node, error: err});
     // job.orchestrator.client.emit("debug_message", "Job Failed : "+job.id);
   })
 
@@ -160,7 +164,7 @@ function debug(client, msg){
 }
 
 //Preprocesses the graph to optimise some of the future queries on the graph
-// - computes "children" of all nodes 
+// - computes "children" of all nodes
 // - computes starting node, and the ending nodes
 // - TO-DO : Remove portion of graph which does not begin with a sentence_input and end with a sentence_output
 // - TO-DO : Add Validations for the graph
@@ -205,8 +209,8 @@ kathaaOrchestrator.prototype.preprocessGraph = function(graph, callback){
 
     // Maintain a table of targets parents
     // This will be useful in case of modules which have
-    // multiple dependencies. 
-    // Modules like that can be enqueud **only** after all their dependencies 
+    // multiple dependencies.
+    // Modules like that can be enqueud **only** after all their dependencies
     // are met.
 
     if(target.parents == undefined){
@@ -263,10 +267,10 @@ kathaaOrchestrator.prototype.preprocessGraph = function(graph, callback){
       // if kathaa_output of parent is defined !!
       outport_value = this.get_outport_value(_parent_id, parent_port)
       if(outport_value == false){
-        return false;  
+        return false;
       }
 
-      // If they are satisfied, automatically keep computing 
+      // If they are satisfied, automatically keep computing
       // the kathaa_input inside the graph-level node instance
       this.set_inport_value(node_id, my_inport, outport_value);
     }
@@ -288,7 +292,7 @@ kathaaOrchestrator.prototype.preprocessGraph = function(graph, callback){
       }
 
     }
-    
+
     return true;
   }
 

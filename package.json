@@ -9,8 +9,7 @@
     "node": ">=5.x"
   },
   "scripts": {
-    "seed_development": "NODE_ENV=development node scripts/seed.js",
-    "seed_production": "NODE_ENV=production node scripts/seed.js",
+    "seed": "node scripts/seed.js",
     "flush_database" : "node scripts/flush_database.js",
     "start": "NODE_ENV=development ./node_modules/.bin/nodemon server.js",
     "debug": "NODE_ENV=development ./node_modules/.bin/nodemon --debug server.js",

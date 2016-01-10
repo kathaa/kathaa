@@ -17,14 +17,13 @@ grunt build
 export MONGOHQ_URL="mongodb://user:pass@your-mongo-server.some-domain.com:port_name/db_name"
 #Make sure, redis is running on localhost
 
-npm run seed_development
-# or `npm seed_production` for seeding the production database
+export NODE_ENV=development
+#or NODE_ENV=production, in case of production mode
 
+npm run seed
 # this will ask you for the details of the Admin user, and seed the database
 # with initial graphs
 
-export NODE_ENV=development
-#or NODE_ENV=production, in case of production mode
 npm start
 
 ###

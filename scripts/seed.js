@@ -134,10 +134,10 @@ function seedDatabase(user){
 
         graph.save(function(err){
           if(err){
-            console.log("Unable to save graph in the file :", fileName);
+            console.log("Unable to save graph from the file :", fileName);
             console.log(err);
           }else{
-            console.log("Successfully saved graph in the file : ",fileName);
+            console.log("Successfully saved graph from the file : ",fileName);
           }
 
           processingStatus[fileName] = true;
