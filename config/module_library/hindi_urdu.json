@@ -278,8 +278,16 @@
         "inports": [
             {
                 "type": "all", 
-                "name": "in_ssf"
-            }
+                "name": "in_mwe"
+            },
+            {
+                "type": "all", 
+                "name": "in_ner"
+            },
+            {
+                "type": "all", 
+                "name": "in_chunker"
+            }            
         ], 
         "version": "v0.1", 
         "outports": [
