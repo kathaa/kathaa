@@ -105,7 +105,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     var _done = function(error, _param){
       if(error){
         job.failed().error(error);
-        return done(error, node_error);
+        return done(error);
       }else{
         //In case of successful completion of job
         return done(error, _param)
