@@ -36,11 +36,14 @@
 {% block content %}
 
 
-
   <!-------------------------------------------------------------------------------------------------------------------------------->
-
-
+<audio id="chime_bell_ding.wav" class="hidden"><source src="/sounds/chime_bell_ding.wav"></audio>
 <script type="text/javascript">
+    function playPause(x){
+        var myAudio=document.getElementById(x);
+        myAudio.currentTime=0;
+        myAudio.play();
+    }
     function set_view(mode){
 
       var UIElements = {
@@ -359,6 +362,7 @@ socket.addEventListener('socket-connect', function(){
 
                 if(message.node.component=="core/sentence_output"){
                     toastr["success"]("", "Successfully processed "+message.node.metadata.label)
+                    playPause("chime_bell_ding.wav");
                 }
             });
 
