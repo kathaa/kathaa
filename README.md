@@ -40,6 +40,9 @@ npm run seed
 # this will ask you for the details of the Admin user, and seed the database
 # with initial graphs
 
+# Copy and Edit environment parameters
+cp config/env/env.example.json config/env/env.json
+
 npm start
 
 ###
@@ -47,6 +50,20 @@ npm start
 # You can also flush the mongodb database associated with your env by
 # npm run flush_database
 ```
+
+Extend
+======
+New Modules can be added in the `config/module_library` folder.
+Inside the folder, there is a `package.json` file, where references to different
+modules can be made.
+Modules have to defined using a `.json` and `.js` file inside the module_library.
+the `.json` file holds the definition of the structure of the module, and the `.js`
+file holds the definition of the function of the file.
+
+Look at examples in `config/module_library/core.js` and `config/module_library/core.json`
+for templates for defining custom modules.
+
+Pull requests for new modules would really be appreciated !!
 
 Author
 ======
