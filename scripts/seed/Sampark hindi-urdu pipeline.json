@@ -244,8 +244,7 @@
                 "width": 72,
                 "height": 72,
                 "progress": 100
-            },
-            "process_definition": "function (kathaa_inputs, progress, done){\n  console.log(\"Inside ner\");\n  //save computed output values\n  var kathaa_outputs = {}\n\n  hindi_urdu_request.post({\n    headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},\n    url:     'http://api.ilmt.iiit.ac.in/hin/urd/9/9',\n    body:    \"input=\"+encodeURI(kathaa_inputs['in_ssf']+\"&depsOn=[]\")\n  }, function(error, response, body){\n    if (!error && response.statusCode == 200) {\n      try{\n        console.log(body);\n        body = hindi_urdu_entities.decode(body);\n        body = JSON.parse(body);\n        //Assumes only one key is passed\n        for(var _key in body){\n          kathaa_outputs['out_ssf'] = body[_key];\n          done && done(null, kathaa_outputs);\n          return;\n        }\n      }catch(e){\n        var err = new Error('Malformed reply from Sampark API Server');        \n        done(err);\n      }\n    }else{\n      var err = new Error('Sampark API Server non responsive');      \n      done(err);\n    }\n  });\n//\n// \n// Available external libraries \n// \n// GLOBAL.hindi_urdu_request = require('request');\n// GLOBAL.hindi_urdu_Entities = require('html-entities').AllHtmlEntities;\n// GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();\n}"
+            }
         },
         "hindi_urdu/merger_5ek": {
             "component": "hindi_urdu/merger",
@@ -256,8 +255,7 @@
                 "width": 72,
                 "height": 72,
                 "progress": 100
-            },
-            "process_definition": "function(kathaa_inputs, progress, done){\n    console.log(\"Inside merger\");\n    //save computed output values\n    var kathaa_outputs = {}\n\n\n    //encode all inputs in base64\n    for(_key in kathaa_inputs){\n      kathaa_inputs[_key] = new Buffer(kathaa_inputs[_key]).toString('base64');\n    }\n\n    var params = { depsOn: [ 'ner', 'multiwordexpr', 'chunker' ],\n      src_lang: 'hin',\n      tgt_lang: 'urd',\n      ner: kathaa_inputs['in_ner'],\n      multiwordexpr: kathaa_inputs['in_mwe'],\n      chunker: kathaa_inputs['in_chunker']\n    }\n\n\n    var postData = querystring.stringify(params);\n    var options = {\n          hostname: 'pipeline.ilmt.iiit.ac.in',\n          port: 5000,\n          path: '/' + \"merger\",\n          method: 'POST',\n          headers: {\n              'Content-Type': 'application/x-www-form-urlencoded',\n              'Content-Length': postData.length\n          }\n    };\n    var start =10;\n    var end=10;\n    callback = function(response) {\n     var str = ''\n     response.setEncoding('utf8');\n     response.on('data', function (chunk) {\n       str += chunk;\n     });\n     response.on('end', function () {\n       kathaa_outputs['out_ssf'] = new Buffer(str, 'base64').toString('utf8');\n       done(null, kathaa_outputs);\n     });\n   }\n\n   var httpreq = http.request(options, callback);\n   httpreq.write(postData);\n   httpreq.end();\n//\n//\n// Available external libraries\n//\n// GLOBAL.hindi_urdu_request = require('request');\n// GLOBAL.hindi_urdu_Entities = require('html-entities').AllHtmlEntities;\n// GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();\n}"
+            }
         }
     },
     "connections": [
