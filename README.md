@@ -21,6 +21,12 @@ creating an online survey like Google Form (which in retrospect was a highly
 Installation
 ============
 ```
+# Note : The whole installation expects Node engine  >= 5.x
+# Please install the latest version of node from :
+# https://nodejs.org/en/download/package-manager/
+# Its really easy, I promise
+# :)
+
 git clone https://github.com/spMohanty/kathaa
 cd kathaa-server
 npm install .
