@@ -1,10 +1,20 @@
-KATHAA : A Visual Programming Framework for Sampark Machine Translation framework
+कथा (kathaa) : A Visual Programming Framework for Sampark Machine Translation framework
 =================================================================================
 
 Kathaa is a Visual Programming Framework for Sampark Machine Translation System.   
 Although it was built for Sampark, it is highly flexible, and can accommodate any   
 practically any other system, as long as you can safely represent the unit-task at
 hand by a single function which takes some inputs, and spits out some outputs :D.   
+
+The goal of this Framework is to empower researchers to design and tinker with
+complex NLP workflows irrespective of their technical proficiency, and hopefully
+to bridge the gap between Linguists and Computational Linguists.
+
+The vision of this Framework is to make creation of NLP workflows as easy as
+creating an online survey like Google Form (which in retrospect was a highly
+  time and resource consuming task just a few years ago).
+
+
 
 ![Kathaa Screenshot](https://cloud.githubusercontent.com/assets/1581312/12222517/cc55d2f0-b7e4-11e5-9f15-77a531a4affa.png)
 
@@ -17,7 +27,7 @@ npm install .
 grunt build
 
 # Point to your MongoDB instance.
-# If you mongo DB instance is running on localhost in default settings, 
+# If you mongo DB instance is running on localhost in default settings,
 # then you can ignore this next step
 export MONGOHQ_URL="mongodb://user:pass@your-mongo-server.some-domain.com:port_name/db_name"
 
