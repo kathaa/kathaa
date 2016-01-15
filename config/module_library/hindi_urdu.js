@@ -239,7 +239,7 @@ hindi_urdu.prototype.hindi_urdu_pickonemorph = function(kathaa_inputs, progress,
 // GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();
 }
 
-hindi_urdu.prototype.hindi_urdu_chunker = function(kathaa_inputs, progress, done){
+hindi_urdu.prototype.hindi_urdu_chunker = function (kathaa_inputs, progress, done){
   console.log("Inside chunker");
   //save computed output values
   var kathaa_outputs = {}
@@ -247,7 +247,7 @@ hindi_urdu.prototype.hindi_urdu_chunker = function(kathaa_inputs, progress, done
   hindi_urdu_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/urd/7/7',
-    body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
+    body:    "pickonemorph="+encodeURI(kathaa_inputs['in_ssf'])
   }, function(error, response, body){
     if (!error && response.statusCode == 200) {
       try{
@@ -278,7 +278,7 @@ hindi_urdu.prototype.hindi_urdu_chunker = function(kathaa_inputs, progress, done
 // GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();
 }
 
-hindi_urdu.prototype.hindi_urdu_multiwordexpr = function(kathaa_inputs, progress, done){
+hindi_urdu.prototype.hindi_urdu_multiwordexpr = function (kathaa_inputs, progress, done){
   console.log("Inside multiwordexpr");
   //save computed output values
   var kathaa_outputs = {}
@@ -286,7 +286,7 @@ hindi_urdu.prototype.hindi_urdu_multiwordexpr = function(kathaa_inputs, progress
   hindi_urdu_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/urd/8/8',
-    body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
+    body:    "pickonemorph="+encodeURI(kathaa_inputs['in_ssf'])
   }, function(error, response, body){
     if (!error && response.statusCode == 200) {
       try{
@@ -317,7 +317,7 @@ hindi_urdu.prototype.hindi_urdu_multiwordexpr = function(kathaa_inputs, progress
 // GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();
 }
 
-hindi_urdu.prototype.hindi_urdu_ner = function(kathaa_inputs, progress, done){
+hindi_urdu.prototype.hindi_urdu_ner = function (kathaa_inputs, progress, done){
   console.log("Inside ner");
   //save computed output values
   var kathaa_outputs = {}
@@ -325,7 +325,7 @@ hindi_urdu.prototype.hindi_urdu_ner = function(kathaa_inputs, progress, done){
   hindi_urdu_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/urd/9/9',
-    body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
+    body:    "utf2wx="+encodeURI(kathaa_inputs['in_ssf'])
   }, function(error, response, body){
     if (!error && response.statusCode == 200) {
       try{
@@ -356,15 +356,15 @@ hindi_urdu.prototype.hindi_urdu_ner = function(kathaa_inputs, progress, done){
 // GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();
 }
 
-hindi_urdu.prototype.hindi_urdu_merger = function(kathaa_inputs, progress, done){
-  console.log("Inside merger");
+hindi_urdu.prototype.hindi_urdu_merger = function (kathaa_inputs, progress, done){
+  console.log("Inside Merger");
   //save computed output values
   var kathaa_outputs = {}
-
+  
   hindi_urdu_request.post({
     headers: {'content-type' : 'application/x-www-form-urlencoded;charset=UTF-8'},
     url:     'http://api.ilmt.iiit.ac.in/hin/urd/10/10',
-    body:    "input="+encodeURI(kathaa_inputs['in_ssf'])
+    body:    "multiwordexpr="+encodeURI(kathaa_inputs['in_mwe'])+"&chunker="+encodeURI(kathaa_inputs['in_chunker'])+"&ner="+encodeURI(kathaa_inputs['in_ner'])
   }, function(error, response, body){
     if (!error && response.statusCode == 200) {
       try{
@@ -386,6 +386,8 @@ hindi_urdu.prototype.hindi_urdu_merger = function(kathaa_inputs, progress, done)
       done(err);
     }
   });
+
+  
 //
 // 
 // Available external libraries 
@@ -394,6 +396,7 @@ hindi_urdu.prototype.hindi_urdu_merger = function(kathaa_inputs, progress, done)
 // GLOBAL.hindi_urdu_Entities = require('html-entities').AllHtmlEntities;
 // GLOBAL.hindi_urdu_entities = new GLOBAL.hindi_urdu_Entities();
 }
+
 
 hindi_urdu.prototype.hindi_urdu_headcomputation = function(kathaa_inputs, progress, done){
   console.log("Inside headcomputation");
