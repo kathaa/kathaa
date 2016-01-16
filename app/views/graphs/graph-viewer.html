@@ -65,10 +65,10 @@
 
       for(var _key in UIElements){
         if(_key == mode){
-          console.log("Showing :",UIElements[_key]);
+          if(window.kathaa.debug){console.log("Showing :",UIElements[_key]);}
           showElements(UIElements[_key]);
         }else{
-          console.log("Hiding :",UIElements[_key]);
+          if(window.kathaa.debug){console.log("Hiding :",UIElements[_key]);}
           hideElements(UIElements[_key]);
         }
       }
@@ -321,7 +321,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $("#kathaa-edit-edge-routes div").click(function(){
-            console.log($(this).attr("route"));
+            if(window.kathaa.debug){console.log($(this).attr("route"));}
 
             window.kathaa.latest_edge_edit_focus.metadata.route = $(this).attr("route");
             editor.rerender();
@@ -343,19 +343,19 @@ socket.addEventListener('socket-connect', function(){
             //
             if(socket.socket.listeners("execute_workflow_progress").length==0)
             socket.socket.on('execute_workflow_progress', function (message) {
-              // console.log("Progress Notification ::");
-              // console.log(message);
+              // if(window.kathaa.debug){console.log("Progress Notification ::");}
+              // if(window.kathaa.debug){console.log(message);}
               try{
                   editor.updateModuleProgressPercentage(message.node_id, message.progress);
               }catch(err){
-                console.log(err);
+                if(window.kathaa.debug){console.log(err);}
               }
             });
 
             if(socket.socket.listeners("node_processing_complete").length==0)
             socket.socket.on('node_processing_complete', function(message){
-                // console.log("Node Processing Complete :: ");
-                // console.log(message);
+                // if(window.kathaa.debug){console.log("Node Processing Complete :: ");}
+                // if(window.kathaa.debug){console.log(message);}
 
                 //Save state of the node in the latest workflow run
                 window.kathaa.latest_workflow_run[message.node.id] = message.node;
@@ -379,13 +379,13 @@ socket.addEventListener('socket-connect', function(){
 
             if(socket.socket.listeners("debug_message").length==0)
             socket.socket.on('debug_message', function (message) {
-              console.log("DEBUG ::");
-              console.log(message);
+              if(window.kathaa.debug){console.log("DEBUG ::");}
+              if(window.kathaa.debug){console.log(message);}
             });
 
             if(socket.socket.listeners("init").length==0)
             socket.socket.on('init', function(params){
-                console.log(params);
+                if(window.kathaa.debug){console.log(params);}
                 if(window.library == undefined){
                   init(params);
                 }
@@ -394,10 +394,10 @@ socket.addEventListener('socket-connect', function(){
 socket.addEventListener('socket-error', function(){
             toastr["error"]("please wait while we try to reconnect", "Connecting failed");
             set_view("loading");
-            console.log("Socket Error !!");
+            if(window.kathaa.debug){console.log("Socket Error !!");}
         });
 socket.addEventListener('socket-timeout', function(){
-            console.log("Socket Timeout !!");
+            if(window.kathaa.debug){console.log("Socket Timeout !!");}
         });
 
 function init(params){

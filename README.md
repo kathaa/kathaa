@@ -49,7 +49,7 @@ npm run seed
 # Copy and Edit environment parameters
 cp config/env/env.example.json config/env/env.json
 
-npm start
+npm run forever
 
 ###
 #
