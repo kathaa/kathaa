@@ -59,17 +59,24 @@ npm start
 
 Extend
 ======
-New Modules can be added in the `config/module_library` folder.
+New Modules can be added in the `module_library` folder.
 Inside the folder, there is a `package.json` file, where references to different
 modules can be made.
-Modules have to defined using a `.json` and `.js` file inside the module_library.
-the `.json` file holds the definition of the structure of the module, and the `.js`
-file holds the definition of the function of the file.
+Modules have to be defined in their corresponding component-groups.
+Each component-group is a folder inside the `module_library` folder, and each
+module is a separate folder in the corresponding component-group folder.
 
-Look at examples in `config/module_library/core.js` and `config/module_library/core.json`
+the `package.json` file in the respective module folder defines the structure of the
+module, and the `main` parameter in the `package.json` tells the module_library_loader
+where to look for the function that the module is supposed to execute.
+
+Look at examples in `module_library/core/custom/package.json` and `module_library/core/custom/index.js`
 for templates for defining custom modules.
 
-Pull requests for new modules would really be appreciated !!
+External libraries can be added in the `libraries.js` file of the folder of the corresponding
+component-group.
+
+Pull requests for new modules/component-groups would really be appreciated !!
 
 Author
 ======
