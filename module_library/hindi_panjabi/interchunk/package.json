@@ -1,0 +1,21 @@
+{
+    "name": "interchunk",
+    "inports": [
+        {
+            "type": "all",
+            "name": "in_ssf"
+        }
+    ],
+    "version": "v0.1",
+    "outports": [
+        {
+            "type": "all",
+            "name": "out_ssf"
+        }
+    ],
+    "metadata": {
+        "label": "interchunk"
+    },
+    "icon": "legal",
+    "main": "index.js"
+}

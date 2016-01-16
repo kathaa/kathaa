@@ -1,0 +1,21 @@
+{
+    "name": "intrachunk",
+    "inports": [
+        {
+            "type": "all",
+            "name": "in_ssf"
+        }
+    ],
+    "version": "v0.1",
+    "outports": [
+        {
+            "type": "all",
+            "name": "out_ssf"
+        }
+    ],
+    "metadata": {
+        "label": "intrachunk"
+    },
+    "icon": "legal",
+    "main": "index.js"
+}

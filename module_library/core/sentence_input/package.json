@@ -1,0 +1,16 @@
+{
+    "name": "sentence_input",
+    "version": "v0.1",
+    "icon": "keyboard-o",
+    "inports": [],
+    "outports": [
+        {
+            "name": "out_ssf",
+            "type": "all"
+        }
+    ],
+    "metadata": {
+        "label": "Sentence Input"
+    },
+    "main": "index.js"
+}

@@ -1,0 +1,21 @@
+{
+    "name": "lexicaltransfer",
+    "inports": [
+        {
+            "type": "all",
+            "name": "in_ssf"
+        }
+    ],
+    "version": "v0.1",
+    "outports": [
+        {
+            "type": "all",
+            "name": "out_ssf"
+        }
+    ],
+    "metadata": {
+        "label": "lexicaltransfer"
+    },
+    "icon": "legal",
+    "main": "index.js"
+}

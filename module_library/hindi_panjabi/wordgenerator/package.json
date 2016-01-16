@@ -1,0 +1,21 @@
+{
+    "name": "wordgenerator",
+    "inports": [
+        {
+            "type": "all",
+            "name": "in_ssf"
+        }
+    ],
+    "version": "v0.1",
+    "outports": [
+        {
+            "type": "all",
+            "name": "out_ssf"
+        }
+    ],
+    "metadata": {
+        "label": "wordgenerator"
+    },
+    "icon": "legal",
+    "main": "index.js"
+}

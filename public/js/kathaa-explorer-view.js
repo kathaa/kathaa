@@ -99,7 +99,7 @@ $(document).ready(function(){
         }else{
             window.kathaa.explorer_process_definition_editor.setValue(
                     window.kathaa.process_definitions[
-                        window.kathaa.latest_node_edit_focus.component.replace("/", "_")
+                        window.kathaa.latest_node_edit_focus.component
                     ]
                 )
         }
@@ -286,7 +286,7 @@ $(document).ready(function(){
         if(window.kathaa.process_definitions){
             if(window.kathaa.explorer_process_definition_editor.getValue() !=
                 window.kathaa.process_definitions[
-                        target_node.component.replace("/","_")
+                        target_node.component
                     ]
                 ){
                     target_node.process_definition

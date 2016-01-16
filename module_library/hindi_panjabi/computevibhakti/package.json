@@ -1,0 +1,21 @@
+{
+    "name": "computevibhakti",
+    "inports": [
+        {
+            "type": "all",
+            "name": "in_ssf"
+        }
+    ],
+    "version": "v0.1",
+    "outports": [
+        {
+            "type": "all",
+            "name": "out_ssf"
+        }
+    ],
+    "metadata": {
+        "label": "computevibhakti"
+    },
+    "icon": "legal",
+    "main": "index.js"
+}

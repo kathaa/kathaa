@@ -1,0 +1,21 @@
+{
+    "name": "utf2wx",
+    "inports": [
+        {
+            "type": "all",
+            "name": "in_ssf"
+        }
+    ],
+    "version": "v0.1",
+    "outports": [
+        {
+            "type": "all",
+            "name": "out_ssf"
+        }
+    ],
+    "metadata": {
+        "label": "utf2wx"
+    },
+    "icon": "legal",
+    "main": "index.js"
+}

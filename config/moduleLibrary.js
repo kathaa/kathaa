@@ -6,9 +6,12 @@
 
 const env = process.env.NODE_ENV || 'development';
 
+var fs = require('fs-extra');
+var path = require('path');
 var jsonfile = require('jsonfile');
 var util = require('util');
 var utf8 = require('utf8');
+var marked = require('marked');
 
 /**
  * Expose
@@ -17,7 +20,9 @@ var utf8 = require('utf8');
 module.exports = function () {
 
   //Load Module Libraries
-  var file = __dirname+"/module_library/package.json";
+  var module_library_root = __dirname+"/../module_library";
+
+  var file = module_library_root + "/package.json";
   var module_package = jsonfile.readFileSync(file);
   var module_library = {}
   module_library.component_library = {}
@@ -25,32 +30,48 @@ module.exports = function () {
   module_library.processes = {}
   module_library.process_definitions = {}
 
-  module_package.files.forEach(function(element, index, array){
-    jsonConcat(module_library.component_library, jsonfile.readFileSync(__dirname+"/module_library/"+element));
+  var namespace_directory ;
+  var component_directory;
+  var _process;
 
-    var library_definition_file = element.split(".");
-    library_definition_file.pop();
-    library_definition_file.push("js");
-    library_definition_file = library_definition_file.join(".");
+  module_package['component-groups'].forEach(function(namespace, index, array){
+  namespace_directory = path.join(module_library_root, namespace);
 
-    var library_definition = require(__dirname+"/module_library/"+library_definition_file);
-    for(var _process in library_definition.prototype){
-      module_library.processes[_process] = library_definition.prototype[_process];
-      module_library.process_definitions[_process] = library_definition.prototype[_process].toString();
-      module_library.library_object[_process] = library_definition;
+  // Import Global Libraries required by individual component-groups
+  require(namespace_directory+"/libraries.js");
+
+  fs.readdirSync(namespace_directory).filter(function(file) {
+    return fs.statSync(path.join(namespace_directory, file)).isDirectory();
+  }).forEach(function(module, index, array){
+
+    component_directory = path.join(namespace_directory, module);
+
+    //Read JSON file
+    try{
+      var module_definition = jsonfile.readFileSync(path.join(component_directory, "package.json"));
+
+      _process = namespace + "/" + module_definition['name'];
+      module_definition['name'] = _process;
+
+      //Collect Description
+      module_definition['description'] = fs.readFileSync(path.join(component_directory, "description.md"), 'UTF-8');
+      module_definition['description'] = marked(module_definition['description']);
+
+      //Collect Processes
+      module_library.processes[_process] = require(path.join(component_directory, module_definition['main']))
+      //Collect Process Definition
+      module_library.process_definitions[_process] = module_library.processes[_process].toString();
+
+
+      delete module_definition['main'];
+      //Add module library to component_library
+      module_library.component_library[_process] = module_definition;
+
+    }catch(err){
+      //Pass Silently
+      console.error(err);
     }
+  });
   })
   return module_library;
 };
-
-//Helper functions
-function random_string(){
-  return Math.random().toString(36).substring(7);
-}
-
-function jsonConcat(o1, o2) {
- for (var key in o2) {
-  o1[key] = o2[key];
- }
- return o1;
-}

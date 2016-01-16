@@ -1,0 +1,21 @@
+{
+    "name": "root2infinity",
+    "inports": [
+        {
+            "type": "all",
+            "name": "in_ssf"
+        }
+    ],
+    "version": "v0.1",
+    "outports": [
+        {
+            "type": "all",
+            "name": "out_ssf"
+        }
+    ],
+    "metadata": {
+        "label": "root2infinity"
+    },
+    "icon": "legal",
+    "main": "index.js"
+}
