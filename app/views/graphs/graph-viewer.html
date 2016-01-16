@@ -405,6 +405,7 @@ function init(params){
     //Register known modules as components
     window.library = {};
     window.library['core'] = params.module_library;
+
     $.each(window.library, function(key, value){
         $.each(value, function(key, value){
             editor.registerComponent(value)
@@ -548,6 +549,7 @@ window.kathaa = {}
 window.kathaa.input_editor_buffer = {}
 window.kathaa.latest_workflow_run = {}
 window.kathaa.show_module_progress = false;
+window.editor = document.querySelector("the-graph-editor");
 
 Polymer.veiledElements = ["the-graph-editor"];
 window.addEventListener('polymer-ready', function() {
@@ -563,13 +565,12 @@ window.loadGraph = function (json) {
   loading_visibility(false);
 
   // Load graph
-  var editor = document.getElementById('editor');
   var graph = json.data ? JSON.parse(json.data.files['noflo.json'].content) : json;
   var graphString = JSON.stringify(graph);
   editor.graph = graph;
 
   // Attach editor to nav
-  var nav = document.getElementById('nav');
+  var nav = document.querySelector('the-graph-nav');
   nav.editor = editor;
 };
 
@@ -584,7 +585,6 @@ loadGraph(JSON.parse({{graph.body | json | raw }}));
   body.appendChild(script);
 {% endif %}
 // Resize to fill window and also have explicit w/h attributes
-var editor = document.getElementById("editor");
 var resize = function () {
   editor.setAttribute("width", window.innerWidth);
   editor.setAttribute("height", window.innerHeight);
