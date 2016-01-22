@@ -1,5 +1,5 @@
 module.exports = function (kathaa_inputs, progress, done){
-  console.log("Inside pruning");
+  ////console.log("Inside pruning");
   //save computed output values
   var kathaa_outputs = {}
 
@@ -10,7 +10,7 @@ module.exports = function (kathaa_inputs, progress, done){
   }, function(error, response, body){
     if (!error && response.statusCode == 200) {
       try{
-        console.log(body);
+        ////console.log(body);
         body = hindi_panjabi_entities.decode(body);
         body = JSON.parse(body);
         //Assumes only one key is passed

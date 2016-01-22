@@ -58,7 +58,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
   job.on('complete', function(kathaa_outputs){
 
-    debug(job.orchestrator.client, kathaa_outputs);
+    // debug(job.orchestrator.client, kathaa_outputs);
 
     //For reference during enqueing
     graph.nodeMap[job.data.node.id].kathaa_outputs = mergeObjects(
@@ -69,8 +69,8 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     console.log("Job Complete : "+job.id);
 
     // Wrap up job-complete formalities
-    job.orchestrator.client.emit("debug_message", "Job Complete : "+job.id);
-    job.orchestrator.client.emit("debug_message", graph);
+    // job.orchestrator.client.emit("debug_message", "Job Complete : "+job.id);
+    // job.orchestrator.client.emit("debug_message", graph);
     job.orchestrator.client.emit("node_processing_complete", {node:graph.get_node(job.data.node.id)});;
     job.orchestrator.client.emit("execute_workflow_progress", {progress:100, node_id: job.data.node.id});
 
@@ -95,7 +95,6 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       }else{
         console.log("Dependency Failed for child : "+_child_id);
       }
-
     }
 
   });
