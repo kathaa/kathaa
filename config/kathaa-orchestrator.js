@@ -349,7 +349,7 @@ kathaaOrchestrator.prototype.preprocessGraph = function(graph, callback){
       // NOTE :
       // Possible Heisenbug here
       // Fix This
-      // console.log("Time ::", process.hrtime());
+      console.log("Time ::", process.hrtime());
       // console.log(edge);
 
       // if kathaa_output of parent is defined !!

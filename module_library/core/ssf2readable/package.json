@@ -1,0 +1,21 @@
+{
+    "name": "ssf2readable",
+    "version": "v0.1",
+    "icon": "eye",
+    "inports": [
+        {
+            "name": "in_ssf",
+            "type": "all"
+        }
+    ],
+    "outports": [
+        {
+            "name": "out",
+            "type": "all"
+        }
+    ],
+    "metadata": {
+        "label": "SSF 2 Readable"
+    },
+    "main": "index.js"
+}

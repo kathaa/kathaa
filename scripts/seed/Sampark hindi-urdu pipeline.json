@@ -228,7 +228,7 @@
             "component": "core/sentence_output",
             "metadata": {
                 "label": "Output",
-                "x": 5472,
+                "x": 5796,
                 "y": 432,
                 "width": 72,
                 "height": 72,
@@ -252,6 +252,28 @@
                 "label": "merger",
                 "x": 2520,
                 "y": 324,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/ssf2readable_vc4": {
+            "component": "core/ssf2readable",
+            "metadata": {
+                "label": "SSF 2 Readable",
+                "x": 5796,
+                "y": 288,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_urdu/wx2utf_urd_1gr3": {
+            "component": "hindi_urdu/wx2utf_urd",
+            "metadata": {
+                "label": "wx2utf_urd",
+                "x": 5508,
+                "y": 432,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -447,16 +469,6 @@
         },
         {
             "src": {
-                "process": "hindi_urdu/wordgenerator_1icu",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "core/sentence_output_f07",
-                "port": "in_ssf"
-            }
-        },
-        {
-            "src": {
                 "process": "hindi_urdu/utf2wx_6jt",
                 "port": "out_ssf"
             },
@@ -515,8 +527,44 @@
             "tgt": {
                 "process": "hindi_urdu/headcomputation_1vs4",
                 "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_urdu/wordgenerator_1icu",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_urdu/wx2utf_urd_1gr3",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_urdu/wx2utf_urd_1gr3",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/sentence_output_f07",
+                "port": "in_ssf"
             },
             "metadata": {}
+        },
+        {
+            "src": {
+                "process": "hindi_urdu/wx2utf_urd_1gr3",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf2readable_vc4",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": 0
+            }
         }
     ]
 }
