@@ -20,18 +20,18 @@ module.exports = function (kathaa_inputs, progress, done){
           return;
         }
       }catch(e){
-        var err = new Error('Malformed reply from Sampark API Server');        
+        var err = new Error('Malformed reply from Sampark API Server');
         done(err);
       }
     }else{
-      var err = new Error('Sampark API Server non responsive');      
+      var err = new Error('Sampark API Server non responsive');
       done(err);
     }
   });
 //
-// 
-// Available external libraries 
-// 
+//
+// Available external libraries
+//
 // GLOBAL.hindi_panjabi_request = require('request');
 // GLOBAL.hindi_panjabi_Entities = require('html-entities').AllHtmlEntities;
 // GLOBAL.hindi_panjabi_entities = new GLOBAL.hindi_panjabi_Entities();

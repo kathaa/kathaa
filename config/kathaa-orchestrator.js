@@ -1,4 +1,5 @@
 var sleep = require('sleep');
+GLOBAL.kathaaData = require('./kathaa-data');
 
 var kathaaOrchestrator = function (module_library, kue, client){
   this.module_library = module_library;
@@ -10,14 +11,27 @@ kathaaOrchestrator.prototype.executeGraph = function(graph, beginNode){
   this.preprocessGraph(graph, function(_kathaaOrchestrator){
     // _kathaaOrchestrator.client.emit("debug_message", "Inside Preprocess");
 
-
     //TO-DO: Handle empty graph in preprocessGraph validations,
     // and add an error callback
     var _beginNode = graph.nodeMap[beginNode.id]
 
-    // // Copy beginNode kathaa_inputs into the _beginNode instance inside graph
+    // Copy beginNode kathaa_inputs into the _beginNode instance inside graph
     _beginNode.kathaa_inputs = beginNode.kathaa_inputs;
     _beginNode.kathaa_outputs = {}
+
+    if(_beginNode.component == "core/sentence_input"){
+      // In case of sentence_input, kathaa_input is not in kathaa-data format
+      // convert it into kathaa data format
+
+      for(var key in beginNode.kathaa_inputs){
+        var temp = beginNode.kathaa_inputs[key].trim().split("\n");
+        _beginNode.kathaa_inputs[key] = new kathaaData("");
+        for(var idx in temp){
+          _beginNode.kathaa_inputs[key].set(idx, temp[idx]);
+        }
+        _beginNode.kathaa_inputs[key] = _beginNode.kathaa_inputs[key].render();
+      }
+    }
 
     _kathaaOrchestrator.queueNodeJob(graph, _beginNode.id);
 
@@ -87,64 +101,131 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
   });
 
   this.kue.process("JOB::"+node.id, 5, function(current_job, done){
+    //TO-DO :: Refactor this block of code !!
+
     // console.log("Processing : "+current_job.data.node.id);
     debug(job.orchestrator.client, "Processing :"+current_job.id+"  node id : "+current_job.data.node.id);
-
-    //Using custom progress tracker, as the Kue progress tracker is acting funny
-    var progressTrackerWrapper = function(progress){
-      job.orchestrator.client.emit("execute_workflow_progress",
-                          { progress : progress,
-                            node_id : current_job.data.node.id
-                          });
-    }
-
-    // Custom _done wrapper to be passed into the individual processes
-    // if error, is defined, then _param will represent a custom error message
-    // if the job successfully completes, error has to be passed as null, and _param
-    // represents `kathaa_input`
-    var _done = function(error, _param){
-      if(error){
-        job.failed().error(error);
-        return done(error);
-      }else{
-        //In case of successful completion of job
-        return done(error, _param)
-      }
-    }
 
     // The current_job object is guaranteed to have `kathaa_inputs` object properly defined
     // The job of the process and return the `kathaa_outputs` object
 
-    //TO-DO : Handle unknown component here
+    // `kathaa_inputs` now holds the input-port values for a whole list of sentences.
+    // instead of a single sentence !!
+    //
+    // Parse all individual kathaa_inputs into their respective kathaa-data object
+    job.data.node.kathaa_inputs_objectified = {}
+    for(var input_port in job.data.node.kathaa_inputs){
+      job.data.node.kathaa_inputs_objectified[input_port] = new kathaaData(job.data.node.kathaa_inputs[input_port]);
+    }
+    job.data.node.kathaa_outputs = {}
+    job.data.node.kathaa_outputs_objectified = {};
 
-    //Check if custom process_definitions have been provided
+    // One key assumption is all nodes will have atleast one input
+    // and all kathaa_input_objects will have the exact same set of keys(as defined by input_ports)
+    // TO-DO :: Add Validation here for the same
 
-    //Look up the corresponding process in module library
-    var _process = job.orchestrator.module_library.processes[node.component]
-    // _process(current_job, progressTrackerWrapper, done);
-    console.log(_process);
+    // Define the process
+    var _process;
+    try{
+      //Check if the node itself supplies a process defintion
+      if(current_job.data.node.process_definition){
+        //then use this process definition instead
+          _process = new Function("return " + current_job.data.node.process_definition)();
+      }else{
+         //Look up the corresponding process in module library
+         _process = job.orchestrator.module_library.processes[node.component];
+      }
+    }catch(err){
+      new Error("Faulty function definition in process : "+node.component);
+      job.failed().error(err);
+      done(err);
+    }
 
-    //Check if the node itself supplies a process defintion
-    if(current_job.data.node.process_definition){
-      //then use this process definition instead
-      //TO-DO Handle errors here
-      //TO-DO Come up with a better way to run in scope
+    // For all Sentences.......Try to run the process, and collect the output
+    // Build a proper kathaa_output object in the RAW/render() form of the kathaa-data object
+    // and then mark as job-completed.
+    var first_input_port = Object.keys(job.data.node.kathaa_inputs)[0]
+    var sentence_ids = job.data.node.kathaa_inputs_objectified[first_input_port].getKeys();
+    var weight_of_sentence = (1/job.data.node.kathaa_inputs_objectified[first_input_port].getKeys().length);
+
+    var outputs_received = 0;
+    function currentProgress(){
+      return (outputs_received/job.data.node.kathaa_inputs_objectified[first_input_port].getKeys().length);
+    }
+
+    var _partial_job_done =  function(sentence_id){
+      var _sentence_id = sentence_id;
+      return function(error, _param){
+                // Custom _done wrapper to be passed into the individual processes
+                // if error, is defined, then _param will represent a custom error message
+                // if the job successfully completes, error has to be passed as null, and _param
+                // represents `kathaa_input`
+                if(error){
+                  // Currently the whole job gets failed if even one of the sentence fails execution
+                  // TO-DO :: Fix this....probably mark error state in the Kathaa-Data format
+                  job.failed().error(error);
+                  return done(error);
+                }else{
+                  // In case of successful completion of partial-job
+                  // Iterate over _param and add keys to respective sentence_ids in kathaa_outputs_objectified
+                  for(var key in _param){
+                    //Check if the object exists
+                    if(job.data.node.kathaa_outputs_objectified.hasOwnProperty(key)){
+                      //Cool do nothing :D everything is in place :D
+                    }
+                    else{
+                      job.data.node.kathaa_outputs_objectified[key] = new kathaaData("");
+                    }
+                    //Set the param corresponding to the sentence_id
+                    job.data.node.kathaa_outputs_objectified[key].set(_sentence_id, _param[key]);
+                    // job.data.node.kathaa_outputs_objectified[key].data[sentence_id+""] = _param[key];
+                  }
+                  outputs_received += 1;
+
+                  // Wait till all outputs have been received
+                  if(currentProgress() == 1){
+                    //Job Complete
+                    //Transfer all kathaa_outputs_objectified to kathaa_outputs
+                    for(var key in job.data.node.kathaa_outputs_objectified){
+                      job.data.node.kathaa_outputs[key] = job.data.node.kathaa_outputs_objectified[key].render();
+                    }
+                    return done(error, job.data.node.kathaa_outputs)
+                  }else{
+                    //Mark Progress
+                    job.orchestrator.client.emit("execute_workflow_progress",
+                                        { progress :  (currentProgress())*100,
+                                          node_id : current_job.data.node.id
+                                        });
+                  }
+                }
+            }
+          }
+
+
+    for(var _idx in sentence_ids){
+
+      //Build per-sentence kathaa_input
+      var _sentence_kathaa_inputs = {}
+      for(var input_port in job.data.node.kathaa_inputs_objectified){
+        _sentence_kathaa_inputs[input_port] = job.data.node.kathaa_inputs_objectified[input_port].get(sentence_ids[_idx]);
+      }
+
+      //Try to execute the process
       try{
-        _process = new Function("return " + current_job.data.node.process_definition)();
-        _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, _done)
+        _process(_sentence_kathaa_inputs,
+          function(progress){
+            //Using custom progress tracker, as the Kue progress tracker is acting funny
+            job.orchestrator.client.emit("execute_workflow_progress",
+                                { progress :  (currentProgress() + (progress/100)*weight_of_sentence)*100,
+                                  node_id : current_job.data.node.id
+                                });
+          },
+          new _partial_job_done(sentence_ids[_idx])
+      );
       }catch(err){
         job.failed().error(err);
         done(err);
       }
-
-    }else{
-       // Use the default process definition
-       try{
-         _process(current_job.data.node.kathaa_inputs, progressTrackerWrapper, _done);
-       }catch(err){
-         job.failed().error(err);
-         done(err);
-       }
     }
   })
 
@@ -263,6 +344,13 @@ kathaaOrchestrator.prototype.preprocessGraph = function(graph, callback){
       edge = node.parents[_parent_id];
       parent_port = edge.src.port;
       my_inport = edge.tgt.port;
+
+
+      // NOTE :
+      // Possible Heisenbug here
+      // Fix This
+      // console.log("Time ::", process.hrtime());
+      // console.log(edge);
 
       // if kathaa_output of parent is defined !!
       outport_value = this.get_outport_value(_parent_id, parent_port)
