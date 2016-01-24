@@ -15,7 +15,6 @@ $(document).ready(function(){
         // (or automatically saved by design if the user decides to execute the workflow from that node)
         var previous_input_editor_value = window.kathaa.explorer_input_editor.getValue()
 
-
         // Initialize parent dicts, if they do not exist
         // much like `mkdir -p` does
         if(window.kathaa.input_editor_buffer == undefined){
@@ -146,7 +145,7 @@ $(document).ready(function(){
                         )
                     )
                 add_input_port_option({
-                    "name" : "sentence_input"
+                    "name" : "input_sentence"
                 }, 0);
             }
         }
@@ -204,9 +203,10 @@ $(document).ready(function(){
     })
 
     var sample_sentence = "देश के टूरिजम में राजस्थान एक अहम जगह रखता है।\nबाद में सुरक्षाकर्मियों ने हंगामा कर रहे छात्रों को सभास्थल से बाहर कर दिया.\nइससे पहले प्रधानमंत्री मोदी ने अपने संसदीय क्षेत्र वाराणसी में नई ट्रेन महामना एक्सप्रेस को हरी झंडी दिखाई.\n";
+    sample_sentence += sample_sentence;
     
     window.kathaa.latest_workflow_run = {};
-    function get_node_input_value_at_port(node, port){
+    window.get_node_input_value_at_port =function(node, port){
         // Check in latest_workflow_run,
         // the latest_workflow run saves the input nad output states of all the nodes
         // in the latest workflow execution.
@@ -297,31 +297,47 @@ $(document).ready(function(){
         }
 
         // Update the value from the input and output buffers into
-        // latest workflow run *only if* the corresponding keys exist
-        // in latest_workflow
+        // latest workflow run
 
         if(window.kathaa.latest_workflow_run[
                 window.kathaa.latest_node_edit_focus.id
-            ]){
-            if(window.kathaa.latest_workflow_run[
+            ]){}else{
+            window.kathaa.latest_workflow_run[
                 window.kathaa.latest_node_edit_focus.id
-            ]["kathaa_inputs"]
-                ){
-
-                for(_key in window.kathaa.input_editor_buffer[
-                                window.kathaa.latest_node_edit_focus.id
-                                ]){
-
-                    window.kathaa.latest_workflow_run[
-                        window.kathaa.latest_node_edit_focus.id
-                    ]["kathaa_inputs"][_key]
-                    =
-                    window.kathaa.input_editor_buffer[
-                        window.kathaa.latest_node_edit_focus.id
-                    ][_key]
-                }
-            }
+            ] = {"kathaa_inputs":{}}
         }
+
+        if(window.kathaa.latest_workflow_run[
+            window.kathaa.latest_node_edit_focus.id
+        ]["kathaa_inputs"]
+            ){}else{
+                window.kathaa.latest_workflow_run[
+                    window.kathaa.latest_node_edit_focus.id
+                ]["kathaa_inputs"] = {};         
+        }
+
+        // At this point, the proper parent structure for kathaa_inputs for this node
+        // has been created even if it dint exist
+        for(_key in window.kathaa.input_editor_buffer[
+                        window.kathaa.latest_node_edit_focus.id
+                        ]){
+            window.kathaa.latest_workflow_run[
+                window.kathaa.latest_node_edit_focus.id
+            ]["kathaa_inputs"][_key]
+            =
+            window.kathaa.input_editor_buffer[
+                window.kathaa.latest_node_edit_focus.id
+            ][_key]
+        }
+        // Dump the value of the key in the input editor also into 
+        // latest_workflow run
+        window.kathaa.latest_workflow_run[
+            window.kathaa.latest_node_edit_focus.id
+        ]["kathaa_inputs"][$("#kathaa-edit-module-input-tab-ports").val()]        
+        =
+        window.kathaa.explorer_input_editor.getValue();
+
+
     }
     $("#kathaa-edit-module-save").click(window.kathaa.save_module_handler);
 

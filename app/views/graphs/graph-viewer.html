@@ -358,8 +358,7 @@ socket.addEventListener('socket-connect', function(){
                 // if(window.kathaa.debug){console.log(message);}
 
                 //Save state of the node in the latest workflow run
-                window.kathaa.latest_workflow_run[message.node.id] = message.node;
-
+                window.kathaa.latest_workflow_run[message.node.id] = message.node;                     
                 if(message.node.component=="core/sentence_output"){
                     toastr["success"]("", "Successfully processed "+message.node.metadata.label)
                     playPause("chime_bell_ding.wav");
@@ -431,7 +430,7 @@ $("#kathaa-edit-module-execute").click(function(){
     execute_workflow(current_node);
 
     // ??Should we reset the lastest workflow run state ?
-    window.kathaa.latest_workflow_run = {}
+    // window.kathaa.latest_workflow_run = {}
 })
 //TO-DO : Add error handling
 $("#kathaa-execute-workflow").click(function(){
@@ -481,7 +480,7 @@ function execute_workflow(beginNode){
     // have no inports in the component_definition
     // TO-DO : Fix this
     if(beginNode.component == "core/sentence_input"){
-        inports = [{"name":"sentence_input"}]
+        inports = [{"name":"input_sentence"}]
     }
 
     for(_index in inports){
@@ -508,10 +507,13 @@ function execute_workflow(beginNode){
         }
         return _o2;
     }
+    console.log(window.kathaa.latest_workflow_run[beginNode.id])
+    console.log("UP :: workflow ");
+
     if(window.kathaa.latest_workflow_run[beginNode.id]){
        beginNode.kathaa_inputs = mergeObjects(
             beginNode.kathaa_inputs,
-            window.kathaa.latest_workflow_run["kathaa_inputs"]
+            window.kathaa.latest_workflow_run[beginNode.id]["kathaa_inputs"]
         )
     }
 
@@ -530,6 +532,9 @@ function execute_workflow(beginNode){
        var current_input_port = $("#kathaa-edit-module-input-tab-ports").val();
        beginNode.kathaa_inputs[current_input_port] = window.kathaa.explorer_input_editor.getValue();
    }
+
+    console.log(beginNode);
+    // Issue with scope of variable in kathaa-orchestrator !!
     socket.socket.emit('execute_workflow', {graph: graph, beginNode: beginNode});
     toastr["info"]("","Executing Kathaa workflow....")
 }

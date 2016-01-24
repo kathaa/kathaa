@@ -61,6 +61,19 @@ kathaaData.prototype.render = function(){
   return raw
 }
 
+kathaaData.prototype.render_natural = function(){
+  var sorted_keys = Object.keys(this.data).map(function (element) {
+                                              return parseInt(element, 10);
+                                            }).sort(function(a,b){
+                                              return a-b;
+                                            });
+  var natural = "";
+  for(var i=0; i<sorted_keys.length; i++){
+      natural += this.data[sorted_keys[i]+""]+"\n";
+  }
+  return natural  
+}
+
 kathaaData.prototype.trimLines = function(data){
   var split = data.split("\n");
   for(var i=0;i <split.length; i++){
