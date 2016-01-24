@@ -228,7 +228,7 @@
             "component": "core/sentence_output",
             "metadata": {
                 "label": "Output",
-                "x": 5796,
+                "x": 5760,
                 "y": 432,
                 "width": 72,
                 "height": 72,
@@ -257,22 +257,22 @@
                 "progress": 100
             }
         },
-        "core/ssf2readable_vc4": {
+        "core/ssf2readable_23hi": {
             "component": "core/ssf2readable",
             "metadata": {
                 "label": "SSF 2 Readable",
-                "x": 5796,
-                "y": 288,
+                "x": 5760,
+                "y": 252,
                 "width": 72,
                 "height": 72,
                 "progress": 100
             }
         },
-        "hindi_urdu/wx2utf_urd_1gr3": {
+        "hindi_urdu/wx2utf_urd_22ci": {
             "component": "hindi_urdu/wx2utf_urd",
             "metadata": {
                 "label": "wx2utf_urd",
-                "x": 5508,
+                "x": 5472,
                 "y": 432,
                 "width": 72,
                 "height": 72,
@@ -535,7 +535,7 @@
                 "port": "out_ssf"
             },
             "tgt": {
-                "process": "hindi_urdu/wx2utf_urd_1gr3",
+                "process": "hindi_urdu/wx2utf_urd_22ci",
                 "port": "in_ssf"
             },
             "metadata": {
@@ -544,22 +544,21 @@
         },
         {
             "src": {
-                "process": "hindi_urdu/wx2utf_urd_1gr3",
+                "process": "hindi_urdu/wx2utf_urd_22ci",
                 "port": "out_ssf"
             },
             "tgt": {
                 "process": "core/sentence_output_f07",
                 "port": "in_ssf"
-            },
-            "metadata": {}
+            }
         },
         {
             "src": {
-                "process": "hindi_urdu/wx2utf_urd_1gr3",
+                "process": "hindi_urdu/wx2utf_urd_22ci",
                 "port": "out_ssf"
             },
             "tgt": {
-                "process": "core/ssf2readable_vc4",
+                "process": "core/ssf2readable_23hi",
                 "port": "in_ssf"
             },
             "metadata": {
