@@ -49,12 +49,22 @@ npm run seed
 # Copy and Edit environment parameters
 cp config/env/env.example.json config/env/env.json
 
-npm run forever
+# In production setups, we would strongly recommend to run kue-sweeper
+#
+# Kue-sweeper regularly cleans out completed jobs, and makes sure your redis instance
+# doesnt store more stuff than we require
+#
+./node_modules/kue-sweeper/forever-start-kue-sweep.sh
+
+
+npm start
 
 ###
 #
 # You can also flush the mongodb database associated with your env by
 # npm run flush_database
+
+
 ```
 
 Extend

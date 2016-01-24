@@ -335,7 +335,7 @@
 <socket-connection id="kathaa-socket" auto></socket-connection>
 <script type="text/javascript">
 var socket = document.querySelector("socket-connection")
-socket.url = "";
+socket.url = "/";
 
 socket.addEventListener('socket-connect', function(){
             toast("success", "", "Connected");
@@ -358,7 +358,7 @@ socket.addEventListener('socket-connect', function(){
                 // if(window.kathaa.debug){console.log(message);}
 
                 //Save state of the node in the latest workflow run
-                window.kathaa.latest_workflow_run[message.node.id] = message.node;                     
+                window.kathaa.latest_workflow_run[message.node.id] = message.node;
                 if(message.node.component=="core/sentence_output"){
                     toastr["success"]("", "Successfully processed "+message.node.metadata.label)
                     playPause("chime_bell_ding.wav");
@@ -390,10 +390,15 @@ socket.addEventListener('socket-connect', function(){
                 }
             })
         });
+window.socket_failure = 0
 socket.addEventListener('socket-error', function(){
+          //Ignore the first socket failure
+          if(window.socket_failure != 0){
             toastr["error"]("please wait while we try to reconnect", "Connecting failed");
             set_view("loading");
             if(window.kathaa.debug){console.log("Socket Error !!");}
+          }
+          window.socket_failure += 1
         });
 socket.addEventListener('socket-timeout', function(){
             if(window.kathaa.debug){console.log("Socket Timeout !!");}
