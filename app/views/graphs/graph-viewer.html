@@ -94,7 +94,7 @@
               window.kathaa.explorer_output_editor.options.readOnly = false;
               window.kathaa.explorer_input_editor.options.readOnly = true;
 
-              $("a[href='#kathaa-edit-module-output-tab']").tab('show');              
+              $("a[href='#kathaa-edit-module-output-tab']").tab('show');
 
             }else{
               // Show Execute Button
@@ -689,6 +689,9 @@ function filter_partially_processed_nodes(graph){
       delete graph.processes[key].metadata.width;
       delete graph.processes[key].metadata.height;
       delete graph.processes[key].metadata.progress;
+
+      graph.processes[key].module = graph.processes[key].component;
+      delete graph.processes[key].component;
     }
   }
   return graph;
