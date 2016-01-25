@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-3 col-xs-3 col-lg-3">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
           <a href="/graphs/{{graph.id}}">
@@ -34,14 +34,14 @@
                 <div class="row">
                 <div class="user-button">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-6 col-lg-6">
                           {% if (graph.user.id == req.user.id ) %}
                             <a href="/graphs/{{graph.id}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-pencil"></i> Edit</a>
                           {% else %}
                             <a href="/graphs/{{graph.id}}" class="btn btn-primary btn-sm btn-block"><i class="fa fa-eye"></i> View</a>
                           {% endif %}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-6 col-lg-6">
                           {% if (graph.user.id == req.user.id ) %}
                             <form action="/graphs/{{graph.id}}" method="POST">
                               <input type="hidden" name="_csrf" value="{{ csrf_token }}">
