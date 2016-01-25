@@ -145,11 +145,12 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
                           { node: job.data.node,
                             response_channel: job_id
                           });
-      job.orchestrator.client.on(job_id, function(kathaa_outputs){
-        // Mark Job as Done when the user sends back modified kathaa_outputs
 
-        // Remove the listener 
-        job.orchestrator.client.removeListener(job_id, testFun);
+      job.orchestrator.client.on(job_id, function(kathaa_outputs){
+        // Remove the listener
+        job.orchestrator.client.removeAllListeners(job_id);
+
+        // Mark Job as Done when the user sends back modified kathaa_outputs
         done(null, kathaa_outputs);
       })
       return;
