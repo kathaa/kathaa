@@ -94,6 +94,8 @@
               window.kathaa.explorer_output_editor.options.readOnly = false;
               window.kathaa.explorer_input_editor.options.readOnly = true;
 
+              $("a[href='#kathaa-edit-module-output-tab']").tab('show');              
+
             }else{
               // Show Execute Button
               $("#kathaa-edit-module-execute").removeClass("hidden");
@@ -110,6 +112,7 @@
             if(window.library["core"][window.kathaa.latest_node_edit_focus.component].type == "kathaa-user-intervention"){
               // Hide Code Tab, as its not relevant in this case
               $("#kathaa-edit-module-process-definition-tab-anchor").addClass("hidden")
+
             }else{
               //Show Code Tab in case of general modules
               $("#kathaa-edit-module-process-definition-tab-anchor").removeClass("hidden")
