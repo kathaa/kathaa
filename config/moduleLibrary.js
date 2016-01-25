@@ -57,15 +57,22 @@ module.exports = function () {
       module_definition['description'] = fs.readFileSync(path.join(component_directory, "description.md"), 'UTF-8');
       module_definition['description'] = marked(module_definition['description']);
 
+      // Modules of type : "kathaa-user-intervention" do not have a computing Process
+      // associated with them
+      // They in turn require the manual intervention of the user to continue
+      //
+      if(module_definition["type"] != "kathaa-user-intervention"){
+
       //Collect Processes
       module_library.processes[_process] = require(path.join(component_directory, module_definition['main']))
       //Collect Process Definition
       module_library.process_definitions[_process] = module_library.processes[_process].toString();
 
-
       delete module_definition['main'];
-      //Add module library to component_library
-      module_library.component_library[_process] = module_definition;
+    }
+
+    //Add module library to component_library
+    module_library.component_library[_process] = module_definition;
 
     }catch(err){
       //Pass Silently

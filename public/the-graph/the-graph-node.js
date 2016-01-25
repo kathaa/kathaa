@@ -78,6 +78,7 @@
     createNodeSublabelText: TheGraph.factories.createText,
     createProgressLabelText: TheGraph.factories.createText,
     createProgressBarRect: TheGraph.factories.createRect,
+    createUserInterventionRect: TheGraph.factories.createRect,
     createNodePort: createNodePort
   };
 
@@ -105,7 +106,7 @@
     ],
     componentDidMount: function () {
       var domNode = this.getDOMNode();
-      
+
       // Dragging
       domNode.addEventListener("trackstart", this.onTrackStart);
 
@@ -347,9 +348,8 @@
       }catch(err){
         console.log(err);
       }
-
       return (
-        nextProps.x !== this.props.x || 
+        nextProps.x !== this.props.x ||
         nextProps.y !== this.props.y ||
         nextProps.icon !== this.props.icon ||
         nextProps.label !== this.props.label ||
@@ -358,6 +358,7 @@
         nextProps.selected !== this.props.selected ||
         nextProps.error !== this.props.error ||
         nextProps.highlightPort !== this.props.highlightPort ||
+        nextProps.requiresUserIntervention != this.props.requiresUserIntervention ||
         nextProps.ports.dirty === true
       );
     },
@@ -482,7 +483,7 @@
 
       var backgroundRect = TheGraph.factories.node.createNodeBackgroundRect.call(this, backgroundRectOptions);
 
-      var border = jQuery.extend(true, {}, TheGraph.config.node.border); 
+      var border = jQuery.extend(true, {}, TheGraph.config.node.border);
       if(this.props.node.component == "core/sentence_input"){
         border.className = " node-border-rect-sentence-input";
       }else if(this.props.node.component == "core/sentence_output"){
@@ -492,8 +493,8 @@
       var borderRectOptions = TheGraph.merge(border, { width: this.props.width, height: this.props.height });
       var borderRect = TheGraph.factories.node.createNodeBorderRect.call(this, borderRectOptions);
 
-    
-      var innerRect = jQuery.extend(true, {}, TheGraph.config.node.innerRect); 
+
+      var innerRect = jQuery.extend(true, {}, TheGraph.config.node.innerRect);
       if(this.props.node.component == "core/sentence_input"){
         innerRect.className += " node-bg-sentence-input";
       }else if(this.props.node.component == "core/sentence_output"){
@@ -525,6 +526,10 @@
       progressBarForegroundOptions.className = "drag";
       var progressBarForeground = TheGraph.factories.node.createProgressBarRect.call(this, progressBarForegroundOptions);
 
+      var userInterventionMarkerBackgroundOptions = TheGraph.merge(TheGraph.config.node.innerRect, { width: this.props.width + 16, height: this.props.height + 16, x:  -8 , y: -8, fill:"red", stroke:"red" });
+      userInterventionMarkerBackgroundOptions.className = "drag";
+      var userInterventionMarkerBackground = TheGraph.factories.node.createUserInterventionRect.call(this, userInterventionMarkerBackgroundOptions);
+
 
       var labelRectX = this.props.width / 2;
       var labelRectY = this.props.height + 15;
@@ -551,8 +556,13 @@
         inportsGroup,
         outportsGroup,
         labelGroup,
-        sublabelGroup,
+        sublabelGroup
       ];
+
+      if(this.props.node.metadata.requiresUserIntervention){
+        console.log("Marking as user Intervention !!");
+        nodeContents.unshift(userInterventionMarkerBackground)
+      }
 
       if(window.kathaa.show_module_progress){
         nodeContents.push(progressbarLabel);

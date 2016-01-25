@@ -42,3 +42,5 @@ public/bower_components
 
 public/build
 public/snapshot/*
+
+dump.rdb

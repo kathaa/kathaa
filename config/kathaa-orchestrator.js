@@ -15,7 +15,6 @@ kathaaOrchestrator.prototype.executeGraph = function(_graph, beginNode){
   //TO-DO: Handle empty graph in preprocessGraph validations,
   // and add an error callback
   var _beginNode = this.graph.get_node(beginNode.id)
-
   _beginNode.kathaa_inputs = {};
   _beginNode.kathaa_outputs = {};
 
@@ -31,8 +30,12 @@ kathaaOrchestrator.prototype.executeGraph = function(_graph, beginNode){
       }
       _beginNode.kathaa_inputs[key] = _beginNode.kathaa_inputs[key].render();
     }
+  }else{
+    // Simply Copy over the kathaa_inputs
+    for(var key in beginNode.kathaa_inputs){
+      _beginNode.kathaa_inputs[key] = beginNode.kathaa_inputs[key];
+    }
   }
-
   this.queueNodeJob(this.graph, _beginNode.id);
 }
 
@@ -68,7 +71,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     // Wrap up job-complete formalities
     // job.orchestrator.client.emit("debug_message", "Job Complete : "+job.id);
     // job.orchestrator.client.emit("debug_message", graph);
-    
+
     var current_node = graph.get_node(job.data.node.id);
 
     // In case of sentence_input, dont pass kathaaData in kathaa_inputs
@@ -80,7 +83,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
         current_node.kathaa_inputs[key] = current_node.kathaa_inputs[key].render_natural();
       }
     }
-    
+
     job.orchestrator.client.emit("node_processing_complete", {node:current_node});
     job.orchestrator.client.emit("execute_workflow_progress", {progress:100, node_id: job.data.node.id});
 
@@ -119,7 +122,38 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
     // `kathaa_inputs` now holds the input-port values for a whole list of sentences.
     // instead of a single sentence !!
-    
+
+    // Handle user-intervention modules here
+    // User-Intervention Modules, just require a user's manual intervention to complete
+
+    var component = job.orchestrator.module_library.component_library[job.data.node.component];
+    if(component.type == "kathaa-user-intervention"){
+      console.log("User Intervention required in node : "+job.data.node.id+" of type : "+job.data.node.component)
+      // job.orchestrator.client.emit("")
+      // Copy in_* ports to out_* ports
+      var kathaa_output_key ;
+      job.data.node.kathaa_outputs = {};
+
+      for(var key in job.data.node.kathaa_inputs){
+        // If value exists in kathaa_inputs, Copy it into kathaa_outputs
+          kathaa_output_key = key.replace("in_", "out_");
+          job.data.node.kathaa_outputs[kathaa_output_key] = job.data.node.kathaa_inputs[key];
+      }
+
+      // Emit user-intervention event
+      job.orchestrator.client.emit("kathaa-user-intervention",
+                          { node: job.data.node,
+                            response_channel: job_id
+                          });
+      job.orchestrator.client.on(job_id, function(kathaa_outputs){
+        // Mark Job as Done when the user sends back modified kathaa_outputs
+        done(null, kathaa_outputs);
+      })
+      return;
+    }
+
+
+
     // Parse all individual kathaa_inputs into their respective kathaa-data object
     job.data.node.kathaa_inputs_objectified = {}
     for(var input_port in job.data.node.kathaa_inputs){
@@ -131,6 +165,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     // One key assumption is all nodes will have atleast one input
     // and all kathaa_input_objects will have the exact same set of keys(as defined by input_ports)
     // TO-DO :: Add Validation here for the same
+
 
     // Define the process
     var _process;
@@ -201,7 +236,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
                     //Mark Progress
                     // Temporarily Hide showing of partial job progress as on the client side
                     // socket.io is having a hard time dealing with so much data
-                    // 
+                    //
                     // job.orchestrator.client.emit("execute_workflow_progress",
                     //                     { progress :  (currentProgress())*100,
                     //                       node_id : job.data.node.id

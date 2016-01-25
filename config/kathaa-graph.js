@@ -11,6 +11,10 @@ var graph = function(_graph){
     node = this.nodeMap[node_id];
     node['id'] = node_id;
 
+    // Deleting kathaa_inputs and kathaa_outputs
+    // ensures, we take just the structure from the graph
+    // Else the dependency resolution for future modules might get messed up
+    // if their kathaa_inputs from any of the previous runs are used in thie graph
     delete node.kathaa_inputs;
     delete node.kathaa_outputs;
   }
