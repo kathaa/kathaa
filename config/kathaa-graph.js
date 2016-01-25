@@ -82,6 +82,8 @@ graph.prototype.get_outport_value = function(node_id, outport){
   node = this.get_node(node_id);
 
   if(node.kathaa_outputs && (outport in node.kathaa_outputs)){
+    console.log(node_id, outport);
+    console.log(node.kathaa_outputs[outport])
     return node.kathaa_outputs[outport];
   }
   return false;

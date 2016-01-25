@@ -431,6 +431,18 @@ socket.addEventListener('socket-connect', function(){
             if(socket.socket.listeners("kathaa-user-intervention").length==0)
             socket.socket.on('kathaa-user-intervention', function(message){
                 playPause("slow_success.wav");
+
+                //Copy kathaa_inputs to kathaa_outputs also by changing the namespaced keys
+                var kathaa_output_key ;
+                message.node.kathaa_outputs = {};
+
+                for(var key in message.node.kathaa_inputs){
+                  // If value exists in kathaa_inputs, Copy it into kathaa_outputs
+                    kathaa_output_key = key.replace("in_", "out_");
+                    message.node.kathaa_outputs[kathaa_output_key] = message.node.kathaa_inputs[key];
+                }
+
+
                 // Save in user_intervention_map
                 window.kathaa.user_intervention_map[message.node.id] = message;
                 //Save state of the node in the latest workflow run

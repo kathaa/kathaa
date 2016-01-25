@@ -131,14 +131,18 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       console.log("User Intervention required in node : "+job.data.node.id+" of type : "+job.data.node.component)
       // job.orchestrator.client.emit("")
       // Copy in_* ports to out_* ports
-      var kathaa_output_key ;
-      job.data.node.kathaa_outputs = {};
 
-      for(var key in job.data.node.kathaa_inputs){
-        // If value exists in kathaa_inputs, Copy it into kathaa_outputs
-          kathaa_output_key = key.replace("in_", "out_");
-          job.data.node.kathaa_outputs[kathaa_output_key] = job.data.node.kathaa_inputs[key];
-      }
+      // This has to be done in the client side
+      // Else it messes up the dependency resolver
+
+      // var kathaa_output_key ;
+      // job.data.node.kathaa_outputs = {};
+      //
+      // for(var key in job.data.node.kathaa_inputs){
+      //   // If value exists in kathaa_inputs, Copy it into kathaa_outputs
+      //     kathaa_output_key = key.replace("in_", "out_");
+      //     job.data.node.kathaa_outputs[kathaa_output_key] = job.data.node.kathaa_inputs[key];
+      // }
 
       // Emit user-intervention event
       job.orchestrator.client.emit("kathaa-user-intervention",
