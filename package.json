@@ -68,7 +68,7 @@
     "requestify": "^0.1.17",
     "sleep": "^3.0.0",
     "socket.io": "^1.4.1",
-    "ssf-api": "git://github.com/spMohanty/ssf-api#v1.0.1",
+    "ssf-api": "git://github.com/spMohanty/ssf-api#v1.0.2",
     "stylus": "^0.53.0",
     "swig": "~1.4.2",
     "utf8": "^2.1.1",
