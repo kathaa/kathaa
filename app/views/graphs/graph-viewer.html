@@ -93,9 +93,6 @@
               window.kathaa.explorer_output_editor.options.readOnly = false;
               window.kathaa.explorer_input_editor.options.readOnly = true;
 
-              // Start view with output pane
-              $("a[href='#kathaa-edit-module-output-tab']").tab('show');
-
             }else{
               // Show Execute Button
               $("#kathaa-edit-module-execute").removeClass("hidden");
@@ -550,6 +547,11 @@ $("#kathaa-edit-module-execute").click(function(){
     loading_visibility(true);
     execute_workflow(current_node);
 
+
+    // Make download latest-run data button visible
+    $("#download-latest-run").removeClass("hidden");
+
+
     // ??Should we reset the lastest workflow run state ?
     // window.kathaa.latest_workflow_run = {}
 })
@@ -581,7 +583,12 @@ function add_process_definitions(graph){
           if(editor.nofloGraph.getNode(id).process_definition){
               graph_node.process_definition = editor.nofloGraph.getNode(id).process_definition
           }
+          console.log(window.library["core"][graph_node.component].type);
+          console.log(window.library["core"][graph_node.component].type != "kathaa-user-intervention");
         }else{
+          console.log(window.library["core"][graph_node.component].type);
+          console.log(window.library["core"][graph_node.component].type != "kathaa-user-intervention");
+
           delete graph_node.process_definition;
         }
     }
@@ -593,9 +600,6 @@ function execute_workflow(beginNode){
     //Prepare graph for kathaa-orchestrator
     var graph=editor.toJSON();
     graph = add_process_definitions(graph);
-
-    // The graph object is used as a reference for strucutre, hence we send the kathaa_inputs
-    // only in the beginNode param
     // graph = add_kathaa_inputs(graph);
 
     beginNode = editor.nofloGraph.getNode(beginNode.id);
@@ -660,6 +664,38 @@ function add_kathaa_inputs(graph){
   }
   return graph;
 }
+
+function add_kathaa_outputs(graph){
+  for(var key in graph.processes){
+      // If latest workflow_run has a parallel instance,
+      // copy the kathaa_outputs in here
+      if(window.kathaa.latest_workflow_run[key] && window.kathaa.latest_workflow_run[key].kathaa_outputs){
+        graph.processes[key].kathaa_outputs = mergeObjects(
+            graph.processes[key].kathaa_outputs,
+            window.kathaa.latest_workflow_run[key].kathaa_outputs
+        )
+      }
+  }
+  return graph;
+}
+
+function download_graph(){
+  var graph = editor.toJSON();
+  graph = add_kathaa_inputs(graph);
+  graph = add_kathaa_outputs(graph);
+
+  graph.nodes = graph.processes;
+  graph.edges = graph.connections;
+
+  delete graph.processes;
+  delete graph.connections;
+  //TO-DO : More preprocessing on the data. No point in sending unnecessary data
+
+
+  var blob = new Blob([JSON.stringify(graph)], {type: "text/json;charset=utf-8"});
+  saveAs(blob, window.kathaa.graphName);
+}
+
 function mergeObjects(_o1, _o2){
     if(_o2 == undefined && _o1 != undefined){
         return _o1;
@@ -696,6 +732,13 @@ window.kathaa.input_editor_buffer = {}
 window.kathaa.latest_workflow_run = {}
 window.kathaa.user_intervention_map = {}
 window.kathaa.show_module_progress = false;
+
+{% if not graph.isNew %}
+window.kathaa.graphName = "{{ graph.name.trim() }}.json";
+{% else %}
+window.kathaa.graphName = "kathaa-new-graph.json"
+{% endif %}
+
 window.editor = document.querySelector("the-graph-editor");
 
 Polymer.veiledElements = ["the-graph-editor"];

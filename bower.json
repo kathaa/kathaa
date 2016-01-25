@@ -19,7 +19,8 @@
     "react.animate-djdeath": "0.0.3",
     "datatables": "~1.10.10",
     "jsoneditor": "~4.2.1",
-    "socket-connection": "https://github.com/spMohanty/socket-connection.git#v0.1.3"
+    "socket-connection": "https://github.com/spMohanty/socket-connection.git#v0.1.3",
+    "FileSaver": "*"
   },
   "license": "MIT",
   "directory": "public/bower_components",
