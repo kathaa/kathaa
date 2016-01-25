@@ -55,6 +55,8 @@ module.exports = function () {
 
       //Collect Description
       module_definition['description'] = fs.readFileSync(path.join(component_directory, "description.md"), 'UTF-8');
+      module_definition['short_description'] = module_definition['description'].length > 120 ? module_definition['description'].substring(0,120)+"...": module_definition['description'];
+
       module_definition['description'] = marked(module_definition['description']);
 
       // Modules of type : "kathaa-user-intervention" do not have a computing Process

@@ -2,7 +2,7 @@ function init_add_module_modal() {
     var data = [];
     $.each(window.library, function(key, value){
         $.each(value, function(key, value){
-            data.push([key, value["name"], value["version"],value["description"]]);
+            data.push([key, value["name"], value["version"],value["short_description"]]);
         })
 
     })

@@ -1,0 +1,25 @@
+{
+    "name": "ssf_soft_merger",
+    "version": "v0.1",
+    "icon": "code-fork",
+    "inports": [
+        {
+            "name": "in_ssf_1",
+            "type": "all"
+        },
+        {
+            "name": "in_ssf_2",
+            "type": "all"
+        }
+    ],
+    "outports": [
+        {
+            "name": "out_ssf",
+            "type": "all"
+        }
+    ],
+    "metadata": {
+        "label": "SSF Soft Merger"
+    },
+    "main": "index.js"
+}
