@@ -37,7 +37,8 @@
 
 
   <!-------------------------------------------------------------------------------------------------------------------------------->
-<audio id="chime_bell_ding.wav" class="hidden"><source src="/sounds/chime_bell_ding.wav"></audio>
+  <audio id="chime_bell_ding.wav" class="hidden"><source src="/sounds/chime_bell_ding.wav"></audio>
+  <audio id="slow_success.wav" class="hidden"><source src="/sounds/slow_success.wav"></audio>
 <script type="text/javascript">
     function playPause(x){
         var myAudio=document.getElementById(x);
@@ -426,6 +427,7 @@ socket.addEventListener('socket-connect', function(){
 
             if(socket.socket.listeners("kathaa-user-intervention").length==0)
             socket.socket.on('kathaa-user-intervention', function(message){
+                playPause("slow_success.wav");
                 // Save in user_intervention_map
                 window.kathaa.user_intervention_map[message.node.id] = message;
                 //Save state of the node in the latest workflow run
