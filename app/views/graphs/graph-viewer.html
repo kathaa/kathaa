@@ -679,20 +679,66 @@ function add_kathaa_outputs(graph){
   return graph;
 }
 
+function filter_partially_processed_nodes(graph){
+  for(var key in graph.processes){
+    if(graph.processes[key].metadata.progress != 100){
+      delete graph.processes[key];
+    }else{
+      delete graph.processes[key].metadata.x;
+      delete graph.processes[key].metadata.y;
+      delete graph.processes[key].metadata.width;
+      delete graph.processes[key].metadata.height;
+      delete graph.processes[key].metadata.progress;
+    }
+  }
+  return graph;
+}
+
+/**
+{
+    "src": {
+        "process": "hindi_panjabi/utf2wx_acs9",
+        "port": "out_ssf"
+    },
+    "tgt": {
+        "process": "hindi_panjabi/morph_jsqt",
+        "port": "in_ssf"
+    }
+},
+**/
+function filter_stray_edges(graph){
+  var new_edges = []
+  for(var key in graph.edges){
+    if(graph.nodes[graph.edges[key].src.process] && graph.nodes[graph.edges[key].tgt.process]){
+      delete graph.edges[key].metadata;
+      new_edges.push(graph.edges[key])
+    }
+    else{
+      delete graph.edges[key];
+    }
+  }
+  graph.edges = new_edges;
+  return graph;
+}
+
 function download_graph(){
   var graph = editor.toJSON();
-  graph = add_kathaa_inputs(graph);
-  graph = add_kathaa_outputs(graph);
-
   graph.nodes = graph.processes;
   graph.edges = graph.connections;
 
+  graph = filter_partially_processed_nodes(graph);
+  graph = filter_stray_edges(graph);
+  graph = add_kathaa_inputs(graph);
+  graph = add_kathaa_outputs(graph);
+
   delete graph.processes;
   delete graph.connections;
-  //TO-DO : More preprocessing on the data. No point in sending unnecessary data
+  delete graph.properties;
+  delete graph.inports;
+  delete graph.outports
+  delete graph.groups;
 
-
-  var blob = new Blob([JSON.stringify(graph)], {type: "text/json;charset=utf-8"});
+  var blob = new Blob([JSON.stringify(graph, null, 4)], {type: "text/json;charset=utf-8"});
   saveAs(blob, window.kathaa.graphName);
 }
 
