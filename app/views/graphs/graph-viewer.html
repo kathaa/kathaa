@@ -583,12 +583,7 @@ function add_process_definitions(graph){
           if(editor.nofloGraph.getNode(id).process_definition){
               graph_node.process_definition = editor.nofloGraph.getNode(id).process_definition
           }
-          console.log(window.library["core"][graph_node.component].type);
-          console.log(window.library["core"][graph_node.component].type != "kathaa-user-intervention");
         }else{
-          console.log(window.library["core"][graph_node.component].type);
-          console.log(window.library["core"][graph_node.component].type != "kathaa-user-intervention");
-
           delete graph_node.process_definition;
         }
     }
@@ -710,6 +705,11 @@ function filter_stray_edges(graph){
   var new_edges = []
   for(var key in graph.edges){
     if(graph.nodes[graph.edges[key].src.process] && graph.nodes[graph.edges[key].tgt.process]){
+      graph.edges[key].src.node = graph.edges[key].src.process
+      graph.edges[key].tgt.node = graph.edges[key].tgt.process
+
+      delete graph.edges[key].src.process
+      delete graph.edges[key].tgt.process
       delete graph.edges[key].metadata;
       new_edges.push(graph.edges[key])
     }
