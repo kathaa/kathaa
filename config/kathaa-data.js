@@ -10,22 +10,17 @@ DELIM = "  ";
 var kathaaData = function(_data){
   //Instantiate data variable
   if(_data == undefined){
-    this.blobs = new libxml.Document();
-    this.blobs.node('kathaa-blobs')
+    this.blobs = {}
+    this.blobs['kathaa-blobs'] = {}
   }else{
     // Assuming its type is libxmljs compatible XML string
     // TO-DO Add a validation here
-    this.blobs = libxml.parseXmlString(_data.trim());
+    this.blobs = JSON.parse(_data.trim());
   }
 }
 
 kathaaData.prototype.getKeys = function(){
-  var blobs = this.blobs.find('kathaa-blob');
-  var keys = [];
-  for(var idx in blobs){
-    keys.push(blobs[idx].attr('id').value());
-  }
-  return keys;
+  return Object.keys(this.blobs['kathaa-blobs'])
 }
 
 kathaaData.prototype.getKeysSorted = function(){
@@ -56,26 +51,15 @@ kathaaData.prototype.getKeysSorted = function(){
 }
 
 kathaaData.prototype.get = function(key){
-
-  //TO-DO : This is a rather hacky way to do this.
-  // The issue arises because using the .text() functions strips out the inner tags
-  // Should find a way for a .innerHtml eequivalent
-  var _t = this.blobs.get("//kathaa-blob[@id='"+key+"']").toString().trim().split("\n");
-  return _t.slice(1, _t.length-1).join("\n")
+  return this.blobs['kathaa-blobs'][key+""];
 }
 
 kathaaData.prototype.set = function(key, value){
-  var blob = this.blobs.get("//kathaa-blob[@id='"+key+"']")
-  if(blob){
-    blob.text("\n"+value.trim()+"\n"+DELIM);
-  }else {
-    var newBlob = this.blobs.get('//kathaa-blobs')
-                      .node('kathaa-blob', "\n"+value.trim()+"\n"+DELIM)
-                      .attr({id: key});
-  }
+  this.blobs['kathaa-blobs'][key+""] = value.trim();
 }
 
 kathaaData.prototype.render = function(){
+  // console.log(entities.decode(this.blobs.toString()));
   // TO-DO : Fix this 
   // The rendered XML should have all the elements sorted properly
   // var _temp = new libxml.Document();
@@ -91,7 +75,8 @@ kathaaData.prototype.render = function(){
   // }
 
   // this.blobs = _temp;
-  return entities.decode(this.blobs.toString());
+  // return entities.decode(this.blobs.toString());
+  return JSON.stringify(this.blobs, null, 4);
 }
 
 kathaaData.prototype.render_natural = function(_delim){
@@ -99,11 +84,11 @@ kathaaData.prototype.render_natural = function(_delim){
     _delim = "\n";
   }
   var natural = "";
-  var blobs = this.blobs.find('kathaa-blob');
-  for(var idx in blobs){
-    natural += blobs[idx].text().trim()+_delim;
+  var keys = Object.keys(this.blobs['kathaa-blobs'])
+  for(var idx in keys){
+    natural += this.blobs['kathaa-blobs'][keys[idx]]+"\n"
   }
-  return natural  
+  return natural.trim()
 }
 
 kathaaData.prototype.trimLines = function(data){

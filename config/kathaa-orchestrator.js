@@ -1,7 +1,8 @@
 var sleep = require('sleep');
 GLOBAL.kathaaData = require('./kathaa-data');
 var kathaaGraph = require('./kathaa-graph');
-
+var Entities = require('html-entities').AllHtmlEntities;
+entities = new Entities();
 
 var kathaaOrchestrator = function (module_library, kue, client){
   this.module_library = module_library;
@@ -133,7 +134,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     if(job.orchestrator.module_library.component_library[job.data.node.component].type == "splitter"){
       // Handle splitter modules here
             // TO-DO Refactor
-            
+
             // Custom _done wrapper to be passed into the individual processes
             // if error, is defined, then _param will represent a custom error message
             // if the job successfully completes, error has to be passed as null, and _param
@@ -251,7 +252,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
         //Build per-sentence kathaa_input
         var _blob_kathaa_inputs = {}
         for(var input_port in job.data.node.kathaa_inputs_objectified){
-          _blob_kathaa_inputs[input_port] = job.data.node.kathaa_inputs_objectified[input_port].get(blob_ids[_idx]);
+          _blob_kathaa_inputs[input_port] = job.data.node.kathaa_inputs_objectified[input_port].get(blob_ids[_idx]);          
         }
 
         //Try to execute the process
