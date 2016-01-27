@@ -129,8 +129,8 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       done(err);
     }
 
-    if(job.orchestrator.module_library.component_library[job.data.node.component].type == "splitter"){
-      // Handle splitter modules here
+    if(job.orchestrator.module_library.component_library[job.data.node.component].type == "kathaa-blob-adapter"){
+      // Handle kathaa-blob-adapters here
             // TO-DO Refactor
 
             // Custom _done wrapper to be passed into the individual processes
