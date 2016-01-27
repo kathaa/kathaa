@@ -27,7 +27,8 @@ kathaaOrchestrator.prototype.executeGraph = function(_graph, beginNode){
       _beginNode.kathaa_inputs[key] = temp.render();
     }
   }
-
+  console.log(_beginNode.kathaa_inputs);
+  
   this.queueNodeJob(this.graph, _beginNode.id);
 }
 
@@ -186,14 +187,14 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       
       // The assumption here is, the same keys are set for all the input ports
       // TO-DO : Fix this
-      var blob_ids = job.data.node.kathaa_inputs_objectified[first_input_port].getKeys();
+      var blobs = job.data.node.kathaa_inputs_objectified[first_input_port].getAllBlobs();
 
       // Handle normal modules
-      var weight_of_sentence = (1/blob_ids.length);
+      var weight_of_sentence = (1/blobs.length);
 
       var outputs_received = 0;
       function currentProgress(){
-        return (outputs_received/blob_ids.length);
+        return (outputs_received/blobs.length);
       }
 
       var _partial_job_done =  function(blob_id){
@@ -210,7 +211,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
                     return done(error);
                   }else{
                     // In case of successful completion of partial-job
-                    // Iterate over _param and add keys to respective blob_ids in kathaa_outputs_objectified
+                    // Iterate over _param and add keys to respective blobs in kathaa_outputs_objectified
                     for(var key in _param){
                       //Check if the object exists
                       if(job.data.node.kathaa_outputs_objectified.hasOwnProperty(key)){
@@ -246,12 +247,12 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
               }
             }
 
-      for(var _idx in blob_ids){
+      for(var _idx in blobs){
 
         //Build per-sentence kathaa_input
         var _blob_kathaa_inputs = {}
         for(var input_port in job.data.node.kathaa_inputs_objectified){
-          _blob_kathaa_inputs[input_port] = job.data.node.kathaa_inputs_objectified[input_port].get(blob_ids[_idx]);          
+          _blob_kathaa_inputs[input_port] = blobs[_idx]['value'];          
         }
 
         //Try to execute the process
@@ -264,7 +265,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
                                     node_id : job.data.node.id
                                   });
             },
-            new _partial_job_done(blob_ids[_idx])
+            new _partial_job_done(blobs[_idx]['key'])
         );
         }catch(err){
           job.failed().error(err);
