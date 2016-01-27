@@ -4,17 +4,6 @@
     "outports": {},
     "groups": [],
     "processes": {
-        "core/sentence_input_poc": {
-            "component": "core/sentence_input",
-            "metadata": {
-                "label": "Sentence Input",
-                "x": 216,
-                "y": 504,
-                "width": 72,
-                "height": 72,
-                "progress": 100
-            }
-        },
         "core/sentence_output_rsr": {
             "component": "core/sentence_output",
             "metadata": {
@@ -23,7 +12,7 @@
                 "y": 504,
                 "width": 72,
                 "height": 72,
-                "progress": 100
+                "progress": 0
             }
         },
         "hindi_panjabi/tokenizer_22xn": {
@@ -119,12 +108,12 @@
             "component": "core/user_intervention",
             "metadata": {
                 "label": "Manual Pick-One-Morph",
-                "x": 1908,
-                "y": 540,
+                "x": 1872,
+                "y": 576,
                 "width": 72,
                 "height": 72,
-                "progress": 100,
-                "requiresUserIntervention": false
+                "progress": 0,
+                "requiresUserIntervention": true
             }
         },
         "core/ssf2readable_12p4": {
@@ -135,7 +124,7 @@
                 "y": 324,
                 "width": 72,
                 "height": 72,
-                "progress": 100
+                "progress": 0
             }
         },
         "hindi_panjabi/pickonemorph_1hl4": {
@@ -157,7 +146,7 @@
                 "y": 432,
                 "width": 72,
                 "height": 72,
-                "progress": 100
+                "progress": 0
             }
         },
         "hindi_panjabi/computehead_1l9l": {
@@ -168,15 +157,27 @@
                 "y": 432,
                 "width": 72,
                 "height": 72,
+                "progress": 0
+            }
+        },
+        "core/sentence_input_1hro": {
+            "component": "core/sentence_input",
+            "metadata": {
+                "label": "Sentence Input",
+                "x": 180,
+                "y": 504,
+                "default": "देश के टूरिजम में राजस्थान एक अहम जगह रखता है।\nबाद में सुरक्षाकर्मियों ने हंगामा कर रहे छात्रों को सभास्थल से बाहर कर दिया.\nइससे पहले प्रधानमंत्री मोदी ने अपने संसदीय क्षेत्र वाराणसी में नई ट्रेन महामना एक्सप्रेस को हरी झंडी दिखाई.\n",
+                "width": 72,
+                "height": 72,
                 "progress": 100
             }
         },
-        "core/line-splitter_1637": {
+        "core/line-splitter_1r9b": {
             "component": "core/line-splitter",
             "metadata": {
                 "label": "Line Splitter",
-                "x": 396,
-                "y": 576,
+                "x": 360,
+                "y": 504,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -341,25 +342,23 @@
         },
         {
             "src": {
-                "process": "core/sentence_input_poc",
+                "process": "core/sentence_input_1hro",
                 "port": "out_raw"
             },
             "tgt": {
-                "process": "core/line-splitter_1637",
+                "process": "core/line-splitter_1r9b",
                 "port": "in_raw_1"
-            },
-            "metadata": {}
+            }
         },
         {
             "src": {
-                "process": "core/line-splitter_1637",
+                "process": "core/line-splitter_1r9b",
                 "port": "out_raw_1"
             },
             "tgt": {
                 "process": "hindi_panjabi/tokenizer_22xn",
                 "port": "in_ssf"
-            },
-            "metadata": {}
+            }
         }
     ]
 }

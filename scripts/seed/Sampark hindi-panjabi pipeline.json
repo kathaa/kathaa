@@ -223,17 +223,6 @@
                 "progress": 100
             }
         },
-        "core/sentence_input_1zk7": {
-            "component": "core/sentence_input",
-            "metadata": {
-                "y": 216,
-                "x": -468,
-                "height": 72,
-                "width": 72,
-                "label": "Sentence Input",
-                "progress": 100
-            }
-        },
         "hindi_panjabi/intrachunk_5j88": {
             "component": "hindi_panjabi/intrachunk",
             "metadata": {
@@ -813,6 +802,18 @@
                 "label": "Line Aggregator",
                 "x": 3636,
                 "y": 396,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/sentence_input_22b": {
+            "component": "core/sentence_input",
+            "metadata": {
+                "label": "Sentence Input",
+                "x": -550.0793111012571,
+                "y": 316.2040432343074,
+                "default": "देश के टूरिजम में राजस्थान एक अहम जगह रखता है।\nबाद में सुरक्षाकर्मियों ने हंगामा कर रहे छात्रों को सभास्थल से बाहर कर दिया.\nइससे पहले प्रधानमंत्री मोदी ने अपने संसदीय क्षेत्र वाराणसी में नई ट्रेन महामना एक्सप्रेस को हरी झंडी दिखाई.\n",
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -1434,19 +1435,6 @@
         },
         {
             "src": {
-                "process": "core/sentence_input_1zk7",
-                "port": "out_raw"
-            },
-            "tgt": {
-                "process": "core/line-splitter_24k7",
-                "port": "in_raw_1"
-            },
-            "metadata": {
-                "route": null
-            }
-        },
-        {
-            "src": {
                 "process": "hindi_panjabi/morph_jsqt",
                 "port": "out_ssf"
             },
@@ -1522,8 +1510,7 @@
             "tgt": {
                 "process": "core/line-aggregator_j0j",
                 "port": "in_raw_1"
-            },
-            "metadata": {}
+            }
         },
         {
             "src": {
@@ -1533,8 +1520,7 @@
             "tgt": {
                 "process": "core/echo_11s",
                 "port": "in_ssf"
-            },
-            "metadata": {}
+            }
         },
         {
             "src": {
@@ -1544,8 +1530,7 @@
             "tgt": {
                 "process": "core/line-aggregator_aai3v",
                 "port": "in_raw_1"
-            },
-            "metadata": {}
+            }
         },
         {
             "src": {
@@ -1555,8 +1540,17 @@
             "tgt": {
                 "process": "core/echo_dj920",
                 "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "core/sentence_input_22b",
+                "port": "out_raw"
             },
-            "metadata": {}
+            "tgt": {
+                "process": "core/line-splitter_24k7",
+                "port": "in_raw_1"
+            }
         }
     ]
 }

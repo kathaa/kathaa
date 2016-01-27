@@ -273,8 +273,7 @@ $(document).ready(function(){
         $("#kathaa-edit-module a[href='#kathaa-edit-module-info-tab']").tab('show')
     })
 
-    var sample_sentence = "देश के टूरिजम में राजस्थान एक अहम जगह रखता है।\nबाद में सुरक्षाकर्मियों ने हंगामा कर रहे छात्रों को सभास्थल से बाहर कर दिया.\nइससे पहले प्रधानमंत्री मोदी ने अपने संसदीय क्षेत्र वाराणसी में नई ट्रेन महामना एक्सप्रेस को हरी झंडी दिखाई.\n";
-    sample_sentence += sample_sentence;
+    // var sample_sentence = "देश के टूरिजम में राजस्थान एक अहम जगह रखता है।\nबाद में सुरक्षाकर्मियों ने हंगामा कर रहे छात्रों को सभास्थल से बाहर कर दिया.\nइससे पहले प्रधानमंत्री मोदी ने अपने संसदीय क्षेत्र वाराणसी में नई ट्रेन महामना एक्सप्रेस को हरी झंडी दिखाई.\n";
 
     window.kathaa.latest_workflow_run = {};
     window.get_node_input_value_at_port =function(node, port){
@@ -308,7 +307,7 @@ $(document).ready(function(){
             }else{
                 if(node.component == "core/sentence_input" &&
                     port == "input_sentence"){
-                    return sample_sentence;
+                    return node.metadata.default;
                 }
                 return "";
             }
@@ -317,7 +316,7 @@ $(document).ready(function(){
             // return sample sentence
             if(node.component == "core/sentence_input" &&
                 port == "input_sentence" ){
-                return sample_sentence;
+                    return node.metadata.default;
             }
             return ""; // Defaults to empty string
         }

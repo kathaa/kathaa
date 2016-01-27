@@ -4,17 +4,6 @@
     "outports": {},
     "groups": [],
     "processes": {
-        "core/sentence_input_14mt": {
-            "component": "core/sentence_input",
-            "metadata": {
-                "label": "Sentence Input",
-                "x": 324,
-                "y": 468,
-                "width": 72,
-                "height": 72,
-                "progress": 100
-            }
-        },
         "hindi_urdu/tokenizer_zqf": {
             "component": "hindi_urdu/tokenizer",
             "metadata": {
@@ -322,6 +311,18 @@
                 "height": 72,
                 "progress": 100
             }
+        },
+        "core/sentence_input_1s9f": {
+            "component": "core/sentence_input",
+            "metadata": {
+                "label": "Sentence Input",
+                "x": 216,
+                "y": 468,
+                "default": "देश के टूरिजम में राजस्थान एक अहम जगह रखता है।\nबाद में सुरक्षाकर्मियों ने हंगामा कर रहे छात्रों को सभास्थल से बाहर कर दिया.\nइससे पहले प्रधानमंत्री मोदी ने अपने संसदीय क्षेत्र वाराणसी में नई ट्रेन महामना एक्सप्रेस को हरी झंडी दिखाई.\n",
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
         }
     },
     "connections": [
@@ -552,16 +553,6 @@
         },
         {
             "src": {
-                "process": "core/sentence_input_14mt",
-                "port": "out_raw"
-            },
-            "tgt": {
-                "process": "core/line-splitter_134l",
-                "port": "in_raw_1"
-            }
-        },
-        {
-            "src": {
                 "process": "core/line-splitter_134l",
                 "port": "out_raw_1"
             },
@@ -641,6 +632,16 @@
             "tgt": {
                 "process": "hindi_urdu/headcomputation_1vs4",
                 "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "core/sentence_input_1s9f",
+                "port": "out_raw"
+            },
+            "tgt": {
+                "process": "core/line-splitter_134l",
+                "port": "in_raw_1"
             }
         }
     ]
