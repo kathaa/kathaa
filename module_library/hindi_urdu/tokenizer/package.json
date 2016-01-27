@@ -2,7 +2,7 @@
     "name": "tokenizer",
     "inports": [
         {
-            "type": "all",
+            "type": "raw",
             "name": "in_ssf"
         }
     ],

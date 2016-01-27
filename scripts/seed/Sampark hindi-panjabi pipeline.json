@@ -171,8 +171,8 @@
         "core/sentence_output_1zk7": {
             "component": "core/sentence_output",
             "metadata": {
-                "y": -36,
-                "x": 3672,
+                "y": 0,
+                "x": 3708,
                 "height": 72,
                 "width": 72,
                 "label": "Sentence Output",
@@ -226,8 +226,8 @@
         "core/sentence_input_1zk7": {
             "component": "core/sentence_input",
             "metadata": {
-                "y": 252,
-                "x": -216,
+                "y": 216,
+                "x": -468,
                 "height": 72,
                 "width": 72,
                 "label": "Sentence Input",
@@ -248,8 +248,8 @@
         "hindi_panjabi/tokenizer_yj5u": {
             "component": "hindi_panjabi/tokenizer",
             "metadata": {
-                "y": 144,
-                "x": 396,
+                "y": 216,
+                "x": 72,
                 "height": 72,
                 "width": 72,
                 "label": "tokenizer",
@@ -260,7 +260,7 @@
             "component": "hindi_panjabi/chunker",
             "metadata": {
                 "y": 180,
-                "x": 900,
+                "x": 792,
                 "height": 72,
                 "width": 72,
                 "label": "chunker",
@@ -271,7 +271,7 @@
             "component": "hindi_panjabi/morph",
             "metadata": {
                 "y": 180,
-                "x": 648,
+                "x": 504,
                 "height": 72,
                 "width": 72,
                 "label": "morph",
@@ -304,7 +304,7 @@
             "component": "hindi_panjabi/postagger",
             "metadata": {
                 "y": 72,
-                "x": 792,
+                "x": 648,
                 "height": 72,
                 "width": 72,
                 "label": "postagger",
@@ -392,7 +392,7 @@
             "component": "hindi_panjabi/pruning",
             "metadata": {
                 "y": 288,
-                "x": 1008,
+                "x": 972,
                 "height": 72,
                 "width": 72,
                 "label": "pruning",
@@ -436,7 +436,7 @@
             "component": "hindi_panjabi/utf2wx",
             "metadata": {
                 "y": 252,
-                "x": 540,
+                "x": 288,
                 "height": 72,
                 "width": 72,
                 "label": "utf2wx",
@@ -459,7 +459,7 @@
             "metadata": {
                 "label": "Randomizer",
                 "x": 1152,
-                "y": -612,
+                "y": -504,
                 "width": 72,
                 "height": 72,
                 "progress": 0
@@ -611,7 +611,7 @@
         "core/sentence_output_5tztn": {
             "component": "core/sentence_output",
             "metadata": {
-                "y": -648,
+                "y": -828,
                 "x": 3600,
                 "height": 72,
                 "width": 72,
@@ -711,8 +711,8 @@
             "component": "core/custom_module",
             "metadata": {
                 "label": "Kathaa-fier",
-                "x": 108,
-                "y": -432,
+                "x": 324,
+                "y": -288,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -730,34 +730,92 @@
                 "progress": 100
             }
         },
-        "core/ssf2readable_1mmg": {
+        "core/ssf2readable_1jt1": {
             "component": "core/ssf2readable",
             "metadata": {
                 "label": "SSF 2 Readable",
-                "x": 3672,
-                "y": -216,
+                "x": 3420,
+                "y": -72,
                 "width": 72,
-                "height": 72
+                "height": 72,
+                "progress": 100
             }
         },
-        "core/ssf2readable_mzymm": {
-            "component": "core/ssf2readable",
-            "metadata": {
-                "label": "SSF 2 Readable",
-                "x": 3636,
-                "y": 396,
-                "width": 72,
-                "height": 72
-            }
-        },
-        "core/ssf2readable_dcyym": {
+        "core/ssf2readable_ixp1q": {
             "component": "core/ssf2readable",
             "metadata": {
                 "label": "SSF 2 Readable",
                 "x": 3600,
-                "y": -792,
+                "y": -972,
                 "width": 72,
-                "height": 72
+                "height": 72,
+                "progress": 0
+            }
+        },
+        "core/ssf2readable_bw614": {
+            "component": "core/ssf2readable",
+            "metadata": {
+                "label": "SSF 2 Readable",
+                "x": 3456,
+                "y": 432,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/line-splitter_24k7": {
+            "component": "core/line-splitter",
+            "metadata": {
+                "label": "Line Splitter",
+                "x": -216,
+                "y": 216,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/line-aggregator_j0j": {
+            "component": "core/line-aggregator",
+            "metadata": {
+                "label": "Line Aggregator",
+                "x": 3600,
+                "y": -144,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/echo_11s": {
+            "component": "core/echo",
+            "metadata": {
+                "label": "Echo",
+                "x": 3744,
+                "y": -180,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/echo_dj920": {
+            "component": "core/echo",
+            "metadata": {
+                "label": "Echo",
+                "x": 3816,
+                "y": 288,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/line-aggregator_aai3v": {
+            "component": "core/line-aggregator",
+            "metadata": {
+                "label": "Line Aggregator",
+                "x": 3636,
+                "y": 396,
+                "width": 72,
+                "height": 72,
+                "progress": 100
             }
         }
     },
@@ -774,41 +832,11 @@
         },
         {
             "src": {
-                "process": "hindi_panjabi/morph_jsqt",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_panjabi/postagger_hm6h",
-                "port": "in_ssf"
-            }
-        },
-        {
-            "src": {
-                "process": "hindi_panjabi/postagger_hm6h",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_panjabi/chunker_jyoh",
-                "port": "in_ssf"
-            }
-        },
-        {
-            "src": {
                 "process": "hindi_panjabi/chunker_jyoh",
                 "port": "out_ssf"
             },
             "tgt": {
                 "process": "hindi_panjabi/pruning_6iv9",
-                "port": "in_ssf"
-            }
-        },
-        {
-            "src": {
-                "process": "hindi_panjabi/pruning_6iv9",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_panjabi/guessmorph_qapk",
                 "port": "in_ssf"
             }
         },
@@ -1305,32 +1333,6 @@
         },
         {
             "src": {
-                "process": "core/sentence_input_1zk7",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_panjabi/tokenizer_yj5u",
-                "port": "in_ssf"
-            },
-            "metadata": {
-                "route": null
-            }
-        },
-        {
-            "src": {
-                "process": "hindi_panjabi/tokenizer_yj5u",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_panjabi/utf2wx_acs9",
-                "port": "in_ssf"
-            },
-            "metadata": {
-                "route": null
-            }
-        },
-        {
-            "src": {
                 "process": "hindi_panjabi/tokenizer_yj5u",
                 "port": "out_ssf"
             },
@@ -1367,11 +1369,50 @@
         },
         {
             "src": {
-                "process": "hindi_panjabi/wordgenerator_ezxo",
+                "process": "core/echo_2g7m5",
                 "port": "out_ssf"
             },
             "tgt": {
-                "process": "core/ssf2readable_1mmg",
+                "process": "core/echo_5r97q",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": "4"
+            }
+        },
+        {
+            "src": {
+                "process": "core/echo_2g7m5",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/echo_1jb89",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": "4"
+            }
+        },
+        {
+            "src": {
+                "process": "core/echo_2g7m5",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/echo_9nv01",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": "4"
+            }
+        },
+        {
+            "src": {
+                "process": "core/echo_aaipx",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf2readable_ixp1q",
                 "port": "in_ssf"
             },
             "metadata": {
@@ -1384,7 +1425,7 @@
                 "port": "out_ssf"
             },
             "tgt": {
-                "process": "core/ssf2readable_mzymm",
+                "process": "core/ssf2readable_bw614",
                 "port": "in_ssf"
             },
             "metadata": {
@@ -1393,16 +1434,129 @@
         },
         {
             "src": {
-                "process": "core/echo_aaipx",
+                "process": "core/sentence_input_1zk7",
+                "port": "out_raw"
+            },
+            "tgt": {
+                "process": "core/line-splitter_24k7",
+                "port": "in_raw_1"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/morph_jsqt",
                 "port": "out_ssf"
             },
             "tgt": {
-                "process": "core/ssf2readable_dcyym",
+                "process": "hindi_panjabi/postagger_hm6h",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/tokenizer_yj5u",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/utf2wx_acs9",
                 "port": "in_ssf"
             },
             "metadata": {
                 "route": 0
             }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/postagger_hm6h",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/chunker_jyoh",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/pruning_6iv9",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/guessmorph_qapk",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "core/line-splitter_24k7",
+                "port": "out_raw_1"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/tokenizer_yj5u",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/wordgenerator_ezxo",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf2readable_1jt1",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "core/ssf2readable_1jt1",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "core/line-aggregator_j0j",
+                "port": "in_raw_1"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "core/line-aggregator_j0j",
+                "port": "out_raw_1"
+            },
+            "tgt": {
+                "process": "core/echo_11s",
+                "port": "in_ssf"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "core/ssf2readable_bw614",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "core/line-aggregator_aai3v",
+                "port": "in_raw_1"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "core/line-aggregator_aai3v",
+                "port": "out_raw_1"
+            },
+            "tgt": {
+                "process": "core/echo_dj920",
+                "port": "in_ssf"
+            },
+            "metadata": {}
         }
     ]
 }

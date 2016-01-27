@@ -1,0 +1,104 @@
+{
+    "name": "line-aggregator",
+    "version": "v0.1",
+    "icon": "columns",
+    "type": "kathaa-blob-adapter",
+    "inports": [
+        {
+            "name": "in_raw_1",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_2",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_3",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_4",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_5",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_6",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_7",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_8",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "in_raw_9",
+            "type": "raw",
+            "optional": true
+        }
+    ],
+    "outports": [
+        {
+            "name": "out_raw_1",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_2",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_3",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_4",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_5",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_6",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_7",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_8",
+            "type": "raw",
+            "optional": true
+        },
+        {
+            "name": "out_raw_9",
+            "type": "raw",
+            "optional": true
+        }
+    ],
+    "metadata": {
+        "label": "Line Aggregator"
+    },
+    "main": "index.js"
+}
