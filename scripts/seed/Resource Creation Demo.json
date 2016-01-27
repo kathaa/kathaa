@@ -1,0 +1,365 @@
+{
+    "properties": {},
+    "inports": {},
+    "outports": {},
+    "groups": [],
+    "processes": {
+        "core/sentence_input_poc": {
+            "component": "core/sentence_input",
+            "metadata": {
+                "label": "Sentence Input",
+                "x": 216,
+                "y": 504,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/sentence_output_rsr": {
+            "component": "core/sentence_output",
+            "metadata": {
+                "label": "Output",
+                "x": 2628,
+                "y": 504,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/tokenizer_22xn": {
+            "component": "hindi_panjabi/tokenizer",
+            "metadata": {
+                "label": "tokenizer",
+                "x": 563.0625,
+                "y": 490.21875,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/utf2wx_1ggu": {
+            "component": "hindi_panjabi/utf2wx",
+            "metadata": {
+                "label": "utf2wx",
+                "x": 720,
+                "y": 468,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/morph_5eg": {
+            "component": "hindi_panjabi/morph",
+            "metadata": {
+                "label": "morph",
+                "x": 858.375,
+                "y": 403.03125,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/postagger_inf": {
+            "component": "hindi_panjabi/postagger",
+            "metadata": {
+                "label": "postagger",
+                "x": 1008,
+                "y": 432,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/user_intervention_3mr": {
+            "component": "core/user_intervention",
+            "metadata": {
+                "label": "Manual POS Corrector",
+                "x": 1152,
+                "y": 684,
+                "width": 72,
+                "height": 72,
+                "progress": 100,
+                "requiresUserIntervention": false
+            }
+        },
+        "hindi_panjabi/chunker_1jlr": {
+            "component": "hindi_panjabi/chunker",
+            "metadata": {
+                "label": "chunker",
+                "x": 1332,
+                "y": 468,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/pruning_1sna": {
+            "component": "hindi_panjabi/pruning",
+            "metadata": {
+                "label": "pruning",
+                "x": 1512,
+                "y": 468,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/guessmorph_1iqr": {
+            "component": "hindi_panjabi/guessmorph",
+            "metadata": {
+                "label": "guessmorph",
+                "x": 1692,
+                "y": 468,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/user_intervention_o4f": {
+            "component": "core/user_intervention",
+            "metadata": {
+                "label": "Manual Pick-One-Morph",
+                "x": 1908,
+                "y": 540,
+                "width": 72,
+                "height": 72,
+                "progress": 100,
+                "requiresUserIntervention": false
+            }
+        },
+        "core/ssf2readable_12p4": {
+            "component": "core/ssf2readable",
+            "metadata": {
+                "label": "SSF 2 Readable",
+                "x": 2628,
+                "y": 324,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/pickonemorph_1hl4": {
+            "component": "hindi_panjabi/pickonemorph",
+            "metadata": {
+                "label": "pickonemorph",
+                "x": 1872,
+                "y": 360,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/ssf_soft_merger_19l7": {
+            "component": "core/ssf_soft_merger",
+            "metadata": {
+                "label": "SSF Soft Merger",
+                "x": 2088,
+                "y": 432,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_panjabi/computehead_1l9l": {
+            "component": "hindi_panjabi/computehead",
+            "metadata": {
+                "label": "computehead",
+                "x": 2268,
+                "y": 432,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/line-splitter_1637": {
+            "component": "core/line-splitter",
+            "metadata": {
+                "label": "Line Splitter",
+                "x": 396,
+                "y": 576,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        }
+    },
+    "connections": [
+        {
+            "src": {
+                "process": "hindi_panjabi/tokenizer_22xn",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/utf2wx_1ggu",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/utf2wx_1ggu",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/morph_5eg",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/morph_5eg",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/postagger_inf",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/postagger_inf",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/user_intervention_3mr",
+                "port": "in_1"
+            }
+        },
+        {
+            "src": {
+                "process": "core/user_intervention_3mr",
+                "port": "out_1"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/chunker_1jlr",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/chunker_1jlr",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/pruning_1sna",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/pruning_1sna",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/guessmorph_1iqr",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/guessmorph_1iqr",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/user_intervention_o4f",
+                "port": "in_1"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/guessmorph_1iqr",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/pickonemorph_1hl4",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/pickonemorph_1hl4",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf_soft_merger_19l7",
+                "port": "in_ssf_1"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "core/user_intervention_o4f",
+                "port": "out_1"
+            },
+            "tgt": {
+                "process": "core/ssf_soft_merger_19l7",
+                "port": "in_ssf_2"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "core/ssf_soft_merger_19l7",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/computehead_1l9l",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/computehead_1l9l",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf2readable_12p4",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_panjabi/computehead_1l9l",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/sentence_output_rsr",
+                "port": "in_ssf"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "core/sentence_input_poc",
+                "port": "out_raw"
+            },
+            "tgt": {
+                "process": "core/line-splitter_1637",
+                "port": "in_raw_1"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "core/line-splitter_1637",
+                "port": "out_raw_1"
+            },
+            "tgt": {
+                "process": "hindi_panjabi/tokenizer_22xn",
+                "port": "in_ssf"
+            },
+            "metadata": {}
+        }
+    ]
+}
