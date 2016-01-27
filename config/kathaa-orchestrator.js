@@ -1,8 +1,6 @@
 var sleep = require('sleep');
 GLOBAL.kathaaData = require('./kathaa-data');
 var kathaaGraph = require('./kathaa-graph');
-var Entities = require('html-entities').AllHtmlEntities;
-entities = new Entities();
 
 var kathaaOrchestrator = function (module_library, kue, client){
   this.module_library = module_library;
@@ -108,7 +106,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
   this.kue.process(job_id, 20, function(current_job, done){
     //TO-DO :: Refactor this block of code !!
 
-    // console.log("Processing : "+current_job.data.node.id);
+    console.log("Processing : "+current_job.data.node.id);
     debug(job.orchestrator.client, "Processing :"+job.id+"  node id : "+job.data.node.id);
 
     // The job object is guaranteed to have `kathaa_inputs` object properly defined
@@ -173,6 +171,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       for(var input_port in job.data.node.kathaa_inputs){
         job.data.node.kathaa_inputs_objectified[input_port] = new kathaaData(job.data.node.kathaa_inputs[input_port]);
       }
+
       job.data.node.kathaa_outputs = {}
       job.data.node.kathaa_outputs_objectified = {};
 
