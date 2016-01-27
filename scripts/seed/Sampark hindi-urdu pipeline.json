@@ -8,8 +8,8 @@
             "component": "core/sentence_input",
             "metadata": {
                 "label": "Sentence Input",
-                "x": 468,
-                "y": 396,
+                "x": 324,
+                "y": 468,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -97,7 +97,7 @@
             "metadata": {
                 "label": "chunker",
                 "x": 2124,
-                "y": 252,
+                "y": 72,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -108,7 +108,7 @@
             "metadata": {
                 "label": "multiwordexpr",
                 "x": 2124,
-                "y": 0,
+                "y": 252,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -228,8 +228,8 @@
             "component": "core/sentence_output",
             "metadata": {
                 "label": "Output",
-                "x": 5760,
-                "y": 432,
+                "x": 6120,
+                "y": 396,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -239,41 +239,85 @@
             "component": "hindi_urdu/ner",
             "metadata": {
                 "label": "ner",
-                "x": 2124,
-                "y": 540,
+                "x": 2268,
+                "y": 432,
                 "width": 72,
                 "height": 72,
                 "progress": 100
             }
         },
-        "hindi_urdu/merger_5ek": {
-            "component": "hindi_urdu/merger",
-            "metadata": {
-                "label": "merger",
-                "x": 2520,
-                "y": 324,
-                "width": 72,
-                "height": 72,
-                "progress": 100
-            }
-        },
-        "core/ssf2readable_23hi": {
+        "core/ssf2readable_vc4": {
             "component": "core/ssf2readable",
             "metadata": {
                 "label": "SSF 2 Readable",
-                "x": 5760,
+                "x": 5796,
+                "y": 288,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "hindi_urdu/wx2utf_urd_1gr3": {
+            "component": "hindi_urdu/wx2utf_urd",
+            "metadata": {
+                "label": "wx2utf_urd",
+                "x": 5508,
+                "y": 432,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/line-splitter_134l": {
+            "component": "core/line-splitter",
+            "metadata": {
+                "label": "Line Splitter",
+                "x": 504,
+                "y": 468,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/line-aggregator_20vr": {
+            "component": "core/line-aggregator",
+            "metadata": {
+                "label": "Line Aggregator",
+                "x": 6012,
                 "y": 252,
                 "width": 72,
                 "height": 72,
                 "progress": 100
             }
         },
-        "hindi_urdu/wx2utf_urd_22ci": {
-            "component": "hindi_urdu/wx2utf_urd",
+        "core/echo_4pz": {
+            "component": "core/echo",
             "metadata": {
-                "label": "wx2utf_urd",
-                "x": 5472,
-                "y": 432,
+                "label": "Echo",
+                "x": 6193.716749954687,
+                "y": 225.125781444567,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/ssf_soft_merger_1pgv": {
+            "component": "core/ssf_soft_merger",
+            "metadata": {
+                "label": "SSF Soft Merger",
+                "x": 2376,
+                "y": 180,
+                "width": 72,
+                "height": 72,
+                "progress": 100
+            }
+        },
+        "core/ssf_soft_merger_xevuo": {
+            "component": "core/ssf_soft_merger",
+            "metadata": {
+                "label": "SSF Soft Merger",
+                "x": 2592,
+                "y": 324,
                 "width": 72,
                 "height": 72,
                 "progress": 100
@@ -283,16 +327,6 @@
     "connections": [
         {
             "src": {
-                "process": "core/sentence_input_14mt",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_urdu/tokenizer_zqf",
-                "port": "in_ssf"
-            }
-        },
-        {
-            "src": {
                 "process": "hindi_urdu/tokenizer_zqf",
                 "port": "out_ssf"
             },
@@ -482,60 +516,11 @@
         },
         {
             "src": {
-                "process": "hindi_urdu/multiwordexpr_s86",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_urdu/merger_5ek",
-                "port": "in_mwe"
-            },
-            "metadata": {
-                "route": null
-            }
-        },
-        {
-            "src": {
-                "process": "hindi_urdu/chunker_1436",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_urdu/merger_5ek",
-                "port": "in_chunker"
-            },
-            "metadata": {
-                "route": null
-            }
-        },
-        {
-            "src": {
-                "process": "hindi_urdu/ner_c11",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_urdu/merger_5ek",
-                "port": "in_ner"
-            },
-            "metadata": {
-                "route": null
-            }
-        },
-        {
-            "src": {
-                "process": "hindi_urdu/merger_5ek",
-                "port": "out_ssf"
-            },
-            "tgt": {
-                "process": "hindi_urdu/headcomputation_1vs4",
-                "port": "in_ssf"
-            }
-        },
-        {
-            "src": {
                 "process": "hindi_urdu/wordgenerator_1icu",
                 "port": "out_ssf"
             },
             "tgt": {
-                "process": "hindi_urdu/wx2utf_urd_22ci",
+                "process": "hindi_urdu/wx2utf_urd_1gr3",
                 "port": "in_ssf"
             },
             "metadata": {
@@ -544,7 +529,7 @@
         },
         {
             "src": {
-                "process": "hindi_urdu/wx2utf_urd_22ci",
+                "process": "hindi_urdu/wx2utf_urd_1gr3",
                 "port": "out_ssf"
             },
             "tgt": {
@@ -554,15 +539,108 @@
         },
         {
             "src": {
-                "process": "hindi_urdu/wx2utf_urd_22ci",
+                "process": "hindi_urdu/wx2utf_urd_1gr3",
                 "port": "out_ssf"
             },
             "tgt": {
-                "process": "core/ssf2readable_23hi",
+                "process": "core/ssf2readable_vc4",
                 "port": "in_ssf"
             },
             "metadata": {
                 "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "core/sentence_input_14mt",
+                "port": "out_raw"
+            },
+            "tgt": {
+                "process": "core/line-splitter_134l",
+                "port": "in_raw_1"
+            }
+        },
+        {
+            "src": {
+                "process": "core/line-splitter_134l",
+                "port": "out_raw_1"
+            },
+            "tgt": {
+                "process": "hindi_urdu/tokenizer_zqf",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "core/ssf2readable_vc4",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "core/line-aggregator_20vr",
+                "port": "in_raw_1"
+            }
+        },
+        {
+            "src": {
+                "process": "core/line-aggregator_20vr",
+                "port": "out_raw_1"
+            },
+            "tgt": {
+                "process": "core/echo_4pz",
+                "port": "in_ssf"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_urdu/chunker_1436",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf_soft_merger_1pgv",
+                "port": "in_ssf_1"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_urdu/multiwordexpr_s86",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf_soft_merger_1pgv",
+                "port": "in_ssf_2"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "core/ssf_soft_merger_1pgv",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf_soft_merger_xevuo",
+                "port": "in_ssf_1"
+            }
+        },
+        {
+            "src": {
+                "process": "hindi_urdu/ner_c11",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "core/ssf_soft_merger_xevuo",
+                "port": "in_ssf_2"
+            }
+        },
+        {
+            "src": {
+                "process": "core/ssf_soft_merger_xevuo",
+                "port": "out_ssf"
+            },
+            "tgt": {
+                "process": "hindi_urdu/headcomputation_1vs4",
+                "port": "in_ssf"
             }
         }
     ]
