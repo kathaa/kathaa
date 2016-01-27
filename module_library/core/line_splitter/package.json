@@ -1,0 +1,21 @@
+{
+    "name": "line-splitter",
+    "version": "v0.1",
+    "icon": "columns",
+    "inports": [
+        {
+            "name": "in_raw",
+            "type": "raw"
+        }
+    ],
+    "outports": [
+        {
+            "name": "out_ssf",
+            "type": "ssf"
+        }
+    ],
+    "metadata": {
+        "label": "Line Splitter"
+    },
+    "main": "index.js"
+}

@@ -5,8 +5,8 @@
     "inports": [],
     "outports": [
         {
-            "name": "out_ssf",
-            "type": "all"
+            "name": "out_raw",
+            "type": "raw"
         }
     ],
     "metadata": {

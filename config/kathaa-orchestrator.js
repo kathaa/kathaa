@@ -21,15 +21,11 @@ kathaaOrchestrator.prototype.executeGraph = function(_graph, beginNode){
 
   if(_beginNode.component == "core/sentence_input"){
     // In case of sentence_input, kathaa_input is not in kathaa-data format
-    // convert it into kathaa data format
-
+    // Blob-ify the inputs !!
     for(var key in beginNode.kathaa_inputs){
-      var temp = beginNode.kathaa_inputs[key].trim().split("\n");
-      _beginNode.kathaa_inputs[key] = new kathaaData("");
-      for(var idx in temp){
-        _beginNode.kathaa_inputs[key].set(idx, temp[idx]);
-      }
-      _beginNode.kathaa_inputs[key] = _beginNode.kathaa_inputs[key].render();
+      var temp = new kathaaData();
+      temp.set(0, beginNode.kathaa_inputs[key]);
+      _beginNode.kathaa_inputs[key] = temp.render();
     }
   }
 
@@ -117,21 +113,6 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     // The job object is guaranteed to have `kathaa_inputs` object properly defined
     // The job of the process and return the `kathaa_outputs` object
 
-    // `kathaa_inputs` now holds the input-port values for a whole list of sentences.
-    // instead of a single sentence !!
-    
-    // Parse all individual kathaa_inputs into their respective kathaa-data object
-    job.data.node.kathaa_inputs_objectified = {}
-    for(var input_port in job.data.node.kathaa_inputs){
-      job.data.node.kathaa_inputs_objectified[input_port] = new kathaaData(job.data.node.kathaa_inputs[input_port]);
-    }
-    job.data.node.kathaa_outputs = {}
-    job.data.node.kathaa_outputs_objectified = {};
-
-    // One key assumption is all nodes will have atleast one input
-    // and all kathaa_input_objects will have the exact same set of keys(as defined by input_ports)
-    // TO-DO :: Add Validation here for the same
-
     // Define the process
     var _process;
     try{
@@ -149,91 +130,146 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       done(err);
     }
 
-    // For all Sentences.......Try to run the process, and collect the output
-    // Build a proper kathaa_output object in the RAW/render() form of the kathaa-data object
-    // and then mark as job-completed.
-    var first_input_port = Object.keys(job.data.node.kathaa_inputs)[0]
-    var sentence_ids = job.data.node.kathaa_inputs_objectified[first_input_port].getKeys();
-    var weight_of_sentence = (1/job.data.node.kathaa_inputs_objectified[first_input_port].getKeys().length);
-
-    var outputs_received = 0;
-    function currentProgress(){
-      return (outputs_received/job.data.node.kathaa_inputs_objectified[first_input_port].getKeys().length);
-    }
-
-    var _partial_job_done =  function(sentence_id){
-      var _sentence_id = sentence_id;
-      return function(error, _param){
-                // Custom _done wrapper to be passed into the individual processes
-                // if error, is defined, then _param will represent a custom error message
-                // if the job successfully completes, error has to be passed as null, and _param
-                // represents `kathaa_input`
-                if(error){
-                  // Currently the whole job gets failed if even one of the sentence fails execution
-                  // TO-DO :: Fix this....probably mark error state in the Kathaa-Data format
-                  job.failed().error(error);
-                  return done(error);
-                }else{
-                  // In case of successful completion of partial-job
-                  // Iterate over _param and add keys to respective sentence_ids in kathaa_outputs_objectified
-                  for(var key in _param){
-                    //Check if the object exists
-                    if(job.data.node.kathaa_outputs_objectified.hasOwnProperty(key)){
-                      //Cool do nothing :D everything is in place :D
-                    }
-                    else{
-                      job.data.node.kathaa_outputs_objectified[key] = new kathaaData("");
-                    }
-                    //Set the param corresponding to the sentence_id
-                    job.data.node.kathaa_outputs_objectified[key].set(_sentence_id, _param[key]);
-                    // job.data.node.kathaa_outputs_objectified[key].data[sentence_id+""] = _param[key];
-                  }
-                  outputs_received += 1;
-                  // Wait till all outputs have been received
-                  if(currentProgress() == 1){
-                    //Job Complete
-                    //Transfer all kathaa_outputs_objectified to kathaa_outputs
-                    for(var key in job.data.node.kathaa_outputs_objectified){
-                      job.data.node.kathaa_outputs[key] = job.data.node.kathaa_outputs_objectified[key].render();
-                    }
-                    return done(error, job.data.node.kathaa_outputs)
-                  }else{
-                    //Mark Progress
-                    // Temporarily Hide showing of partial job progress as on the client side
-                    // socket.io is having a hard time dealing with so much data
-                    // 
-                    // job.orchestrator.client.emit("execute_workflow_progress",
-                    //                     { progress :  (currentProgress())*100,
-                    //                       node_id : job.data.node.id
-                    //                     });
-                  }
-                }
+    if(job.orchestrator.module_library.component_library[job.data.node.component].type == "splitter"){
+      // Handle splitter modules here
+            // TO-DO Refactor
+            
+            // Custom _done wrapper to be passed into the individual processes
+            // if error, is defined, then _param will represent a custom error message
+            // if the job successfully completes, error has to be passed as null, and _param
+            // represents `kathaa_input`
+            var _done = function(error, _param){
+              if(error){
+                job.failed().error(error);
+                return done(error);
+              }else{
+                //In case of successful completion of job
+                return done(error, _param)
+              }
             }
-          }
 
-    for(var _idx in sentence_ids){
+            try{
+              _process(current_job.data.node.kathaa_inputs, 
+                      function(progress){
+                        //Using custom progress tracker, as the Kue progress tracker is acting funny
+                        job.orchestrator.client.emit("execute_workflow_progress",
+                                            { progress :  progress/100,
+                                              node_id : job.data.node.id
+                                            });
+                      }
+                      , _done)
+            }catch(err){
+              job.failed().error(err);
+              done(err);
+            }
 
-      //Build per-sentence kathaa_input
-      var _sentence_kathaa_inputs = {}
-      for(var input_port in job.data.node.kathaa_inputs_objectified){
-        _sentence_kathaa_inputs[input_port] = job.data.node.kathaa_inputs_objectified[input_port].get(sentence_ids[_idx]);
+    }else{
+      // `kathaa_inputs` now holds the input-port values for a whole list of sentences.
+      // instead of a single sentence !!
+      
+      // Parse all individual kathaa_inputs into their respective kathaa-data object
+      job.data.node.kathaa_inputs_objectified = {}
+      for(var input_port in job.data.node.kathaa_inputs){
+        job.data.node.kathaa_inputs_objectified[input_port] = new kathaaData(job.data.node.kathaa_inputs[input_port]);
+      }
+      job.data.node.kathaa_outputs = {}
+      job.data.node.kathaa_outputs_objectified = {};
+
+      // One key assumption is all nodes will have atleast one input
+      // and all kathaa_input_objects will have the exact same set of keys(as defined by input_ports)
+      // TO-DO :: Add Validation here for the same
+
+      // For all Sentences.......Try to run the process, and collect the output
+      // Build a proper kathaa_output object in the RAW/render() form of the kathaa-data object
+      // and then mark as job-completed.
+      var first_input_port = Object.keys(job.data.node.kathaa_inputs)[0]
+      
+      // The assumption here is, the same keys are set for all the input ports
+      // TO-DO : Fix this
+      var blob_ids = job.data.node.kathaa_inputs_objectified[first_input_port].getKeys();
+
+      // Handle normal modules
+      var weight_of_sentence = (1/blob_ids.length);
+
+      var outputs_received = 0;
+      function currentProgress(){
+        return (outputs_received/blob_ids.length);
       }
 
-      //Try to execute the process
-      try{
-        _process(_sentence_kathaa_inputs,
-          function(progress){
-            //Using custom progress tracker, as the Kue progress tracker is acting funny
-            job.orchestrator.client.emit("execute_workflow_progress",
-                                { progress :  (currentProgress() + (progress/100)*weight_of_sentence)*100,
-                                  node_id : job.data.node.id
-                                });
-          },
-          new _partial_job_done(sentence_ids[_idx])
-      );
-      }catch(err){
-        job.failed().error(err);
-        done(err);
+      var _partial_job_done =  function(blob_id){
+        var _blob_id = blob_id;
+        return function(error, _param){
+                  // Custom _done wrapper to be passed into the individual processes
+                  // if error, is defined, then _param will represent a custom error message
+                  // if the job successfully completes, error has to be passed as null, and _param
+                  // represents `kathaa_input`
+                  if(error){
+                    // Currently the whole job gets failed if even one of the sentence fails execution
+                    // TO-DO :: Fix this....probably mark error state in the Kathaa-Data format
+                    job.failed().error(error);
+                    return done(error);
+                  }else{
+                    // In case of successful completion of partial-job
+                    // Iterate over _param and add keys to respective blob_ids in kathaa_outputs_objectified
+                    for(var key in _param){
+                      //Check if the object exists
+                      if(job.data.node.kathaa_outputs_objectified.hasOwnProperty(key)){
+                        //Cool do nothing :D everything is in place :D
+                      }
+                      else{
+                        job.data.node.kathaa_outputs_objectified[key] = new kathaaData();
+                      }
+                      //Set the param corresponding to the blob_id
+                      job.data.node.kathaa_outputs_objectified[key].set(_blob_id, _param[key]);
+                      // job.data.node.kathaa_outputs_objectified[key].data[blob_id+""] = _param[key];
+                    }
+                    outputs_received += 1;
+                    // Wait till all outputs have been received
+                    if(currentProgress() == 1){
+                      //Job Complete
+                      //Transfer all kathaa_outputs_objectified to kathaa_outputs
+                      for(var key in job.data.node.kathaa_outputs_objectified){
+                        job.data.node.kathaa_outputs[key] = job.data.node.kathaa_outputs_objectified[key].render();
+                      }
+                      return done(error, job.data.node.kathaa_outputs)
+                    }else{
+                      //Mark Progress
+                      // Temporarily Hide showing of partial job progress as on the client side
+                      // socket.io is having a hard time dealing with so much data
+                      // 
+                      // job.orchestrator.client.emit("execute_workflow_progress",
+                      //                     { progress :  (currentProgress())*100,
+                      //                       node_id : job.data.node.id
+                      //                     });
+                    }
+                  }
+              }
+            }
+
+      for(var _idx in blob_ids){
+
+        //Build per-sentence kathaa_input
+        var _blob_kathaa_inputs = {}
+        for(var input_port in job.data.node.kathaa_inputs_objectified){
+          _blob_kathaa_inputs[input_port] = job.data.node.kathaa_inputs_objectified[input_port].get(blob_ids[_idx]);
+        }
+
+        //Try to execute the process
+        try{
+          _process(_blob_kathaa_inputs,
+            function(progress){
+              //Using custom progress tracker, as the Kue progress tracker is acting funny
+              job.orchestrator.client.emit("execute_workflow_progress",
+                                  { progress :  (currentProgress() + (progress/100)*weight_of_sentence)*100,
+                                    node_id : job.data.node.id
+                                  });
+            },
+            new _partial_job_done(blob_ids[_idx])
+        );
+        }catch(err){
+          job.failed().error(err);
+          done(err);
+        }
       }
     }
   })
