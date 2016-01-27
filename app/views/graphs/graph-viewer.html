@@ -589,6 +589,12 @@ $("#kathaa-execute-workflow").click(function(){
     }
 });
 
+function add_kathaa_run_state_information(graph){
+  graph.kathaa_run_state = {};
+  graph.kathaa_run_state['latest_workflow_run'] = window.kathaa.latest_workflow_run;
+  return graph;
+}
+
 function add_process_definitions(graph){
     var graph_node;
 
@@ -831,7 +837,17 @@ window.loadGraph = function (json) {
 };
 
 {% if graph.body %}
-loadGraph(JSON.parse({{graph.body | json | raw }}));
+window.kathaa.graphObject = JSON.parse({{graph.body | json | raw }});
+loadGraph(window.kathaa.graphObject);
+//Load workflow_run information if it exists
+if(window.kathaa.graphObject.kathaa_run_state){
+  if(window.kathaa.graphObject.kathaa_run_state['latest_workflow_run']){
+    window.kathaa.latest_workflow_run = window.kathaa.graphObject.kathaa_run_state['latest_workflow_run'];
+  }
+}
+//Clean up memory
+delete window.kathaa.graphObject;
+
 {% else %}
   //LoadGraph
   var body = document.querySelector('body');
@@ -854,6 +870,7 @@ resize();
 function save_workflow(){
 var graph = editor.nofloGraph.toJSON();
 graph = add_process_definitions(graph);
+graph = add_kathaa_run_state_information(graph);
 
 // $("#kathaa-debug-view").show();
 // window.kathaa.debug_view.setValue(
