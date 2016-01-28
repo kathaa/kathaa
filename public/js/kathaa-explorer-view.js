@@ -247,6 +247,7 @@ $(document).ready(function(){
         }
 
         //Render corresponding output for node,port pair
+        // TO-DO : Add Validation here....
         if(outports.length > 0){
             window.kathaa.explorer_output_editor.setValue(
                     get_node_output_value_at_port(
@@ -395,8 +396,6 @@ $(document).ready(function(){
                 window.kathaa.latest_workflow_run[
                     window.kathaa.latest_node_edit_focus.id
                 ]["kathaa_outputs"] = {};
-
-
         }
 
         // At this point, the proper parent structure for kathaa_inputs for this node

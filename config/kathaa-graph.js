@@ -56,7 +56,13 @@ var graph = function(_graph, kathaaResources){
     }
     // the key being the id of the parent node,
     // and the value being the corresponding edge object
-    target.parents[source.id] = edge;
+
+    // One parent can have multiple edges
+    if(target.parents[source.id]){
+      target.parents[source.id].push(edge)      
+    }else{
+      target.parents[source.id] = [edge];
+    }
   }
 
 
@@ -102,28 +108,31 @@ graph.prototype.check_dependency_satisfied = function(node_id, module_library){
 
   // When all inports are filled !!
   // When all parents have their corresponding edges satisfied
-  var edge, parent_port, outport_value, my_inport;
+  var edge, edges, parent_port, outport_value, my_inport;
   for(var _parent_id in node.parents){
-    edge = node.parents[_parent_id];
-    parent_port = edge.src.port;
-    my_inport = edge.tgt.port;
+    for(var edge_idx in node.parents[_parent_id]){
+
+      edge = node.parents[_parent_id][edge_idx];
+      parent_port = edge.src.port;
+      my_inport = edge.tgt.port;
 
 
-    // NOTE :
-    // Possible Heisenbug here
-    // Fix This
-    console.log("Time ::", process.hrtime());
-    // console.log(edge);
+      // NOTE :
+      // Possible Heisenbug here
+      // Fix This
+      console.log("Time ::", process.hrtime());
+      // console.log(edge);
 
-    // if kathaa_output of parent is defined !!
-    outport_value = this.get_outport_value(_parent_id, parent_port)    
-    if(outport_value == false){
-      return false;
+      // if kathaa_output of parent is defined !!
+      outport_value = this.get_outport_value(_parent_id, parent_port)    
+      if(outport_value == false){
+        return false;
+      }
+
+      // If they are satisfied, automatically keep computing
+      // the kathaa_input inside the graph-level node instance
+      this.set_inport_value(node_id, my_inport, outport_value);
     }
-
-    // If they are satisfied, automatically keep computing
-    // the kathaa_input inside the graph-level node instance
-    this.set_inport_value(node_id, my_inport, outport_value);
   }
 
   // Now check if all the (non-optional) inports of the said component

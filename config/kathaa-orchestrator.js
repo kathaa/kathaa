@@ -121,7 +121,6 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
   this.kue.process(job_id, 20, function(current_job, done){
     //TO-DO :: Refactor this block of code !!
-
     console.log("Processing : "+current_job.data.node.id);
     debug(job.orchestrator.client, "Processing :"+job.id+"  node id : "+job.data.node.id);
 
@@ -222,7 +221,6 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
                 return done(error, _param)
               }
             }
-
             try{
               _process(current_job.data.node.kathaa_inputs, 
                       function(progress){
@@ -241,7 +239,6 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     }else{
       // `kathaa_inputs` now holds the input-port values for a whole list of sentences.
       // instead of a single sentence !!
-      console.log(job.data.kathaa_inputs);
       // Parse all individual kathaa_inputs into their respective kathaa-data object
       job.data.node.kathaa_inputs_objectified = {}
       for(var input_port in job.data.node.kathaa_inputs){

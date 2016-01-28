@@ -1,0 +1,26 @@
+{
+    "name": "classification_evaluator",
+    "version": "v0.1",
+    "icon": "user-md",
+    "type" : "kathaa-evaluator",
+    "inports": [
+        {
+            "name": "true_labels",
+            "type": "all"
+        },
+        {
+            "name": "predicted_labels",
+            "type": "all"
+        }        
+    ],
+    "outports": [
+        {
+            "name": "evaluation_result",
+            "type": "all"
+        }
+    ],
+    "metadata": {
+        "label": "Classification Evaluator"
+    },
+    "main": "index.js"
+}
