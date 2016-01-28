@@ -49,7 +49,6 @@ kathaaData.prototype.set = function(key, value){
   }else{
     console.log("Attempt to Set illegal key in kathaaData ::", key+"", value+"")
   }
-  console.log(this.blobs);
 }
 
 kathaaData.prototype.render_partial = function(blobs){

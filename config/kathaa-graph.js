@@ -22,7 +22,6 @@ var graph = function(_graph, kathaaResources){
     // convert to kathaaData format and copy the kathaa_outputs if available
     // in kathaaResources
     if(kathaaResources[node.id]){
-      console.log("Resource : ", kathaaResources[node.id]);
       node.kathaa_outputs = kathaaResources[node.id]
       for(var port in kathaaResources[node.id]){
         kathaaResources[node.id][port] = new kathaaData(kathaaResources[node.id][port]);
@@ -94,8 +93,6 @@ graph.prototype.get_outport_value = function(node_id, outport){
   node = this.get_node(node_id);
 
   if(node.kathaa_outputs && (outport in node.kathaa_outputs)){
-    console.log(node_id, outport);
-    console.log(node.kathaa_outputs[outport])
     return node.kathaa_outputs[outport];
   }
   return false;
