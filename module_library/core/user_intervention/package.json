@@ -100,6 +100,5 @@
     ],
     "metadata": {
         "label": "User Intervention"
-    },
-    "main": "index.js"
+    }
 }

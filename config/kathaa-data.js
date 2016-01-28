@@ -12,10 +12,17 @@ var kathaaData = function(_data){
   }else{
     this.blobs = new kathaa_nested_blobs();
 
-    // TO-DO Add a validation here
-    while (match = re.exec(_data)) {
+    // Check if we have atleast one match
+    // TO-DO Add more validation
+    match = re.exec(_data)
+    if(match && match.length>2){
       this.set(match[1], match[2]);
-    };
+      while (match = re.exec(_data)) {
+        this.set(match[1], match[2]);
+      };      
+    }else{
+      this.set('0', _data+"\n")
+    }
   }
 }
 
@@ -37,7 +44,12 @@ kathaaData.prototype.get = function(key){
 }
 
 kathaaData.prototype.set = function(key, value){
-  this.blobs.set(key+"",value.trim());
+  if(/\d*\.?\d*/.exec((key+"").trim())){
+    this.blobs.set(key+"",value.trim());
+  }else{
+    console.log("Attempt to Set illegal key in kathaaData ::", key+"", value+"")
+  }
+  console.log(this.blobs);
 }
 
 kathaaData.prototype.render_partial = function(blobs){
@@ -75,7 +87,8 @@ kathaaData.prototype.trimLines = function(data){
 module.exports = kathaaData;
 
 // Test
-// var data = new kathaaData();
+// var data = new kathaaData('');
+
 // data.set(0, 'Test1');
 // data.set(0.6, 'Test1');
 // data.set(0.3, 'Test1');

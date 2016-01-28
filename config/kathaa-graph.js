@@ -1,5 +1,5 @@
-var deepcopy = require('deepcopy');
-var graph = function(_graph){
+var kathaaData = require('./kathaa-data')
+var graph = function(_graph, kathaaResources){
   this.nodes = _graph.processes;
   this.edges = _graph.connections;
 
@@ -17,6 +17,18 @@ var graph = function(_graph){
     // if their kathaa_inputs from any of the previous runs are used in thie graph
     delete node.kathaa_inputs;
     delete node.kathaa_outputs;
+
+    // In case of kathaa_resource type of modules,
+    // convert to kathaaData format and copy the kathaa_outputs if available
+    // in kathaaResources
+    if(kathaaResources[node.id]){
+      console.log("Resource : ", kathaaResources[node.id]);
+      node.kathaa_outputs = kathaaResources[node.id]
+      for(var port in kathaaResources[node.id]){
+        kathaaResources[node.id][port] = new kathaaData(kathaaResources[node.id][port]);
+        this.set_outport_value(node.id, port, kathaaResources[node.id][port].render());
+      }
+    }
   }
 
   // Mark connection between nodes in the data structure
@@ -107,7 +119,7 @@ graph.prototype.check_dependency_satisfied = function(node_id, module_library){
     // console.log(edge);
 
     // if kathaa_output of parent is defined !!
-    outport_value = this.get_outport_value(_parent_id, parent_port)
+    outport_value = this.get_outport_value(_parent_id, parent_port)    
     if(outport_value == false){
       return false;
     }

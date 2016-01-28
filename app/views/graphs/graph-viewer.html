@@ -105,13 +105,32 @@
               //Make Input Editor as editable and output editor as Readonly
               window.kathaa.explorer_output_editor.options.readOnly = true;
               window.kathaa.explorer_input_editor.options.readOnly = false;
+
+              if(window.library['core'][window.kathaa.latest_node_edit_focus.component].type == "kathaa-resources"){
+                  window.kathaa.explorer_output_editor.options.readOnly = false
+              }
             }
 
-            // Whenever the component type is kathaa-user-intervention,
+            $("#kathaa-edit-module-input-tab-anchor").removeClass("hidden")
+            $("#kathaa-edit-module-process-definition-tab-anchor").removeClass("hidden")
+
+
+            var component = window.library["core"][window.kathaa.latest_node_edit_focus.component]
+            // Whenever the component type is kathaa-user-intervention or kathaa-resources,
             // Always hide the code tab
-            if(window.library["core"][window.kathaa.latest_node_edit_focus.component].type == "kathaa-user-intervention"){
+            if(component.type == "kathaa-user-intervention" 
+              || 
+              component.type == "kathaa-resources" 
+              ){
               // Hide Code Tab, as its not relevant in this case
               $("#kathaa-edit-module-process-definition-tab-anchor").addClass("hidden")
+
+                // In case of kathaa-resources, additionally hide the Input tab
+                if(component.type == "kathaa-resources"){
+                    $("#kathaa-edit-module-input-tab-anchor").addClass("hidden")
+                }else{
+                    $("#kathaa-edit-module-input-tab-anchor").removeClass("hidden")
+                }
 
             }else{
               //Show Code Tab in case of general modules
@@ -160,7 +179,7 @@
                             <li class="active "><a data-toggle="tab" href="#kathaa-edit-module-info-tab" aria-expanded="true">Info</a></li>
                             <li class=""><a data-toggle="tab" href="#kathaa-edit-module-properties-tab" aria-expanded="true">Module Properties</a></li>
                             <li id="kathaa-edit-module-process-definition-tab-anchor" class=""><a data-toggle="tab" href="#kathaa-edit-module-process-definition-tab" aria-expanded="true">Code</a></li>
-                            <li class=""><a data-toggle="tab" href="#kathaa-edit-module-input-tab" aria-expanded="false">Input</a></li>
+                            <li id="kathaa-edit-module-input-tab-anchor" class=""><a data-toggle="tab" href="#kathaa-edit-module-input-tab" aria-expanded="false">Input</a></li>
                             <li class=""><a data-toggle="tab" href="#kathaa-edit-module-output-tab" aria-expanded="false">Output</a></li>
                         </ul>
                     </div>
@@ -428,6 +447,7 @@ socket.addEventListener('socket-connect', function(){
                 }
             })
 
+            //User Intervention and kathaa-resources Event handlers
             if(socket.socket.listeners("kathaa-user-intervention").length==0)
             socket.socket.on('kathaa-user-intervention', function(message){
                 playPause("slow_success.wav");
@@ -453,7 +473,7 @@ socket.addEventListener('socket-connect', function(){
                     closeButton: true,
                     progressBar: true,
                     showMethod: 'slideDown',
-                    timeOut: 10000
+                    timeOut: 4000
                 };
                 toastr["warning"]("Node <strong><i style='color:red'>"+message.node.metadata.label+"</i></strong> requires User Intervention....", "User Intervention");
             })
@@ -471,9 +491,6 @@ socket.addEventListener('socket-error', function(){
 socket.addEventListener('socket-timeout', function(){
             if(window.kathaa.debug){console.log("Socket Timeout !!");}
         });
-
-//User Intervention Event handlers
-
 
 function init(params){
     //Init Module Library
@@ -601,7 +618,9 @@ function add_process_definitions(graph){
     for(var id in graph.processes){
         graph_node = graph.processes[id];
 
-        if(window.library["core"][graph_node.component].type != "kathaa-user-intervention"){
+        if(window.library["core"][graph_node.component].type != "kathaa-user-intervention" || 
+           window.library["core"][graph_node.component].type != "kathaa-resources"
+          ){
           // Add process definitions only in case of non-user-intervention modules
           if(editor.nofloGraph.getNode(id).process_definition){
               graph_node.process_definition = editor.nofloGraph.getNode(id).process_definition
@@ -664,8 +683,28 @@ function execute_workflow(beginNode){
        beginNode.kathaa_inputs[current_input_port] = window.kathaa.explorer_input_editor.getValue();
     }
 
+    // Build and send a resources dict of their respective kathaa_outputs if available
+
+    var kathaaResources = {}
+    var node;
+    for(var idx in editor.nofloGraph.nodes){
+      node = editor.nofloGraph.nodes[idx]
+      if(window.library["core"][node.component].type == "kathaa-resources"){
+        // Check if the corresponding kathaa_output_state exists
+        if(window.kathaa.latest_workflow_run && 
+           window.kathaa.latest_workflow_run[node.id] &&
+           window.kathaa.latest_workflow_run[node.id]['kathaa_outputs']
+          ){
+          kathaaResources[node.id] = window.kathaa.latest_workflow_run[node.id]['kathaa_outputs'];
+        }
+      }
+    }
+
     // Issue with scope of variable in kathaa-orchestrator !!
-    socket.socket.emit('execute_workflow', {graph: graph, beginNode: beginNode});
+    socket.socket.emit('execute_workflow', {  graph: graph, 
+                                              beginNode: beginNode,
+                                              kathaaResources: kathaaResources
+                                            });
     toastr["info"]("","Executing Kathaa workflow....")
 }
 

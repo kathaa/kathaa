@@ -1,0 +1,58 @@
+{
+    "name": "resources",
+    "version": "v0.1",
+    "icon": "book",
+    "type" : "kathaa-resources",
+    "inports": [
+    ],
+    "outports": [
+        {
+            "name": "out_1",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_2",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_3",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_4",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_5",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_6",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_7",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_8",
+            "type": "all",
+            "optional": true            
+        },
+        {
+            "name": "out_9",
+            "type": "all",
+            "optional": true            
+        }
+    ],
+    "metadata": {
+        "label": "Resource"
+    }
+}

@@ -50,7 +50,7 @@ module.exports = function (socketio, app, module_library) {
         // client.emit('request_ack', { response: "acknowledged", id: request_id });
 
         var _kathaaOrchestrator = new kathaaOrchestrator(module_library, _kue, client);
-        _kathaaOrchestrator.executeGraph(message.graph, message.beginNode);
+        _kathaaOrchestrator.executeGraph(message.graph, message.beginNode, message.kathaaResources);
         // client.emit("debug_message", message);
       });
     })

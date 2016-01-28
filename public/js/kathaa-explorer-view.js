@@ -162,7 +162,8 @@ $(document).ready(function(){
 
         //Render process definitions
         //...only if the type is not kathaa-user-intervention
-        if(component_definition['type'] != 'kathaa-user-intervention')
+        if(component_definition['type'] != 'kathaa-user-intervention' &&
+           component_definition['type'] != 'kathaa-resources' )
         if(window.kathaa.latest_node_edit_focus.process_definition){
             window.kathaa.explorer_process_definition_editor.setValue(
                     window.kathaa.latest_node_edit_focus.process_definition
@@ -320,6 +321,13 @@ $(document).ready(function(){
             }
             return ""; // Defaults to empty string
         }
+
+        //If its a kathaa-resources module, then return a blank string for consistency
+        var component_definition = window.library["core"][node.component]
+        if(component_definition.type == "kathaa-resources"){
+            return "";
+        }
+
     }
 
     function get_node_output_value_at_port(node, port){

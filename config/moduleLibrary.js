@@ -63,7 +63,8 @@ module.exports = function () {
       // associated with them
       // They in turn require the manual intervention of the user to continue
       //
-      if(module_definition["type"] != "kathaa-user-intervention"){
+      if(module_definition["type"] != "kathaa-user-intervention" && 
+         module_definition["type"] != "kathaa-resources" ){
 
       //Collect Processes
       module_library.processes[_process] = require(path.join(component_directory, module_definition['main']))

@@ -8,8 +8,8 @@ var kathaaOrchestrator = function (module_library, kue, client){
   this.client = client;
 }
 
-kathaaOrchestrator.prototype.executeGraph = function(_graph, beginNode){
-  this.graph = new kathaaGraph(_graph);
+kathaaOrchestrator.prototype.executeGraph = function(_graph, beginNode, kathaaResources){
+  this.graph = new kathaaGraph(_graph, kathaaResources);
 
   //TO-DO: Handle empty graph in preprocessGraph validations,
   // and add an error callback
@@ -33,13 +33,25 @@ kathaaOrchestrator.prototype.executeGraph = function(_graph, beginNode){
   }
 
   this.queueNodeJob(this.graph, _beginNode.id);
+
+  // Also enqueue all nodes of type kathaa-resources
+  // as they should ideally also do some pre processings of their own
+  // before they can be used by any evaluator modules
+  for(var nodeId in this.graph.nodeMap){
+    if(getComponentObject(this.module_library, this.graph.nodeMap[nodeId].component).type == "kathaa-resources"){
+      this.queueNodeJob(this.graph, nodeId);
+    }
+  }
 }
 
+function getComponentObject(module_library, component_name){
+  return module_library.component_library[component_name];
+}
 function getInPorts(module_library, component_name){
-  return module_library.component_library[component].inports;
+  return module_library.component_library[component_name].inports;
 }
 function getOutPorts(module_library, component_name){
-  return module_library.component_library[component].outports;
+  return module_library.component_library[component_name].outports;
 }
 function get_random_string(k){
   return Math.random().toString(36).substring(k);
@@ -166,6 +178,32 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
         done(null, kathaa_outputs);
       })
       return;
+    }
+    else if(component.type == "kathaa-resources"){
+      console.log("Kathaa Resource Node Instantiated: "+job.data.node.id+" of type : "+job.data.node.component)
+      
+      // Re use the kathaa-user-intervention event for client-side simplicity
+      //TO-DO : Refactor this !!
+      job.orchestrator.client.emit("kathaa-user-intervention",
+                          { node: job.data.node,
+                            response_channel: job_id
+                          });
+
+      job.orchestrator.client.on(job_id, function(kathaa_outputs){
+        // Remove the listener
+        job.orchestrator.client.removeAllListeners(job_id);
+
+        // Reformat Data 
+        // TO-DO :: Ideally there should be a conditional here, 
+        //          to check only for keys which 
+        for(var key in kathaa_outputs){
+              kathaa_outputs[key] = new kathaaData(kathaa_outputs[key])
+              kathaa_outputs[key] = kathaa_outputs[key].render()
+        }
+        // Mark Job as Done when the user sends back modified kathaa_outputs
+        done(null, kathaa_outputs);
+      })
+      return;
     }    
     else if(component.type == "kathaa-blob-adapter"){
       // Handle kathaa-blob-adapters here
@@ -203,7 +241,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     }else{
       // `kathaa_inputs` now holds the input-port values for a whole list of sentences.
       // instead of a single sentence !!
-      
+      console.log(job.data.kathaa_inputs);
       // Parse all individual kathaa_inputs into their respective kathaa-data object
       job.data.node.kathaa_inputs_objectified = {}
       for(var input_port in job.data.node.kathaa_inputs){
