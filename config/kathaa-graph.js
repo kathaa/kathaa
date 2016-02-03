@@ -28,6 +28,9 @@ var graph = function(_graph, kathaaResources){
         this.set_outport_value(node.id, port, kathaaResources[node.id][port].render());
       }
     }
+
+    // Mark this node as unprocessed
+    node.processed = false;
   }
 
   // Mark connection between nodes in the data structure
@@ -59,7 +62,7 @@ var graph = function(_graph, kathaaResources){
 
     // One parent can have multiple edges
     if(target.parents[source.id]){
-      target.parents[source.id].push(edge)      
+      target.parents[source.id].push(edge)
     }else{
       target.parents[source.id] = [edge];
     }
@@ -123,8 +126,13 @@ graph.prototype.check_dependency_satisfied = function(node_id, module_library){
       console.log("Time ::", process.hrtime());
       // console.log(edge);
 
+      // If it hasnt been processed
+      if(this.nodeMap[_parent_id].processed == false){
+        return false;
+      }
+
       // if kathaa_output of parent is defined !!
-      outport_value = this.get_outport_value(_parent_id, parent_port)    
+      outport_value = this.get_outport_value(_parent_id, parent_port)
       if(outport_value == false){
         return false;
       }

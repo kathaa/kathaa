@@ -68,9 +68,15 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
 
 
   job.on('complete', function(kathaa_outputs){
+    var current_node = graph.get_node(job.data.node.id);
+
+    // Mark current_node as "processed"
+
+    current_node.processed = true;
+
     //For reference during enqueing
-    graph.get_node(job.data.node.id).kathaa_outputs = mergeObjects(
-                                    graph.get_node(job.data.node.id).kathaa_outputs,
+    current_node.kathaa_outputs = mergeObjects(
+                                    current_node.kathaa_outputs,
                                     kathaa_outputs
                                     );
 
@@ -80,7 +86,6 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     // job.orchestrator.client.emit("debug_message", "Job Complete : "+job.id);
     // job.orchestrator.client.emit("debug_message", graph);
 
-    var current_node = graph.get_node(job.data.node.id);
 
     // In case of sentence_input, dont pass kathaaData in kathaa_inputs
     // but convert it back to natural list of sentences
@@ -180,7 +185,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
     }
     else if(component.type == "kathaa-resources"){
       console.log("Kathaa Resource Node Instantiated: "+job.data.node.id+" of type : "+job.data.node.component)
-      
+
       // Re use the kathaa-user-intervention event for client-side simplicity
       //TO-DO : Refactor this !!
       job.orchestrator.client.emit("kathaa-user-intervention",
@@ -192,9 +197,9 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
         // Remove the listener
         job.orchestrator.client.removeAllListeners(job_id);
 
-        // Reformat Data 
-        // TO-DO :: Ideally there should be a conditional here, 
-        //          to check only for keys which 
+        // Reformat Data
+        // TO-DO :: Ideally there should be a conditional here,
+        //          to check only for keys which
         for(var key in kathaa_outputs){
               kathaa_outputs[key] = new kathaaData(kathaa_outputs[key])
               kathaa_outputs[key] = kathaa_outputs[key].render()
@@ -203,7 +208,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
         done(null, kathaa_outputs);
       })
       return;
-    }    
+    }
     else if(component.type == "kathaa-blob-adapter"){
       // Handle kathaa-blob-adapters here
             // TO-DO Refactor
@@ -222,7 +227,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
               }
             }
             try{
-              _process(current_job.data.node.kathaa_inputs, 
+              _process(current_job.data.node.kathaa_inputs,
                       function(progress){
                         //Using custom progress tracker, as the Kue progress tracker is acting funny
                         job.orchestrator.client.emit("execute_workflow_progress",
@@ -256,7 +261,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
       // Build a proper kathaa_output object in the RAW/render() form of the kathaa-data object
       // and then mark as job-completed.
       var first_input_port = Object.keys(job.data.node.kathaa_inputs)[0]
-      
+
       // The assumption here is, the same keys are set for all the input ports
       // TO-DO : Fix this
       var blobs = job.data.node.kathaa_inputs_objectified[first_input_port].getAllBlobs();
@@ -309,7 +314,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
                       //Mark Progress
                       // Temporarily Hide showing of partial job progress as on the client side
                       // socket.io is having a hard time dealing with so much data
-                      // 
+                      //
                       // job.orchestrator.client.emit("execute_workflow_progress",
                       //                     { progress :  (currentProgress())*100,
                       //                       node_id : job.data.node.id
@@ -324,7 +329,7 @@ kathaaOrchestrator.prototype.queueNodeJob = function(graph, node_id){
         //Build per-sentence kathaa_input
         var _blob_kathaa_inputs = {}
         for(var input_port in job.data.node.kathaa_inputs_objectified){
-          _blob_kathaa_inputs[input_port] = blobs[_idx]['value'];          
+          _blob_kathaa_inputs[input_port] = blobs[_idx]['value'];
         }
 
         //Try to execute the process
