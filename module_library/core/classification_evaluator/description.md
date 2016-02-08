@@ -1,1 +1,0 @@
-A `kathaa-evaluator` module which can consume aggregated streams of true labels, and predicted labels, and compute common Model evaluation metrics like `accuracy`, `precision`, `recall`, `f1-score`, etc

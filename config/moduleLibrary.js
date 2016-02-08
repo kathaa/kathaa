@@ -34,54 +34,54 @@ module.exports = function () {
   var component_directory;
   var _process;
 
-  module_package['component-groups'].forEach(function(namespace, index, array){
-  namespace_directory = path.join(module_library_root, namespace);
 
-  // Import Global Libraries required by individual component-groups
-  require(namespace_directory+"/libraries.js");
+  for(var namespace in module_package['module-groups']){
+    namespace_directory = path.join(module_library_root, namespace);
 
-  fs.readdirSync(namespace_directory).filter(function(file) {
-    return fs.statSync(path.join(namespace_directory, file)).isDirectory();
-  }).forEach(function(module, index, array){
+    // Import Global Libraries required by individual component-groups
+    require(namespace_directory+"/libraries.js");
 
-    component_directory = path.join(namespace_directory, module);
+    fs.readdirSync(namespace_directory).filter(function(file) {
+      return file != ".git" && fs.statSync(path.join(namespace_directory, file)).isDirectory();
+    }).forEach(function(module, index, array){
 
-    //Read JSON file
-    try{
-      var module_definition = jsonfile.readFileSync(path.join(component_directory, "package.json"));
+      component_directory = path.join(namespace_directory, module);
+      //Read JSON file
+      try{
+        var module_definition = jsonfile.readFileSync(path.join(component_directory, "package.json"));
 
-      _process = namespace + "/" + module_definition['name'];
-      module_definition['name'] = _process;
+        _process = namespace + "/" + module_definition['name'];
+        module_definition['name'] = _process;
 
-      //Collect Description
-      module_definition['description'] = fs.readFileSync(path.join(component_directory, "description.md"), 'UTF-8');
-      module_definition['short_description'] = module_definition['description'].length > 120 ? module_definition['description'].substring(0,120)+"...": module_definition['description'];
+        //Collect Description
+        module_definition['description'] = fs.readFileSync(path.join(component_directory, "description.md"), 'UTF-8');
+        module_definition['short_description'] = module_definition['description'].length > 120 ? module_definition['description'].substring(0,120)+"...": module_definition['description'];
 
-      module_definition['description'] = marked(module_definition['description']);
+        module_definition['description'] = marked(module_definition['description']);
 
-      // Modules of type : "kathaa-user-intervention" do not have a computing Process
-      // associated with them
-      // They in turn require the manual intervention of the user to continue
-      //
-      if(module_definition["type"] != "kathaa-user-intervention" && 
-         module_definition["type"] != "kathaa-resources" ){
+        // Modules of type : "kathaa-user-intervention" and "kathaa-resources" do not have a computing Process
+        // associated with them
+        // They in turn require the manual intervention of the user to continue
+        //
+        if(module_definition["type"] != "kathaa-user-intervention" &&
+           module_definition["type"] != "kathaa-resources" ){
 
-      //Collect Processes
-      module_library.processes[_process] = require(path.join(component_directory, module_definition['main']))
-      //Collect Process Definition
-      module_library.process_definitions[_process] = module_library.processes[_process].toString();
+        //Collect Processes
+        module_library.processes[_process] = require(path.join(component_directory, module_definition['main']))
+        //Collect Process Definition
+        module_library.process_definitions[_process] = module_library.processes[_process].toString();
 
-      delete module_definition['main'];
-    }
+        delete module_definition['main'];
+        }
 
-    //Add module library to component_library
-    module_library.component_library[_process] = module_definition;
+        //Add module library to component_library
+        module_library.component_library[_process] = module_definition;
 
-    }catch(err){
-      //Pass Silently
-      console.error(err);
-    }
-  });
-  })
+      }catch(err){
+        //Pass Silently
+        console.error(err);
+      }
+    });
+  }
   return module_library;
 };
