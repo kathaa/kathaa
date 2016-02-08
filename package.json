@@ -15,7 +15,8 @@
     "debug": "./node_modules/.bin/nodemon --debug server.js",
     "test": "NODE_ENV=test ./node_modules/.bin/ava --serial test/test-*.js",
     "forever": "./node_modules/forever/bin/forever -m 5 server.js",
-    "kathaa_module_sync": "node scripts/modules_sync.js"
+    "install-kathaa-modules": "node scripts/modules_sync.js",
+    "postinstall": "node scripts/modules_sync.js"
   },
   "dependencies": {
     "babylon": "6.0.17",

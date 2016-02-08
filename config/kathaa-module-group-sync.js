@@ -31,7 +31,7 @@ module.exports = function(module_groups, module_library_root, callback) {
     // TO-DO : Add different boundary cases here
     if(!retrying){
       console.log("==========================================================")
-      console.log("Syncing  kathaa-module-group '"+repo['namespace']+"' from : "+repo['repository']);
+      console.log("Installing  kathaa-module-group '"+repo['namespace']+"' from : "+repo['repository']);
     }
 
     Git.Clone(repo['repository'], path.join(module_library_root, repo['namespace']),
@@ -74,6 +74,7 @@ module.exports = function(module_groups, module_library_root, callback) {
       .then(function(repository){
         // TO-DO : Handle moving to different tags at this point
         sync_module_repo(repo_list, callback);
+        // TO-DO : Handle validation of repository here
       },
       function(error){
         if(error){
