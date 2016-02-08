@@ -22,8 +22,8 @@ module.exports = function () {
   //Load Module Libraries
   var module_library_root = __dirname+"/../module_library";
 
-  var file = module_library_root + "/package.json";
-  var module_package = jsonfile.readFileSync(file);
+  var package_file = __dirname + "/../package.json";
+  var module_package = jsonfile.readFileSync(package_file);
   var module_library = {}
   module_library.component_library = {}
   module_library.library_object = {}
@@ -35,7 +35,7 @@ module.exports = function () {
   var _process;
 
 
-  for(var namespace in module_package['module-groups']){
+  for(var namespace in module_package['kathaa-module-groups']){
     namespace_directory = path.join(module_library_root, namespace);
 
     // Import Global Libraries required by individual component-groups
