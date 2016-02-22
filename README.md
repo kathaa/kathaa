@@ -46,6 +46,9 @@ npm run seed
 # this will ask you for the details of the Admin user, and seed the database
 # with initial graphs
 
+#Instantiate the module_library
+npm run install-kathaa-modules
+
 # Copy and Edit environment parameters
 cp config/env/env.example.json config/env/env.json
 
