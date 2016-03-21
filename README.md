@@ -27,8 +27,8 @@ Installation
 # Its really easy, I promise
 # :)
 
-git clone https://github.com/spMohanty/kathaa
-cd kathaa-server
+git clone https://github.com/kathaa/kathaa 
+cd kathaa
 npm install .
 grunt build
 
