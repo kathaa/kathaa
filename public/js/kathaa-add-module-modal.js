@@ -7,38 +7,39 @@
     $.each(window.library, function(key, value){
         $.each(value, function(key, value){
             data.push([key, value["name"], value["version"],value["short_description"]]);
-        })
-
-    })
+        });
+    });
 
     var table;
-    if ( $.fn.dataTable.isDataTable( '#kathaa-modules-table' ) ) {
+    if ($.fn.dataTable.isDataTable('#kathaa-modules-table')) {
         table = $('#kathaa-modules-table').DataTable();
-    }else{
+    }
+    else {
         table = $('#kathaa-modules-table').DataTable({
-        data: data,
-        scrollY: "400px",
-        scrollCollapse: true,
-        paging:         true,
-        columnDefs: [
-            {
-                "render": function ( data, type, row ) {
-                    if(data == "core/sentence_input"){
-                        return "<i class='text-warning'>"+data+"</i>" ;
-                    }else if(data == "core/sentence_output"){
-                        return "<i class='text-info'>"+data+"</i>" ;
-                    }
-                    return "<i class='text-success'>"+data+"</i>" ;
+            data: data,
+            scrollY: "400px",
+            scrollCollapse: true,
+            paging:         true,
+            columnDefs: [
+                {
+                    "render": function ( data, type, row ) {
+                        if (data == "core/sentence_input") {
+                            return "<i class='text-warning'>" + data + "</i>";
+                        }
+                        else if (data == "core/sentence_output"){
+                            return "<i class='text-info'>" + data + "</i>";
+                        }
+                        return "<i class='text-success'>" + data + "</i>";
+                    },
+                    "targets": 1
                 },
-                "targets": 1
-            },
-            { "visible": false,  "targets": [ 0 ] }
-         ]
+                { "visible": false,  "targets": [ 0 ] }
+             ]
         });
     }
 
 
-    $('#kathaa-modules-table tbody').on( 'click', 'tr', function () {
+    $('#kathaa-modules-table tbody').on('click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
@@ -60,18 +61,18 @@
 
 function validate_module_addition(editor,component_name){
     // Only one sentence_input module allowed
-    if(component_name == "core/sentence_input"){
-        for(var i=0;i<editor.nofloGraph.nodes.length; i++){
-            if(editor.nofloGraph.nodes[i].component == "core/sentence_input"){
-                var _result = {}
+    if (component_name == "core/sentence_input") {
+        for (var i=0; i<editor.nofloGraph.nodes.length; i++) {
+            if (editor.nofloGraph.nodes[i].component == "core/sentence_input"){
+                var _result = {};
                 _result.success = false;
-                _result.message = "Only one Sentence_Input module is allowed in the workflow."
+                _result.message = "Only one Sentence_Input module is allowed in the workflow.";
 
                 return _result;
             }
         }
     }
-    return {success:true};
+    return { success: true };
 }
 
 
@@ -81,7 +82,7 @@ function validate_module_addition(editor,component_name){
 
 function add_module_to_graph(component_name){
     var validation = validate_module_addition(editor, component_name);
-    if(validation.success == false){
+    if (validation.success == false) {
         toastr.options = {
             closeButton: true,
             progressBar: true,
@@ -92,7 +93,7 @@ function add_module_to_graph(component_name){
         return;
     }
 
-    var id = component_name+"_"+Math.round(Math.random()*100000).toString(36);
+    var id = component_name + "_" + Math.round(Math.random()*100000).toString(36);
 
     var metadata = {
         label: component_name,
@@ -100,16 +101,17 @@ function add_module_to_graph(component_name){
         y: Math.round(Math.random()*600)
     };
 
-    if(window.kathaa.addNodePositionKnown){
+    if (window.kathaa.addNodePositionKnown){
         metadata.x = window.kathaa.last_menu_position.x;
         metadata.y = window.kathaa.last_menu_position.y;
     }
 
     // metadata = TheGraph.merge(metadata, editor.getComponent(component_name).metadata);
-    for(var _key in editor.getComponent(component_name).metadata){
-        if(_key=="x" || _key=="y"){
+    for (var _key in editor.getComponent(component_name).metadata){
+        if (_key=="x" || _key=="y"){
             //Do Nothing
-        }else{
+        }
+        else {
             metadata[_key] = editor.getComponent(component_name).metadata[_key];
         }
     }
