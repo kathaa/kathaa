@@ -1,4 +1,8 @@
-function init_add_module_modal() {
+/*  
+ *  Initializes the modal for adding a module to the graph.
+ */
+
+ function init_add_module_modal() {
     var data = [];
     $.each(window.library, function(key, value){
         $.each(value, function(key, value){
@@ -48,6 +52,12 @@ function init_add_module_modal() {
     });
 }
 
+
+/*  
+ *  Validates whether module was added successfully.
+ *  This is run by add_module_to_graph before doing anything else. 
+ */
+
 function validate_module_addition(editor,component_name){
     // Only one sentence_input module allowed
     if(component_name == "core/sentence_input"){
@@ -63,6 +73,12 @@ function validate_module_addition(editor,component_name){
     }
     return {success:true};
 }
+
+
+/*  
+ *  Adds a component module to the graph 
+ */
+
 function add_module_to_graph(component_name){
     var validation = validate_module_addition(editor, component_name);
     if(validation.success == false){
