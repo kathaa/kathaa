@@ -1,6 +1,12 @@
+/*
+ *  Perform actions after the document ready event, to make sure 
+ *  DOM is and rendered before anything is used. 
+ *
+*/
+
 $(document).ready(function(){
-    window.kathaa.input_editor_buffer = {}
-    window.kathaa.output_editor_buffer = {}
+    window.kathaa.input_editor_buffer = {};
+    window.kathaa.output_editor_buffer = {};
 
     // What happens when input ports and output ports change
     window.kathaa.edit_module_previous_inport = null;
@@ -15,25 +21,23 @@ $(document).ready(function(){
         // The value from the buffer will be saved into `input_values` if the user decides
         // to save the properties
         // (or automatically saved by design if the user decides to execute the workflow from that node)
-        var previous_input_editor_value = window.kathaa.explorer_input_editor.getValue()
+        var previous_input_editor_value = window.kathaa.explorer_input_editor.getValue();
 
         // Initialize parent dicts, if they do not exist
         // much like `mkdir -p` does
-        if(window.kathaa.input_editor_buffer == undefined){
-            window.kathaa.input_editor_buffer = {}
+        if (window.kathaa.input_editor_buffer == undefined) {
+            window.kathaa.input_editor_buffer = {};
         }
-        if(window.kathaa.input_editor_buffer[
-            window.kathaa.latest_node_edit_focus.id] == undefined){
+        if (window.kathaa.input_editor_buffer[
+            window.kathaa.latest_node_edit_focus.id] == undefined) {
 
-            window.kathaa.input_editor_buffer[
-                    window.kathaa.latest_node_edit_focus.id] = {}
+                window.kathaa.input_editor_buffer[
+                        window.kathaa.latest_node_edit_focus.id] = {};
         }
 
         window.kathaa.input_editor_buffer[
             window.kathaa.latest_node_edit_focus.id
-            ][
-            previous_inport_mame
-            ] = previous_input_editor_value
+            ][previous_inport_mame] = previous_input_editor_value;
 
 
         // Update the input editor instance with the value associated
@@ -44,11 +48,9 @@ $(document).ready(function(){
 
         var updated_input_editor_value = window.kathaa.input_editor_buffer[
                 window.kathaa.latest_node_edit_focus.id
-            ][
-                updated_inport_name
-            ]
+            ][updated_inport_name];
 
-        if(updated_input_editor_value == undefined){
+        if (updated_input_editor_value == undefined) {
             // In case, the value does not exist,
             // obtain the value from get_node_input_value_at_port
 
@@ -60,13 +62,13 @@ $(document).ready(function(){
 
         //Mark this as the updated previous_inport
         window.kathaa.edit_module_previous_inport = $(this).val();
-    })
+    });
 
     window.kathaa.edit_module_previous_outport = null;
     $("#kathaa-edit-module-output-tab-ports").on('focus', function(){
         //Store the outport value before change event
         window.kathaa.edit_module_previous_outport = $(this).val();
-    }).on('change', function(e){
+    }).on('change', function(e) {
         var previous_outport_mame = window.kathaa.edit_module_previous_outport;
         var updated_outport_name = $(this).val();
 
@@ -74,25 +76,23 @@ $(document).ready(function(){
         // The value from the buffer will be saved into `output_values` if the user decides
         // to save the properties
         // (or automatically saved by design if the user decides to execute the workflow from that node)
-        var previous_output_editor_value = window.kathaa.explorer_output_editor.getValue()
+        var previous_output_editor_value = window.kathaa.explorer_output_editor.getValue();
 
         // Initialize parent dicts, if they do not exist
         // much like `mkdir -p` does
-        if(window.kathaa.output_editor_buffer == undefined){
-            window.kathaa.output_editor_buffer = {}
+        if (window.kathaa.output_editor_buffer == undefined) {
+            window.kathaa.output_editor_buffer = {};
         }
-        if(window.kathaa.output_editor_buffer[
-            window.kathaa.latest_node_edit_focus.id] == undefined){
+        if (window.kathaa.output_editor_buffer[
+            window.kathaa.latest_node_edit_focus.id] == undefined) {
 
             window.kathaa.output_editor_buffer[
-                    window.kathaa.latest_node_edit_focus.id] = {}
+                    window.kathaa.latest_node_edit_focus.id] = {};
         }
 
         window.kathaa.output_editor_buffer[
             window.kathaa.latest_node_edit_focus.id
-            ][
-            previous_outport_mame
-          ] = previous_output_editor_value
+            ][previous_outport_mame] = previous_output_editor_value;
 
 
         // Update the output editor instance with the value associated
@@ -103,11 +103,9 @@ $(document).ready(function(){
 
         var updated_output_editor_value = window.kathaa.output_editor_buffer[
                 window.kathaa.latest_node_edit_focus.id
-            ][
-                updated_outport_name
-            ]
+            ][updated_outport_name];
 
-        if(updated_output_editor_value == undefined){
+        if (updated_output_editor_value == undefined) {
             // In case, the value does not exist,
             // obtain the value from get_node_output_value_at_port
 
@@ -119,7 +117,7 @@ $(document).ready(function(){
 
         //Mark this as the updated previous_outport
         window.kathaa.edit_module_previous_outport = $(this).val();
-    })
+    });
 
 
     // NOTE
@@ -147,43 +145,44 @@ $(document).ready(function(){
         // Clear input_editor_buffer and output_editor_buffer when the explorer page is first render
         // This makes the input_editor_buffer values persist only as long as the
         // same instance of explorer page is open
-        if(window.kathaa.input_editor_buffer){
+        if (window.kathaa.input_editor_buffer) {
             delete window.kathaa.input_editor_buffer[
                     window.kathaa.latest_node_edit_focus.id
-                ]
+                ];
         }
-        if(window.kathaa.output_editor_buffer){
+        if (window.kathaa.output_editor_buffer) {
             delete window.kathaa.input_editor_buffer[
                     window.kathaa.latest_node_edit_focus.id
-                ]
+                ];
         }
 
-        var component_definition = window.library["core"][window.kathaa.latest_node_edit_focus.component]
+        var component_definition = window.library["core"][window.kathaa.latest_node_edit_focus.component];
 
         //Render process definitions
         //...only if the type is not kathaa-user-intervention
         if(component_definition['type'] != 'kathaa-user-intervention' &&
-           component_definition['type'] != 'kathaa-resources' )
-        if(window.kathaa.latest_node_edit_focus.process_definition){
+           component_definition['type'] != 'kathaa-resources')
+        if(window.kathaa.latest_node_edit_focus.process_definition) {
             window.kathaa.explorer_process_definition_editor.setValue(
                     window.kathaa.latest_node_edit_focus.process_definition
-                )
-        }else{
+                );
+        }
+        else {
             window.kathaa.explorer_process_definition_editor.setValue(
                     window.kathaa.process_definitions[
                         window.kathaa.latest_node_edit_focus.component
                     ]
-                )
+                );
         }
 
         //Render Input Options and Output Options
-        var inports = component_definition.inports
+        var inports = component_definition.inports;
         var inport;
         //Remove all previous options
         $("#kathaa-edit-module-input-tab-ports").html("");
 
         var _option;
-        function add_input_port_option(port, index){
+        function add_input_port_option(port, index) {
             _option = $('<option>');
             _option.addClass('kathaa-edit-module-input-tab-port');
             _option.val(port.name);
@@ -193,29 +192,31 @@ $(document).ready(function(){
             }
             $("#kathaa-edit-module-input-tab-ports").append(_option);
         }
-        for(var _index in inports){
+
+        for (var _index in inports) {
             inport = inports[_index];
             //Add option for all every available inport
             add_input_port_option(inport, _index);
         }
 
         //Render corresponding input for node,port pair
-        if(inports.length > 0){
+        if (inports.length > 0) {
             window.kathaa.explorer_input_editor.setValue(
                     get_node_input_value_at_port(
                         window.kathaa.latest_node_edit_focus,
                         inports[0].name
                     )
-                )
-        }else{
+                );
+        }
+        else {
             //Check if the component is sentence_input
-            if(window.kathaa.latest_node_edit_focus.component == "core/sentence_input"){
+            if (window.kathaa.latest_node_edit_focus.component == "core/sentence_input") {
                 window.kathaa.explorer_input_editor.setValue(
                         get_node_input_value_at_port(
                             window.kathaa.latest_node_edit_focus,
                             "input_sentence"
                         )
-                    )
+                    );
                 add_input_port_option({
                     "name" : "input_sentence"
                 }, 0);
@@ -229,7 +230,7 @@ $(document).ready(function(){
         $("#kathaa-edit-module-output-tab-ports").html("");
 
         var _option;
-        function add_output_port_option(port, index){
+        function add_output_port_option(port, index) {
             _option = $('<option>');
             _option.addClass('kathaa-edit-module-output-tab-port');
             _option.val(port.name);
@@ -239,7 +240,8 @@ $(document).ready(function(){
             }
             $("#kathaa-edit-module-output-tab-ports").append(_option);
         }
-        for(var _index in outports){
+
+        for (var _index in outports) {
             outport = outports[_index];
             //Add option for all every available outport
             add_output_port_option(outport, _index);
@@ -248,23 +250,24 @@ $(document).ready(function(){
 
         //Render corresponding output for node,port pair
         // TO-DO : Add Validation here....
-        if(outports.length > 0){
+        if (outports.length > 0) {
             window.kathaa.explorer_output_editor.setValue(
                     get_node_output_value_at_port(
                         window.kathaa.latest_node_edit_focus,
                         outports[0].name
                     )
-                )
-        }else{
+                );
+        }
+        else {
 
             //Check if the component is sentence_output
-            if(window.kathaa.latest_node_edit_focus.component == "core/sentence_output"){
+            if (window.kathaa.latest_node_edit_focus.component == "core/sentence_output") {
                 window.kathaa.explorer_output_editor.setValue(
                         get_node_output_value_at_port(
                             window.kathaa.latest_node_edit_focus,
                             "out_ssf"
                         )
-                    )
+                    );
                 add_output_port_option({
                     "name" : "sentence_output"
                 }, 0);
@@ -272,13 +275,13 @@ $(document).ready(function(){
         }
 
         //Open Info Tab
-        $("#kathaa-edit-module a[href='#kathaa-edit-module-info-tab']").tab('show')
-    })
+        $("#kathaa-edit-module a[href='#kathaa-edit-module-info-tab']").tab('show');
+    });
 
     // var sample_sentence = "देश के टूरिजम में राजस्थान एक अहम जगह रखता है।\nबाद में सुरक्षाकर्मियों ने हंगामा कर रहे छात्रों को सभास्थल से बाहर कर दिया.\nइससे पहले प्रधानमंत्री मोदी ने अपने संसदीय क्षेत्र वाराणसी में नई ट्रेन महामना एक्सप्रेस को हरी झंडी दिखाई.\n";
 
     window.kathaa.latest_workflow_run = {};
-    window.get_node_input_value_at_port =function(node, port){
+    window.get_node_input_value_at_port =function(node, port) {
         // Check in latest_workflow_run,
         // the latest_workflow run saves the input nad output states of all the nodes
         // in the latest workflow execution.
@@ -300,38 +303,40 @@ $(document).ready(function(){
         //    "input_port_name_2" : "Known Input Value",
         // }
         //
-        if(window.kathaa.latest_workflow_run[node.id]){
+        if (window.kathaa.latest_workflow_run[node.id]) {
             //Check if kathaa_inputs has a value for the corresponding port
-            if(window.kathaa.latest_workflow_run[node.id].kathaa_inputs &&
-                window.kathaa.latest_workflow_run[node.id].kathaa_inputs[port]){
+            if (window.kathaa.latest_workflow_run[node.id].kathaa_inputs &&
+                window.kathaa.latest_workflow_run[node.id].kathaa_inputs[port]) {
 
                 return window.kathaa.latest_workflow_run[node.id].kathaa_inputs[port];
-            }else{
-                if(node.component == "core/sentence_input" &&
-                    port == "input_sentence"){
+            }
+            else {
+                if (node.component == "core/sentence_input" &&
+                    port == "input_sentence") {
                     return node.metadata.default;
                 }
                 return "";
             }
-        }else{
+        }
+        else {
             // In case of sentence_input, if the user hasnt set a value
             // return sample sentence
-            if(node.component == "core/sentence_input" &&
-                port == "input_sentence" ){
+            if (node.component == "core/sentence_input" &&
+                port == "input_sentence") {
                     return node.metadata.default;
             }
             return ""; // Defaults to empty string
         }
 
         //If its a kathaa-resources module, then return a blank string for consistency
-        var component_definition = window.library["core"][node.component]
-        if(component_definition.type == "kathaa-resources"){
+        var component_definition = window.library["core"][node.component];
+        if (component_definition.type == "kathaa-resources") {
             return "";
         }
 
     }
 
-    function get_node_output_value_at_port(node, port){
+    function get_node_output_value_at_port(node, port) {
         // Check in latest_workflow_run,
         //
         // Look inside get_node_input_value_at_port function for
@@ -339,21 +344,23 @@ $(document).ready(function(){
         // `latest_workflow_run`
 
 
-        if(window.kathaa.latest_workflow_run[node.id]){
+        if (window.kathaa.latest_workflow_run[node.id]) {
             //Check if kathaa_inputs has a value for the corresponding port
-            if(window.kathaa.latest_workflow_run[node.id].kathaa_outputs &&
-                window.kathaa.latest_workflow_run[node.id].kathaa_outputs[port]){
+            if (window.kathaa.latest_workflow_run[node.id].kathaa_outputs &&
+                window.kathaa.latest_workflow_run[node.id].kathaa_outputs[port]) {
 
                 return window.kathaa.latest_workflow_run[node.id].kathaa_outputs[port];
-            }else{
+            }
+            else {
                 return "";
             }
-        }else{
+        }
+        else {
             return ""; // Defaults to empty string
         }
     }
 
-    window.kathaa.save_module_handler = function(){
+    window.kathaa.save_module_handler = function() {
         var json_editor = window.kathaa.latest_edit_module_json_editor;
         var updated_node = json_editor.get();
         var target_node = editor.nofloGraph.getNode(window.kathaa.latest_edit_module_target_node.id);
@@ -363,15 +370,15 @@ $(document).ready(function(){
         set_view('graph-editor');
 
         //Check if the process_definition has been changed, and needs to be updated
-        if(window.kathaa.process_definitions){
-            if(window.kathaa.explorer_process_definition_editor.getValue() !=
+        if (window.kathaa.process_definitions) {
+            if (window.kathaa.explorer_process_definition_editor.getValue() !=
                 window.kathaa.process_definitions[
                         target_node.component
                     ]
-                ){
+                ) {
                     target_node.process_definition
                     =
-                    window.kathaa.explorer_process_definition_editor.getValue()
+                    window.kathaa.explorer_process_definition_editor.getValue();
             }
         }
 
@@ -380,19 +387,26 @@ $(document).ready(function(){
 
         if(window.kathaa.latest_workflow_run[
                 window.kathaa.latest_node_edit_focus.id
-            ]){}else{
+            ]) {
+            // Do nothing
+        }
+        else {
             window.kathaa.latest_workflow_run[
                 window.kathaa.latest_node_edit_focus.id
-            ] = {"kathaa_inputs":{}, "kathaa_outputs": {}}
+            ] = {"kathaa_inputs":{}, "kathaa_outputs": {}};
         }
 
-        if(window.kathaa.latest_workflow_run[
+        if (window.kathaa.latest_workflow_run[
             window.kathaa.latest_node_edit_focus.id
         ]["kathaa_inputs"]
-            ){}else{
+            ) {
+            // Do nothing
+        }
+        else {
                 window.kathaa.latest_workflow_run[
                     window.kathaa.latest_node_edit_focus.id
                 ]["kathaa_inputs"] = {};
+
                 window.kathaa.latest_workflow_run[
                     window.kathaa.latest_node_edit_focus.id
                 ]["kathaa_outputs"] = {};
@@ -400,16 +414,17 @@ $(document).ready(function(){
 
         // At this point, the proper parent structure for kathaa_inputs for this node
         // has been created even if it dint exist
-        for(_key in window.kathaa.input_editor_buffer[
+        for (_key in window.kathaa.input_editor_buffer[
                         window.kathaa.latest_node_edit_focus.id
-                        ]){
+                        ]) {
+
             window.kathaa.latest_workflow_run[
                 window.kathaa.latest_node_edit_focus.id
             ]["kathaa_inputs"][_key]
             =
             window.kathaa.input_editor_buffer[
                 window.kathaa.latest_node_edit_focus.id
-            ][_key]
+            ][_key];
         }
         // Dump the value of the key in the input editor also into
         // latest_workflow run
@@ -421,16 +436,16 @@ $(document).ready(function(){
 window.kathaa.input_editor_buffer
         // At this point, the proper parent structure for kathaa_outputs for this node
         // has been created even if it dint exist
-        for(_key in window.kathaa.output_editor_buffer[
+        for (_key in window.kathaa.output_editor_buffer[
                         window.kathaa.latest_node_edit_focus.id
-                        ]){
+                        ]) {
             window.kathaa.latest_workflow_run[
                 window.kathaa.latest_node_edit_focus.id
             ]["kathaa_outputs"][_key]
             =
             window.kathaa.output_editor_buffer[
                 window.kathaa.latest_node_edit_focus.id
-            ][_key]
+            ][_key];
         }
         // Dump the value of the key in the input editor also into
         // latest_workflow run
@@ -440,12 +455,11 @@ window.kathaa.input_editor_buffer
         =
         window.kathaa.explorer_output_editor.getValue();
 
-
     }
     $("#kathaa-edit-module-save").click(window.kathaa.save_module_handler);
 
     //Refresh CodeMirror tabs, as updates when they are visible are not rendered by default
-    $("a[href='#kathaa-edit-module-input-tab']").on('shown.bs.tab',function(){
+    $("a[href='#kathaa-edit-module-input-tab']").on('shown.bs.tab',function() {
         window.kathaa.explorer_input_editor.refresh();
         // Show execute from this node button
 
@@ -453,27 +467,27 @@ window.kathaa.input_editor_buffer
         if(!window.kathaa.latest_node_edit_focus.metadata.requiresUserIntervention){
           $("#kathaa-edit-module-execute").removeClass("hidden");
         }
-    })
-    $("a[href='#kathaa-edit-module-input-tab']").on('hide.bs.tab',function(){
+    });
+    $("a[href='#kathaa-edit-module-input-tab']").on('hide.bs.tab',function() {
         // window.kathaa.explorer_input_editor.refresh();
         // Hide execute from this node button
         $("#kathaa-edit-module-execute").addClass("hidden");
-    })
-    $("a[href='#kathaa-edit-module-output-tab']").on('shown.bs.tab',function(){
+    });
+    $("a[href='#kathaa-edit-module-output-tab']").on('shown.bs.tab',function() {
         window.kathaa.explorer_output_editor.refresh();
-    })
+    });
 
-    $("a[href='#kathaa-edit-module-process-definition-tab']").on('shown.bs.tab',function(){
+    $("a[href='#kathaa-edit-module-process-definition-tab']").on('shown.bs.tab',function() {
         window.kathaa.explorer_process_definition_editor.refresh();
         $("#kathaa-edit-module-execute").removeClass("hidden");
-    })
-    $("a[href='#kathaa-edit-module-process-definition-tab']").on('hide.bs.tab',function(){
+    });
+    $("a[href='#kathaa-edit-module-process-definition-tab']").on('hide.bs.tab',function() {
         $("#kathaa-edit-module-execute").addClass("hidden");
-    })
+    });
 
 
 
-    //Instantiated CodeMirror editors
+    // Instantiated CodeMirror editors
     window.kathaa.explorer_process_definition_editor = CodeMirror.fromTextArea(document.getElementById("kathaa-edit-module-process-definition-tab-code"), {
      lineNumbers: true,
      matchBrackets: true,
@@ -497,4 +511,4 @@ window.kathaa.input_editor_buffer
 
     // //Setup jquery.ime
     // $( 'input, textarea, [contenteditable]' ).ime();
-})
+});
