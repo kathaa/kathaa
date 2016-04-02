@@ -83,7 +83,7 @@ the `package.json` file in the respective module folder defines the structure of
 module, and the `main` parameter in the `package.json` tells the module_library_loader
 where to look for the function that the module is supposed to execute.
 
-Look at examples in `https://github.com/kathaa/core-modules/blob/master/custom_module/package.json` and `https://github.com/kathaa/core-modules/blob/master/custom_module/index.js`
+Look at examples in https://github.com/kathaa/core-modules/blob/master/custom_module/package.json and https://github.com/kathaa/core-modules/blob/master/custom_module/index.js
 for templates for defining custom modules.
 
 
