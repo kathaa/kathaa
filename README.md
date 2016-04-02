@@ -75,24 +75,19 @@ npm start
 
 Extend
 ======
-New Modules can be added in the `module_library` folder.
-Inside the folder, there is a `package.json` file, where references to different
-modules can be made.
-Modules have to be defined in their corresponding component-groups.
-Each component-group is a folder inside the `module_library` folder, and each
-module is a separate folder in the corresponding component-group folder.
+New Modules can be added by referencing the corresponding module-group in the `package.json` as shown in : https://github.com/kathaa/kathaa/blob/master/package.json#L7
+
+ Inside every module_group, the individual modules must exist as folders, along with a `libraries.js` file for any shared libraries. 
 
 the `package.json` file in the respective module folder defines the structure of the
 module, and the `main` parameter in the `package.json` tells the module_library_loader
 where to look for the function that the module is supposed to execute.
 
-Look at examples in `module_library/core/custom/package.json` and `module_library/core/custom/index.js`
+Look at examples in `https://github.com/kathaa/core-modules/blob/master/custom_module/package.json` and `https://github.com/kathaa/core-modules/blob/master/custom_module/index.js`
 for templates for defining custom modules.
 
-External libraries can be added in the `libraries.js` file of the folder of the corresponding
-component-group.
 
-Pull requests for new modules/component-groups would really be appreciated !!
+Pull requests for new modules-groups, or modules would be highly appreciated. Please get in touch with spmohanty91@gmail.com, if you have any interesting ideas !!
 
 Author
 ======
