@@ -12,7 +12,7 @@ const Graph = mongoose.model('Graph');
 const file_handler = require('../../config/file_handler');
 
 /**
- * Load
+ * Load a graph
  */
 
 exports.load = wrap(function* (req, res, next, id) {
@@ -22,7 +22,7 @@ exports.load = wrap(function* (req, res, next, id) {
 });
 
 /**
- * List
+ * List graphs
  */
 
 exports.index = wrap(function* (req, res) {
@@ -45,7 +45,7 @@ exports.index = wrap(function* (req, res) {
 });
 
 /**
- * New graph
+ * Generate new graph
  */
 
 exports.new = function (req, res){
@@ -58,7 +58,7 @@ exports.new = function (req, res){
 };
 
 /**
- * Create an graph
+ * Create a new graph
  * Upload an image
  */
 
@@ -71,23 +71,24 @@ exports.create = wrap(function* (req, res) {
 
   // Saves the Snapshot PNG in /public/snapshots folder with
   // the graph-id as its name.
-  if(req.body.snapshot){
+  if (req.body.snapshot) {
     file_handler.save_base64_png( 'snapshot', graph.id+".png",
                                   req.body.snapshot,
                                   function(){
-                                  })
+                                  });
   }
 
-  if(req.body.isForked){
-    graph.name += "::Forked"
+  if (req.body.isForked) {
+    graph.name += "::Forked";
     //Update
     var parentGraph = yield Graph.load(
             mongoose.Types.ObjectId(req.body.parentGraph)
-          )
+          );
     graph.parentGraph = parentGraph;
     yield graph.uploadAndSave();
     req.flash('success', 'Successfully forked graph!');
-  }else{
+  }
+  else {
     yield graph.uploadAndSave();
     req.flash('success', 'Successfully created graph!');
   }
@@ -99,7 +100,7 @@ exports.create = wrap(function* (req, res) {
   * Fork a Graph
   */
 
-exports.fork = wrap(function* (req, res){
+exports.fork = wrap(function* (req, res) {
   const graph = new Graph(only(req.graph, 'name body'));
   graph.name += "::Forked";
   graph.user = req.user;
@@ -108,7 +109,8 @@ exports.fork = wrap(function* (req, res){
   //Copy old graphs snapshot as new graphs snapshot
   file_handler.copy_file('snapshot',  req.graph.id+".png",
                                       graph.id+".png",
-                                      function(){});
+                                      function(){
+                                      });
 
   yield graph.uploadAndSave();
 
@@ -118,7 +120,7 @@ exports.fork = wrap(function* (req, res){
 
 
 /**
- * Edit an graph
+ * Edit a graph
  */
 
 exports.edit = function (req, res) {
@@ -127,7 +129,7 @@ exports.edit = function (req, res) {
     title: 'Edit ' + req.graph.name,
     graph: req.graph,
     graphView: true,
-    isOwner: req.graph.user.id == req.user.id
+    isOwner: req.graph.user.id == req.user.id   // Make sure user has permission to edit graph
   });
 };
 
@@ -135,16 +137,16 @@ exports.edit = function (req, res) {
  * Update graph
  */
 
-exports.update = wrap(function* (req, res){
+exports.update = wrap(function* (req, res) {
   const graph = req.graph;
 
   // Saves the Snapshot PNG in /public/snapshots folder with
   // the graph-id as its name.
-  if(req.body.snapshot){
+  if (req.body.snapshot) {
     file_handler.save_base64_png( 'snapshot', graph.id+".png",
                                   req.body.snapshot,
                                   function(){
-                                  })
+                                  });
   }
 
   assign(graph, only(req.body, 'name body'));
@@ -153,16 +155,17 @@ exports.update = wrap(function* (req, res){
 });
 
 /**
- * Show
+ * Show a graph
  */
 
-exports.show = function (req, res){
+exports.show = function(req, res) {
 
   if(req.graph.user.id == req.user.id){
     // If the user has the right to edit the graph,
     // redirect him to the edit page directly
     res.redirect('/graphs/'+req.graph.id+"/edit");
-  }else{
+  }
+  else {
     res.render('graphs/show', {
       name: req.graph.name,
       graph: req.graph,
@@ -174,14 +177,15 @@ exports.show = function (req, res){
 
 
 /**
- * Delete an graph
+ * Delete a graph
  */
 
 exports.destroy = wrap(function* (req, res) {
   yield req.graph.remove();
 
   //Delete Snapshot
-  file_handler.delete_file('snapshot', req.graph.id+".png", function(){});
+  file_handler.delete_file('snapshot', req.graph.id+".png", function(){
+                                                              });
 
   req.flash('success', 'Deleted successfully');
   res.redirect('/graphs');
