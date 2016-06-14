@@ -1,7 +1,7 @@
-कथा (kathaa) : A Visual Programming Framework for Sampark Machine Translation framework
+कथा (kathaa) : A Visual Programming Framework for NLP Applications
 =================================================================================
 
-Kathaa is a Visual Programming Framework for Sampark Machine Translation System.   
+Kathaa is a Visual Programming Framework for NLP Applications.   
 Although it was built for Sampark, it is highly flexible, and can accommodate any   
 practically any other system, as long as you can safely represent the unit-task at
 hand by a single function which takes some inputs, and spits out some outputs :D.   
