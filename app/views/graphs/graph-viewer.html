@@ -389,17 +389,17 @@
     })
 </script>
 
-<socket-connection id="kathaa-socket" auto></socket-connection>
-<script type="text/javascript">
-var socket = document.querySelector("socket-connection")
-socket.url = "";
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.2/socket.io.min.js"> </script>
 
-socket.addEventListener('socket-connect', function(){
+
+<script type="text/javascript">
+var socket = io();
+
+socket.on('connect', function(){
             toast("success", "", "Connected");
             set_view('graph-editor');
             //
-            if(socket.socket.listeners("execute_workflow_progress").length==0)
-            socket.socket.on('execute_workflow_progress', function (message) {
+            socket.on('execute_workflow_progress', function (message) {
               // if(window.kathaa.debug){console.log("Progress Notification ::");}
               // if(window.kathaa.debug){console.log(message);}
               try{
@@ -409,8 +409,7 @@ socket.addEventListener('socket-connect', function(){
               }
             });
 
-            if(socket.socket.listeners("node_processing_complete").length==0)
-            socket.socket.on('node_processing_complete', function(message){
+            socket.on('node_processing_complete', function(message){
                 // if(window.kathaa.debug){console.log("Node Processing Complete :: ");}
                 // if(window.kathaa.debug){console.log(message);}
 
@@ -422,8 +421,7 @@ socket.addEventListener('socket-connect', function(){
                 }
             });
 
-            if(socket.socket.listeners("node_processing_failed").length==0)
-            socket.socket.on('node_processing_failed', function(message){
+            socket.on('node_processing_failed', function(message){
                 toastr.options = {
                     closeButton: true,
                     progressBar: true,
@@ -433,14 +431,13 @@ socket.addEventListener('socket-connect', function(){
                 toastr["error"](message.error, "Unable to process "+message.node.metadata.label)
             });
 
-            if(socket.socket.listeners("debug_message").length==0)
-            socket.socket.on('debug_message', function (message) {
+            socket.on('debug_message', function (message) {
               if(window.kathaa.debug){console.log("DEBUG ::");}
               if(window.kathaa.debug){console.log(message);}
             });
 
-            if(socket.socket.listeners("init").length==0)
-            socket.socket.on('init', function(params){
+            socket.on('init', function(params){
+                console.log("Inside init socket call")
                 if(window.kathaa.debug){console.log(params);}
                 if(window.library == undefined){
                   init(params);
@@ -448,8 +445,7 @@ socket.addEventListener('socket-connect', function(){
             })
 
             //User Intervention and kathaa-resources Event handlers
-            if(socket.socket.listeners("kathaa-user-intervention").length==0)
-            socket.socket.on('kathaa-user-intervention', function(message){
+            socket.on('kathaa-user-intervention', function(message){
                 playPause("slow_success.wav");
 
                 //Copy kathaa_inputs to kathaa_outputs also by changing the namespaced keys
@@ -479,7 +475,7 @@ socket.addEventListener('socket-connect', function(){
             })
         });
 window.socket_failure = 0
-socket.addEventListener('socket-error', function(){
+socket.on('error', function(){
           //Ignore the first socket failure
           if(window.socket_failure != 0){
             toastr["error"]("please wait while we try to reconnect", "Connecting failed");
@@ -488,7 +484,7 @@ socket.addEventListener('socket-error', function(){
           }
           window.socket_failure += 1
         });
-socket.addEventListener('socket-timeout', function(){
+socket.on('timeout', function(){
             if(window.kathaa.debug){console.log("Socket Timeout !!");}
         });
 
@@ -497,7 +493,6 @@ function init(params){
     //Register known modules as components
     window.library = {};
     window.library['core'] = params.module_library;
-
     $.each(window.library, function(key, value){
         $.each(value, function(key, value){
             editor.registerComponent(value)
@@ -559,7 +554,7 @@ $("#kathaa-edit-module-continue-user-intervention").click(function(){
   }
 
   // Send modified Kathaa_Outputs to the job via the correct response Channel
-  socket.socket.emit(response_channel, kathaa_outputs);
+  socket.emit(response_channel, kathaa_outputs);
 
   // Clean up
   delete window.kathaa.user_intervention_map[current_node.id];
@@ -701,7 +696,7 @@ function execute_workflow(beginNode){
     }
 
     // Issue with scope of variable in kathaa-orchestrator !!
-    socket.socket.emit('execute_workflow', {  graph: graph, 
+    socket.emit('execute_workflow', {  graph: graph, 
                                               beginNode: beginNode,
                                               kathaaResources: kathaaResources
                                             });

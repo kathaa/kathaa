@@ -58,8 +58,10 @@ function listen () {
   //Setup Socket.IO
   var socketio = require('socket.io').listen(server);
   require('./config/socketio')(socketio, app, module_library);
+  socketio.on('connection', function(){
+        console.log("Working !!")
+  });
   console.log('Socket.IO Server listening on port ' + port);
-
 }
 
 function connect () {
