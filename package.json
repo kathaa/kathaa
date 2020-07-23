@@ -62,7 +62,7 @@
     "notifier": "~0.1.7",
     "object-assign": "*",
     "only": "0.0.2",
-    "parse": "^1.6.14",
+    "parse": "^2.15.0",
     "parser": "^0.1.4",
     "passport": "~0.3.2",
     "passport-facebook": "~2.0.0",
